@@ -127,7 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chinese.cpp" />
+    <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="Dish.cpp" />
     <ClCompile Include="DSA_assignment_team6.cpp" />
+    <ClCompile Include="List.cpp" />
+    <ClCompile Include="Membership.cpp" />
+    <ClCompile Include="Order.cpp" />
+    <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Western.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chinese.h" />
+    <ClInclude Include="Customer.h" />
+    <ClInclude Include="Dish.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Membership.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="Queue.h" />
+    <ClInclude Include="Western.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

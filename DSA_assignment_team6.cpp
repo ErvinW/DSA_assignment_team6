@@ -1,20 +1,296 @@
-// DSA_assignment_team6.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <string>
+#include <iomanip>
+#include <fstream> 
+#include <vector>
+#include <sstream>
+#include "List.h"
+#include "Customer.h"
+#include "Membership.h"
+#include "Dish.h"
+#include "Chinese.h"
+#include "Western.h"
+#include "Queue.h"
+
+
+
+using namespace std;
+
+List <Customer> customerList;
+List <Dish> foodItemList;
+List <Chinese> chineseList;
+List <Western> westernList;
+Queue <Order> orderList;
+vector <vector <string>> content;
+vector <string> row;
+string line, word;
+
+
+
+
+
+
+void initialiseMenu()
+{
+    foodItemList.add(Chinese("Chinese", "Mapo Tofu", "Small", 20));
+    foodItemList.add(Chinese("Chinese", "Mapo Tofu", "Medium", 25));
+    foodItemList.add(Chinese("Chinese", "Mapo Tofu", "Large", 30));
+    foodItemList.add(Chinese("Chinese", "Spring Rolls", "Small", 5));
+    foodItemList.add(Chinese("Chinese", "Spring Rolls", "Medium", 8));
+    foodItemList.add(Chinese("Chinese", "Spring Rolls", "Large", 10));
+    foodItemList.add(Chinese("Chinese", "Wonton Soup", "Small", 5));
+    foodItemList.add(Chinese("Chinese", "Wonton Soup", "Medium", 6));
+    foodItemList.add(Chinese("Chinese", "Wonton Soup", "Large", 8));
+    foodItemList.add(Chinese("Chinese", "Char Siu", "Small", 20));
+    foodItemList.add(Chinese("Chinese", "Char Siu", "Medium", 30));
+    foodItemList.add(Chinese("Chinese", "Char Siu", "Large", 40));
+    foodItemList.add(Chinese("Chinese", "Kungpao Chicken", "Small", 25));
+    foodItemList.add(Chinese("Chinese", "Kungpao Chicken", "Medium", 30));
+    foodItemList.add(Chinese("Chinese", "Kungpao Chicken", "Large", 35));
+    foodItemList.add(Western("Western", "Pasta", "Small", 22));
+    foodItemList.add(Western("Western", "Pasta", "Medium", 25));
+    foodItemList.add(Western("Western", "Pasta", "Large", 28));
+    foodItemList.add(Western("Western", "Chicken Chop", "Small", 30));
+    foodItemList.add(Western("Western", "Chicken Chop", "Medium", 35));
+    foodItemList.add(Western("Western", "Chicken Chop", "Large", 40));
+    foodItemList.add(Western("Western", "Fish and Chips", "Small", 20));
+    foodItemList.add(Western("Western", "Fish and Chips", "Medium", 25));
+    foodItemList.add(Western("Western", "Fish and Chips", "Large", 30));
+    foodItemList.add(Western("Western", "Pizza", "Small", 30));
+    foodItemList.add(Western("Western", "Pizza", "Medium", 40));
+    foodItemList.add(Western("Western", "Pizza", "Large", 50));
+    foodItemList.add(Western("Western", "Fried Chicken Wings", "Small", 5));
+    foodItemList.add(Western("Western", "Fried Chicken Wings", "Medium", 15));
+    foodItemList.add(Western("Western", "Fried Chicken Wings", "Large", 25));
+}
+
+void assignDish()
+{
+    for (int i = 0; i < foodItemList.getLength(); i++)
+    {
+        auto d = foodItemList.get(i);
+        if (d.getCuisine() == "Chinese")
+        {
+            chineseList.add(Chinese(d.getCuisine(), d.getFoodName(), d.getPortion(), d.getCharge()));
+
+        }
+        else
+        {
+            westernList.add(Western(d.getCuisine(), d.getFoodName(), d.getPortion(), d.getCharge()));
+        }
+    }
+}
+
+void displayAllFood()
+{
+    // Print the header
+
+    cout << left << setw(25) << "Food Name";
+    cout << left << setw(15) << "Portion";
+    cout << right << setw(15) << "Charge" << endl;
+    cout << "+-------------------------------------------------------+" << endl;
+
+    // Print the food items
+    for (int i = 0; i < foodItemList.getLength(); i++)
+    {
+        auto d = foodItemList.get(i);
+
+        // Use std::left for Food Name and Portion, and std::right for Charge
+
+        cout << left << setw(3) << i + 1;
+        cout << left << setw(25) << d.getFoodName();
+        cout << left << setw(15) << d.getPortion();
+        cout << right << setw(10) << "$" << d.getCharge() << endl;
+        cout << "+-------------------------------------------------------+" << endl;
+
+    }
+}
+
+void displayAllCustomer()
+{
+    // Print the header
+
+    cout << left << setw(25) << "Name";
+    cout << left << setw(15) << "Member Status";
+    cout << right << setw(15) << "Member Points" << endl;
+    cout << "" << endl;
+    cout << "+-------------------------------------------------------+" << endl;
+
+    // Print the food items
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+
+
+        // Use std::left for Food Name and Portion, and std::right for Charge
+
+        cout << left << setw(3) << i + 1;
+        cout << left << setw(25) << c.getName();
+        cout << left << setw(15) << c.Member.getStatus();
+        cout << right << setw(10) << c.Member.getPoint() << endl;
+        cout << "+-------------------------------------------------------+" << endl;
+
+    }
+}
+
+
+
+// Adding all the food items to the List using add function
+
+void registerAccount()
+{
+
+    string customerName;
+
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
+    bool isNewUser = true;
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+        if (c.getName() == customerName)
+        {
+            cout << "You have registered for an account " << endl;
+            isNewUser = false;
+            break;
+        }
+    }
+
+    if (isNewUser == true)
+    {
+        int memberPoint = 0;
+        string memberStatus = "Ordinary";
+        Membership member = Membership(memberStatus, memberPoint);
+        Order order = Order(false);
+        Customer newCustomer = Customer(customerName, order, member);
+        customerList.add(newCustomer);
+        displayAllCustomer();
+        fstream file("Customer.csv", ios::in);
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                row.clear();
+
+                stringstream str(line);
+
+                while (getline(str, word, ','))
+                    row.push_back(word);
+                content.push_back(row);
+            }
+        }
+    }
+
+
+}
+
+
+
+void OrderFood()
+{
+    displayAllCustomer();
+    string name;
+    cout << "Please enter the customer name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, name);
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+        if (name == c.getName())
+        {
+            while (true)
+            {
+                displayAllFood();
+                cout << "" << endl;
+                int option;
+                cout << "1. Please select a dish";
+                cout << "2. Finish ordering";
+                cin >> option;
+                for (int i = 0; i < foodItemList.getLength();i++)
+                {
+                    if (option - 1 == i)
+                    {
+                        c.orderItem.addDish(foodItemList.get(i));
+
+                    }
+                    else
+                    {
+                        orderList.enqueue(c.orderItem);
+                    }
+                }
+            }
+
+        }
+    }
+
+    cout << "" << endl;
+
+
+}
+
 
 int main()
 {
-    std::cout << "Hello\n";
+    initialiseMenu();
+    assignDish();
+    bool check = true;
+
+
+    while (check == true)
+    {
+        int option;
+        cout << "+---------------Welcome To  Restaurant---------------+" << endl;
+        cout << "1. Register Customer" << endl;
+        cout << "" << endl;
+        cout << "Please choose an option: ";
+        cin >> option;
+        if (option == 1)
+        {
+            registerAccount();
+
+            while (true)
+            {
+                int choice;
+                cout << "+----------------------------------------------------+" << endl;
+                cout << "1. Browse All Food Selection" << endl;
+                cout << "2. Create an order" << endl;
+                cout << "3. Delete an order" << endl;
+                cout << "4. Exit" << endl;
+                cout << "Please choose an option: ";
+                cin >> choice;
+                cout << "" << endl;
+
+                if (choice == 1)
+                {
+                    displayAllFood();
+                    cout << "" << endl;
+                }
+                else if (choice == 2)
+                {
+
+                }
+                else if (choice == 3)
+                {
+
+                }
+                else if (choice == 4)
+                {
+                    // Exit the loop and end the program
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid choice. Please try again." << endl;
+                }
+            }
+        }
+    }
+
+
+
+
+
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
