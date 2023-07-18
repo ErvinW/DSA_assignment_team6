@@ -147,6 +147,10 @@
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Western.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Customer.csv" />
+    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -69,4 +69,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Customer.csv" />
+    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
+  </ItemGroup>
 </Project>
