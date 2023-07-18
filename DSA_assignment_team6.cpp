@@ -21,9 +21,7 @@ List <Dish> foodItemList;
 List <Chinese> chineseList;
 List <Western> westernList;
 Queue <Order> orderList;
-vector <vector <string>> content;
-vector <string> row;
-string line, word;
+
 
 
 
@@ -109,11 +107,11 @@ void displayAllFood()
 void displayAllCustomer()
 {
     // Print the header
-
-    cout << left << setw(25) << "Name";
-    cout << left << setw(15) << "Member Status";
-    cout << right << setw(15) << "Member Points" << endl;
     cout << "" << endl;
+    cout << left << setw(23) << "   Name";
+    cout << left << setw(20) << "Member Status";
+    cout << right << setw(15) << "Member Points" << endl;
+    
     cout << "+-------------------------------------------------------+" << endl;
 
     // Print the food items
@@ -124,40 +122,62 @@ void displayAllCustomer()
 
         // Use std::left for Food Name and Portion, and std::right for Charge
 
-        cout << left << setw(3) << i + 1;
-        cout << left << setw(25) << c.getName();
-        cout << left << setw(15) << c.Member.getStatus();
-        cout << right << setw(10) << c.Member.getPoint() << endl;
+        cout << left << setw(3) << i + 1 ;
+        cout << left << setw(20) << c.getName();
+        cout << left << setw(12) << c.Member.getStatus();
+        cout << right << setw(11) << c.Member.getPoint() << endl;
         cout << "+-------------------------------------------------------+" << endl;
-
+        cout << "" << endl;
     }
 }
 
+#include <fstream>
+
+void readCustomersFromFile() {
+    ifstream inFile("Customer.csv");
+    if (!inFile) {
+        cerr << "Error opening Customer.csv for reading." << endl;
+        return;
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        istringstream iss(line);
+        string name, memberStatus;
+        int memberPoint;
+
+        if (getline(iss, name, ',') && getline(iss, memberStatus, ',') && (iss >> memberPoint)) {
+            Membership member = Membership(memberStatus, memberPoint);
+            Order order = Order(false);
+            Customer newCustomer = Customer(name, order, member);
+            customerList.add(newCustomer);
+        }
+    }
+    inFile.close();
+}
 
 
 // Adding all the food items to the List using add function
 
-void registerAccount()
-{
-
+void registerAccount() {
+    readCustomersFromFile(); // Read the existing customers from the file
+    displayAllCustomer();
     string customerName;
-
     cout << "Please enter your name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, customerName);
+
     bool isNewUser = true;
-    for (int i = 0; i < customerList.getLength(); i++)
-    {
+    for (int i = 0; i < customerList.getLength(); i++) {
         auto c = customerList.get(i);
-        if (c.getName() == customerName)
-        {
-            cout << "You have registered for an account " << endl;
+        if (c.getName() == customerName) {
+            cout << "You have already registered for an account." << endl;
             isNewUser = false;
             break;
         }
     }
 
-    if (isNewUser == true)
+    if (isNewUser == true) 
     {
         int memberPoint = 0;
         string memberStatus = "Ordinary";
@@ -165,24 +185,17 @@ void registerAccount()
         Order order = Order(false);
         Customer newCustomer = Customer(customerName, order, member);
         customerList.add(newCustomer);
-        displayAllCustomer();
-        fstream file("Customer.csv", ios::in);
-        if (file.is_open())
-        {
-            while (getline(file, line))
-            {
-                row.clear();
 
-                stringstream str(line);
-
-                while (getline(str, word, ','))
-                    row.push_back(word);
-                content.push_back(row);
-            }
+        ofstream outFile("Customer.csv", ios::app); // Open the file in append mode
+        if (!outFile) {
+            std::cerr << "Error opening Customer.csv for writing." << endl;
+            return;
         }
+
+        outFile << customerName << "," << memberPoint << "," << memberStatus << "\n";
+        outFile.close();
+        
     }
-
-
 }
 
 
