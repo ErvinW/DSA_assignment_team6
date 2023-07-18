@@ -199,6 +199,32 @@ void registerAccount() {
 }
 
 
+void login() {
+    readCustomersFromFile(); // Read the existing customers from the file
+    displayAllCustomer();
+    string customerName;
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
+
+
+    bool isUser = true;
+    for (int i = 0; i < customerList.getLength(); i++) {
+        auto c = customerList.get(i);
+        if (c.getName() != customerName) {
+            cout << "You are not a current member." << endl;
+            isUser = false;
+            break;
+        }
+    }
+
+   
+
+
+
+}
+
+
 
 void OrderFood()
 {
@@ -256,6 +282,8 @@ int main()
         cout << "+---------------Welcome To  Restaurant---------------+" << endl;
         cout << "1. Register Customer" << endl;
         cout << "" << endl;
+        cout << "2. Login Customer" << endl;
+        cout << "" << endl;
         cout << "Please choose an option: ";
         cin >> option;
         if (option == 1)
@@ -297,6 +325,10 @@ int main()
                     cout << "Invalid choice. Please try again." << endl;
                 }
             }
+        }
+
+        else if (option == 2) {
+            login();
         }
     }
 
