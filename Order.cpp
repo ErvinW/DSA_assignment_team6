@@ -40,3 +40,7 @@ double Order::CalculateTotal()
 
     return total;
 }
+
+void updateStatus(Order order) {
+    order.isReady = true;
+}

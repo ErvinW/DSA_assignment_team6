@@ -20,6 +20,7 @@ public:
 	bool getisReady();
 	void addDish(Dish);
 	double CalculateTotal();
+	void updateStatus(Order order);
 
 
 
