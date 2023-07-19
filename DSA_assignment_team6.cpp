@@ -364,8 +364,6 @@ int main()
                     {
                         
                         string customerName = registerAccount();
-                        cout << customerName << endl;
-                        
 
                         while (true)
                         {
