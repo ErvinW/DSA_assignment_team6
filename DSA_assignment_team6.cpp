@@ -203,8 +203,6 @@ void registerAccount()
 
 
 
-
-
 void OrderFood()
 {
     displayAllCustomer();
@@ -214,38 +212,57 @@ void OrderFood()
     getline(cin, name);
     for (int i = 0; i < customerList.getLength(); i++)
     {
-        auto c = customerList.get(i);
+        auto& c = customerList.get(i); // get a reference to the customer
         if (name == c.getName())
         {
+            List<Dish> dishesToOrder; // create a new list to store the dishes to order
             while (true)
             {
                 displayAllFood();
                 cout << "" << endl;
                 int option;
-                cout << "1. Please select a dish";
-                cout << "2. Finish ordering";
+                cout << "1. Please select a dish" << endl;
+                cout << "2. Finish ordering" << endl;
                 cin >> option;
-                for (int i = 0; i < foodItemList.getLength();i++)
+                if (option == 1)
                 {
-                    if (option - 1 == i)
+                    int dishIndex;
+                    cout << "Please enter the index of the dish you want to order: ";
+                    cin >> dishIndex;
+                    if (dishIndex > 0 && dishIndex <= foodItemList.getLength())
                     {
-                        c.orderItem.addDish(foodItemList.get(i));
-
+                        dishesToOrder.add(foodItemList.get(dishIndex - 1)); // add the selected dish to the order
                     }
                     else
                     {
-                        orderList.enqueue(c.orderItem);
+                        cout << "Invalid index. Please try again." << endl;
                     }
                 }
+                else if (option == 2)
+                {
+                    double totalCharge = 0;
+                    cout << "\nYour Order:\n";
+                    for (int j = 0; j < dishesToOrder.getLength(); j++)
+                    {
+                        auto& dish = dishesToOrder.get(j);
+                        c.orderItem.addDish(dish); // add dishes to the order
+                        totalCharge += dish.getCharge();
+                        cout << dish << endl;
+                    }
+                    cout << "Total: $" << totalCharge << endl;
+                    orderList.enqueue(c.orderItem); // add the order to the queue
+                    break; // break the loop when finished ordering
+                }
+                else
+                {
+                    cout << "Invalid option. Please try again." << endl;
+                }
             }
-
+            break; // break the loop when finished with this customer
         }
     }
-
-    cout << "" << endl;
-
-
 }
+
 
 
 
@@ -254,7 +271,6 @@ int main()
     initialiseMenu();
     assignDish();
     bool check = true;
-
 
     while (check == true)
     {
@@ -289,11 +305,11 @@ int main()
                 }
                 else if (choice == 2)
                 {
-
+                    OrderFood(); // Call the OrderFood function here
                 }
                 else if (choice == 3)
                 {
-
+                    // Implementation for deleting an order goes here
                 }
                 else if (choice == 4)
                 {
@@ -306,16 +322,15 @@ int main()
                 }
             }
         }
-
         else if (option == 2) {
-
+            // Implementation for login goes here
         }
     }
-
-
-
-
-
-
 }
+
+
+
+
+
+
 

@@ -63,13 +63,15 @@ public:
 	}
 
 	// get an item at a specified position of the list (retrieve)
-	T get(int index)
+	T& get(int index)
 	{
 		bool success = (index >= 0) && (index < size);
 		if (success)
 			return items[index];
-
+		else
+			throw std::out_of_range("Invalid index");  // Throw an exception if the index is invalid
 	}
+
 
 	// check if the list is empty
 	bool isEmpty() { return size == 0; }

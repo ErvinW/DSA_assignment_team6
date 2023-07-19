@@ -1,8 +1,8 @@
 #pragma once
-using namespace std;
 #include <iostream>
 #include <string>
 
+using namespace std;
 
 class Dish {
 private:
@@ -17,10 +17,13 @@ public:
 	void setCuisine(string);
 	string getCuisine();
 	void setFoodName(string);
-	string getFoodName();
+	string getFoodName() const;
 	void setPortion(string);
-	string getPortion();
+	string getPortion() const;
 	void setCharge(double);
-	double getCharge();
+	double getCharge() const;
 	virtual double CalculateCharges();
+	friend std::ostream& operator<<(std::ostream& os, const Dish& dish);
 };
+
+std::ostream& operator<<(std::ostream& os, const Dish& dish);
