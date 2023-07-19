@@ -3,13 +3,13 @@ using namespace std;
 #include <iostream>
 #include <string>
 
-class Dish
-{
+
+class Dish {
 private:
-	string Cuisine;
+	string cuisine;
 	string foodName;
-	string Portion;
-	double Charge;
+	string portion;
+	double charge;
 
 public:
 	Dish();
@@ -23,8 +23,4 @@ public:
 	void setCharge(double);
 	double getCharge();
 	virtual double CalculateCharges();
-
-
-
 };
-

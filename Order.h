@@ -9,8 +9,6 @@ class Order
 {
 private:
 
-
-
 public:
 	bool isReady;
 	List<Dish> orderList;
@@ -20,8 +18,6 @@ public:
 	bool getisReady();
 	void addDish(Dish);
 	double CalculateTotal();
-
-
-
+	void updateStatus(Order order);
+	void createOrder(List<Dish> dishes);
 };
-

@@ -5,22 +5,22 @@ using namespace std;
 
 Dish::Dish() {};
 
-Dish::Dish(string a_Cuisine, string a_foodName, string a_Portion, double a_Charge)
+Dish::Dish(string a_cuisine, string a_foodName, string a_portion, double a_charge)
 {
-	Cuisine = a_Cuisine;
+	cuisine = a_cuisine;
 	foodName = a_foodName;
-	Portion = a_Portion;
-	Charge = a_Charge;
+	portion = a_portion;
+	charge = a_charge;
 }
 
-void Dish::setCuisine(string a_foodName)
+void Dish::setCuisine(string a_cuisine)
 {
-	Cuisine = a_foodName;
+	cuisine = a_cuisine;
 }
 
 string Dish::getCuisine()
 {
-	return Cuisine;
+	return cuisine;
 }
 
 void Dish::setFoodName(string a_foodName)
@@ -33,28 +33,27 @@ string Dish::getFoodName()
 	return foodName;
 }
 
-void Dish::setPortion(string a_Portion)
+void Dish::setPortion(string a_portion)
 {
-	Portion = a_Portion;
+	portion = a_portion;
 }
 
 string Dish::getPortion()
 {
-	return Portion;
+	return portion;
 }
 
-void Dish::setCharge(double a_Charge)
+void Dish::setCharge(double a_charge)
 {
-	Charge = a_Charge;
+	charge = a_charge;
 }
 
 double Dish::getCharge()
 {
-	return Charge;
+	return charge;
 }
-
 
 double Dish::CalculateCharges()
 {
-	return 0;
+	return charge;
 }
