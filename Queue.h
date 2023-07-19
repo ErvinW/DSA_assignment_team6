@@ -91,5 +91,27 @@ public:
 		return (front == -1 && back == -1);
 	}
 
+	void displayAll()
+	{
+		if (isEmpty())
+		{
+			cout << "Queue is empty." << endl;
+			return;
+		}
+
+		int current = front;
+		while (true)
+		{
+			cout << items[current] << endl;
+
+			if (current == back)
+			{
+				break;
+			}
+			current = (current + 1) % MAXSIZE;
+		}
+		cout << endl;
+	}
+
 };
 
