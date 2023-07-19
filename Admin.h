@@ -14,7 +14,7 @@ public:
 	
 
 	Admin();
-	Admin(string, Order);
+	Admin(string);
 	void setName(string);
 	string getName();
 	void setorderItem(Order);
