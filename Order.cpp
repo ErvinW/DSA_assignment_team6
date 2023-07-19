@@ -39,3 +39,16 @@ double Order::CalculateTotal()
 
     return total;
 }
+
+void updateStatus(Order order) {
+    order.isReady = true;
+}
+
+void Order::createOrder(List<Dish> dishes)
+{
+    isReady = false;
+    for (auto dish : dishes)
+    {
+        addDish(dish);
+    }
+}
