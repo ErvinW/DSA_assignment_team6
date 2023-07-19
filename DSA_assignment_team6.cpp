@@ -11,17 +11,26 @@
 #include "Chinese.h"
 #include "Western.h"
 #include "Queue.h"
+#include "Admin.h"
 
 
 
 using namespace std;
 
 List <Customer> customerList;
+List <Admin> adminList;
 List <Dish> foodItemList;
 List <Chinese> chineseList;
 List <Western> westernList;
 Queue <Order> orderList;
 
+
+void intialiseAdmin()
+{
+    adminList.add(Admin("Jack"));
+    adminList.add(Admin("Marry"));
+    adminList.add(Admin("David"));
+}
 
 
 
@@ -199,9 +208,62 @@ void registerAccount()
         
     }
 }
+ 
+
+bool customerLogIn()
+{
+    string customerName;
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
+
+    bool isOldUser = false;
+
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+        if (customerName == c.getName())
+        {
+            cout << "Welcome back " << c.getName() << endl;
+            isOldUser = true;
+            break;
+        }
+    }
+    if (isOldUser != true)
+    {
+        cout << "You need to register for an account first" << endl;
+        return false;
+    }
+}
 
 
 
+bool adminLogIn()
+{
+    string adminName;
+    cout << "Please log in with your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, adminName);
+
+    bool isOldUser = false;
+
+    for (int i = 0; i < adminList.getLength(); i++)
+    {
+        auto c = adminList.get(i);
+        if (adminName == c.getName())
+        {
+            cout << "Welcome back " << c.getName() << endl;
+            isOldUser = true;
+            break;
+        }
+    }
+    if (isOldUser != true)
+    {
+        cout << "You are not register as an admin yet" << endl;
+        return false;
+        
+    }
+}
 
 void OrderFood()
 {
@@ -266,11 +328,14 @@ void OrderFood()
 
 
 
+
 int main()
 {
+    intialiseAdmin();
     initialiseMenu();
     assignDish();
     bool check = true;
+
 
     while (check == true)
     {
@@ -286,17 +351,17 @@ int main()
         {
             registerAccount();
 
-            while (true)
-            {
-                int choice;
-                cout << "+----------------------------------------------------+" << endl;
-                cout << "1. Browse All Food Selection" << endl;
-                cout << "2. Create an order" << endl;
-                cout << "3. Delete an order" << endl;
-                cout << "4. Exit" << endl;
-                cout << "Please choose an option: ";
-                cin >> choice;
-                cout << "" << endl;
+                        while (true)
+                        {
+                            int choice;
+                            cout << "+----------------------------------------------------+" << endl;
+                            cout << "1. Browse All Food Selection" << endl;
+                            cout << "2. Create an order" << endl;
+                            cout << "3. Delete an order" << endl;
+                            cout << "4. Exit" << endl;
+                            cout << "Please choose an option: ";
+                            cin >> choice;
+                            cout << "" << endl;
 
                 if (choice == 1)
                 {
@@ -305,11 +370,11 @@ int main()
                 }
                 else if (choice == 2)
                 {
-                    OrderFood(); // Call the OrderFood function here
+                    OrderFood();
                 }
                 else if (choice == 3)
                 {
-                    // Implementation for deleting an order goes here
+
                 }
                 else if (choice == 4)
                 {
@@ -322,15 +387,38 @@ int main()
                 }
             }
         }
+
         else if (option == 2) {
-            // Implementation for login goes here
+
         }
     }
-}
 
+                while (true)
+                {
+                    int choice;
+                    cout << "+----------------------------------------------------+" << endl;
+                    cout << "1. View the incoming orders" << endl;
+                    cout << "2. Update status of the orders" << endl;
+                    cout << "3. View the customer information for that order" << endl;
+                    cout << "4. Exit" << endl;
+                    cout << "Please choose an option: ";
+                    cin >> choice;
+                    cout << "" << endl;
 
+                    if (choice == 1)
+                    {
 
+                    }
+                    else if (choice == 2)
+                    {
 
+                    }
+                    else if (choice == 3)
+                    {
 
+                    }
+                }
 
+            }
+            
 
