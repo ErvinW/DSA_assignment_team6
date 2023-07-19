@@ -159,7 +159,8 @@ void readCustomersFromFile() {
 
 // Adding all the food items to the List using add function
 
-void registerAccount() {
+void registerAccount()
+{
     readCustomersFromFile(); // Read the existing customers from the file
     displayAllCustomer();
     string customerName;
@@ -168,7 +169,8 @@ void registerAccount() {
     getline(cin, customerName);
 
     bool isNewUser = true;
-    for (int i = 0; i < customerList.getLength(); i++) {
+    for (int i = 0; i < customerList.getLength(); i++) 
+    {
         auto c = customerList.get(i);
         if (c.getName() == customerName) {
             cout << "You have already registered for an account." << endl;
@@ -199,7 +201,8 @@ void registerAccount() {
 }
 
 
-void login() {
+void login() 
+{
     readCustomersFromFile(); // Read the existing customers from the file
     displayAllCustomer();
     string customerName;
@@ -209,7 +212,8 @@ void login() {
 
 
     bool isUser = true;
-    for (int i = 0; i < customerList.getLength(); i++) {
+    for (int i = 0; i < customerList.getLength(); i++) 
+    {
         auto c = customerList.get(i);
         if (c.getName() != customerName) {
             cout << "You are not a current member." << endl;
@@ -217,11 +221,6 @@ void login() {
             break;
         }
     }
-
-   
-
-
-
 }
 
 

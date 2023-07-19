@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Chinese.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="Dish.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Western.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="Chinese.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Dish.h" />
