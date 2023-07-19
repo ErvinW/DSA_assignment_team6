@@ -168,14 +168,14 @@ void readCustomersFromFile() {
 
 // Adding all the food items to the List using add function
 
-void registerAccount(string customerName)
+string registerAccount()
 {
     readCustomersFromFile(); // Read the existing customers from the file
     displayAllCustomer();
-    //string customerName;
-    //cout << "Please enter your name: ";
-    //cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    //getline(cin, customerName);
+    string customerName;
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
 
     bool isNewUser = true;
     for (int i = 0; i < customerList.getLength(); i++) 
@@ -200,7 +200,7 @@ void registerAccount(string customerName)
         ofstream outFile("Customer.csv", ios::app); // Open the file in append mode
         if (!outFile) {
             std::cerr << "Error opening Customer.csv for writing." << endl;
-            return;
+            return customerName;
         }
 
         outFile << customerName << "," << memberPoint << "," << memberStatus << "\n";
@@ -252,7 +252,9 @@ bool adminLogIn()
         auto c = adminList.get(i);
         if (adminName == c.getName())
         {
+            cout << "" << endl;
             cout << "Welcome back " << c.getName() << endl;
+            cout << "" << endl;
             isOldUser = true;
             break;
         }
@@ -325,12 +327,6 @@ void OrderFood()
     }
 }
 
-
-
-
-
-
-
 int main()
 {
     intialiseAdmin();
@@ -339,24 +335,37 @@ int main()
     bool check = true;
 
 
-    while (check == true)
+    while (true)
     {
-        int option;
-        cout << "+---------------Welcome To  Restaurant---------------+" << endl;
-        cout << "1. Register Customer" << endl;
-        cout << "" << endl;
-        cout << "2. Login Customer" << endl;
-        cout << "" << endl;
-        cout << "Please choose an option: ";
-        cin >> option;
-        if (option == 1)
+        while (true)
         {
-            ////////////// Edits
-            string customerName;
-            cout << "Please enter your name: ";
-            cin >> customerName;
-            /////////////
-            registerAccount(customerName); //Edits
+            int option;
+            cout << "+---------------Welcome To  Restaurant---------------+" << endl;
+            cout << "1. User" << endl;
+            cout << "" << endl;
+            cout << "2. Admin" << endl;
+            cout << "" << endl;
+            cout << "Please choose your role: ";
+            cin >> option;
+            if (option == 1)
+            {
+                while (check == true)
+                {
+                    int option;
+                    cout << "+---------------Welcome To  Restaurant---------------+" << endl;
+                    cout << "1. Register Customer" << endl;
+                    cout << "" << endl;
+                    cout << "2. Login Customer" << endl;
+                    cout << "" << endl;
+                    cout << "Please choose an option: ";
+                    cin >> option;
+
+                    if (option == 1)
+                    {
+                        
+                        string customerName = registerAccount();
+                        cout << customerName << endl;
+                        
 
                         while (true)
                         {
@@ -364,45 +373,89 @@ int main()
                             cout << "+----------------------------------------------------+" << endl;
                             cout << "1. Browse All Food Selection" << endl;
                             cout << "2. Create an order" << endl;
-                            cout << "3. Delete an order" << endl;
-                            cout << "4. View order" << endl;
-                            cout << "5. Exit" << endl;
+                            cout << "3. Cancel an order" << endl;
+                            cout << "4. Exit" << endl;
                             cout << "Please choose an option: ";
                             cin >> choice;
                             cout << "" << endl;
 
-                if (choice == 1)
-                {
-                    displayAllFood();
-                    cout << "" << endl;
-                }
-                else if (choice == 2)
-                {
-                    OrderFood();
-                }
-                else if (choice == 3)
-                {
+                            if (choice == 1)
+                            {
+                                displayAllFood();
+                                cout << "" << endl;
+                            }
+                            else if (choice == 2)
+                            {
+                                OrderFood();
+                            }
+                            else if (choice == 3)
+                            {
 
-                }
-                else if (choice == 4) {
+                            }
+                            else if (choice == 4)
+                            {
+                                // Exit the loop and end the program
+                                break;
+                            }
+                            else
+                            {
+                                cout << "Invalid choice. Please try again." << endl;
+                            }
+                        }
+                    }
 
-                }
-                else if (choice == 5)
-                {
-                    // Exit the loop and end the program
-                    break;
-                }
-                else
-                {
-                    cout << "Invalid choice. Please try again." << endl;
+                    else if (option == 2)
+                    {
+                        if (customerLogIn() == false)
+                        {
+                            break;
+                        }
+
+                        while (true)
+                        {
+                            int choice;
+                            cout << "+----------------------------------------------------+" << endl;
+                            cout << "1. Browse All Food Selection" << endl;
+                            cout << "2. Create an order" << endl;
+                            cout << "3. Cancel an order" << endl;
+                            cout << "4. Exit" << endl;
+                            cout << "Please choose an option: ";
+                            cin >> choice;
+                            cout << "" << endl;
+
+                            if (choice == 1)
+                            {
+                                displayAllFood();
+                                cout << "" << endl;
+                            }
+                            else if (choice == 2)
+                            {
+                                OrderFood();
+                            }
+                            else if (choice == 3)
+                            {
+
+                            }
+                            else if (choice == 4)
+                            {
+                                // Exit the loop and end the program
+                                break;
+                            }
+                            else
+                            {
+                                cout << "Invalid choice. Please try again." << endl;
+                            }
+                        }
+                    }
+
                 }
             }
-        }
-
-        else if (option == 2) {
-            customerLogIn();
-        }
-    }
+            else if (option == 2)
+            {
+                if (adminLogIn() == false)
+                {
+                    break;
+                }
 
                 while (true)
                 {
@@ -431,5 +484,13 @@ int main()
                 }
 
             }
+            else
+            {
+                cout << "Invalid choice. Please try again." << endl;
+            }
+
+        }
+    }
+}
             
 
