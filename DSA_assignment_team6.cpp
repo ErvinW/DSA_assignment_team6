@@ -210,7 +210,7 @@ void registerAccount()
 }
  
 
-void customerLogIn()
+bool customerLogIn()
 {
     string customerName;
     cout << "Please enter your name: ";
@@ -232,6 +232,7 @@ void customerLogIn()
     if (isOldUser != true)
     {
         cout << "You need to register for an account first" << endl;
+        return false;
     }
 }
 
@@ -320,145 +321,155 @@ int main()
 
     while (true)
     {
-        int option;
-        cout << "+---------------Welcome To  Restaurant---------------+" << endl;
-        cout << "1. User" << endl;
-        cout << "" << endl;
-        cout << "2. Admin" << endl;
-        cout << "" << endl;
-        cout << "Please choose your role: ";
-        cin >> option;
-        if (option == 1)
+        while (true)
         {
-            while (check == true)
+            int option;
+            cout << "+---------------Welcome To  Restaurant---------------+" << endl;
+            cout << "1. User" << endl;
+            cout << "" << endl;
+            cout << "2. Admin" << endl;
+            cout << "" << endl;
+            cout << "Please choose your role: ";
+            cin >> option;
+            if (option == 1)
             {
-                int option;
-                cout << "+---------------Welcome To  Restaurant---------------+" << endl;
-                cout << "1. Register Customer" << endl;
-                cout << "" << endl;
-                cout << "2. Login Customer" << endl;
-                cout << "" << endl;
-                cout << "Please choose an option: ";
-                cin >> option;
-                if (option == 1)
+                while (check == true)
                 {
-                    registerAccount();
-
-                    while (true)
+                    int option;
+                    cout << "+---------------Welcome To  Restaurant---------------+" << endl;
+                    cout << "1. Register Customer" << endl;
+                    cout << "" << endl;
+                    cout << "2. Login Customer" << endl;
+                    cout << "" << endl;
+                    cout << "Please choose an option: ";
+                    cin >> option;
+                    if (option == 1)
                     {
-                        int choice;
-                        cout << "+----------------------------------------------------+" << endl;
-                        cout << "1. Browse All Food Selection" << endl;
-                        cout << "2. Create an order" << endl;
-                        cout << "3. Delete an order" << endl;
-                        cout << "4. Exit" << endl;
-                        cout << "Please choose an option: ";
-                        cin >> choice;
-                        cout << "" << endl;
+                        registerAccount();
 
-                        if (choice == 1)
+                        while (true)
                         {
-                            displayAllFood();
+                            int choice;
+                            cout << "+----------------------------------------------------+" << endl;
+                            cout << "1. Browse All Food Selection" << endl;
+                            cout << "2. Create an order" << endl;
+                            cout << "3. Delete an order" << endl;
+                            cout << "4. Exit" << endl;
+                            cout << "Please choose an option: ";
+                            cin >> choice;
                             cout << "" << endl;
-                        }
-                        else if (choice == 2)
-                        {
 
-                        }
-                        else if (choice == 3)
-                        {
+                            if (choice == 1)
+                            {
+                                displayAllFood();
+                                cout << "" << endl;
+                            }
+                            else if (choice == 2)
+                            {
 
+                            }
+                            else if (choice == 3)
+                            {
+
+                            }
+                            else if (choice == 4)
+                            {
+                                // Exit the loop and end the program
+                                break;
+                            }
+                            else
+                            {
+                                cout << "Invalid choice. Please try again." << endl;
+                            }
                         }
-                        else if (choice == 4)
+                    }
+
+                    else if (option == 2)
+                    {
+                        if (customerLogIn() == false)
                         {
-                            // Exit the loop and end the program
                             break;
                         }
-                        else
+
+                        while (true)
                         {
-                            cout << "Invalid choice. Please try again." << endl;
+                            int choice;
+                            cout << "+----------------------------------------------------+" << endl;
+                            cout << "1. Browse All Food Selection" << endl;
+                            cout << "2. Create an order" << endl;
+                            cout << "3. Delete an order" << endl;
+                            cout << "4. Exit" << endl;
+                            cout << "Please choose an option: ";
+                            cin >> choice;
+                            cout << "" << endl;
+
+                            if (choice == 1)
+                            {
+                                displayAllFood();
+                                cout << "" << endl;
+                            }
+                            else if (choice == 2)
+                            {
+
+                            }
+                            else if (choice == 3)
+                            {
+
+                            }
+                            else if (choice == 4)
+                            {
+                                // Exit the loop and end the program
+                                break;
+                            }
+                            else
+                            {
+                                cout << "Invalid choice. Please try again." << endl;
+                            }
                         }
+                    }
+
+                }
+            }
+            else if (option == 2)
+            {
+                if (adminLogIn() == false)
+                {
+                    break;
+                }
+
+                while (true)
+                {
+                    int choice;
+                    cout << "+----------------------------------------------------+" << endl;
+                    cout << "1. View the incoming orders" << endl;
+                    cout << "2. Update status of the orders" << endl;
+                    cout << "3. View the customer information for that order" << endl;
+                    cout << "4. Exit" << endl;
+                    cout << "Please choose an option: ";
+                    cin >> choice;
+                    cout << "" << endl;
+
+                    if (choice == 1)
+                    {
+
+                    }
+                    else if (choice == 2)
+                    {
+
+                    }
+                    else if (choice == 3)
+                    {
+
                     }
                 }
 
-                else if (option == 2)
-                {
-                    customerLogIn();
-
-                    while (true)
-                    {
-                        int choice;
-                        cout << "+----------------------------------------------------+" << endl;
-                        cout << "1. Browse All Food Selection" << endl;
-                        cout << "2. Create an order" << endl;
-                        cout << "3. Delete an order" << endl;
-                        cout << "4. Exit" << endl;
-                        cout << "Please choose an option: ";
-                        cin >> choice;
-                        cout << "" << endl;
-
-                        if (choice == 1)
-                        {
-                            displayAllFood();
-                            cout << "" << endl;
-                        }
-                        else if (choice == 2)
-                        {
-
-                        }
-                        else if (choice == 3)
-                        {
-
-                        }
-                        else if (choice == 4)
-                        {
-                            // Exit the loop and end the program
-                            break;
-                        }
-                        else
-                        {
-                            cout << "Invalid choice. Please try again." << endl;
-                        }
-                    }
-                }
-
             }
-        }
-        else if (option == 2)
-        {
-            if (adminLogIn() == false)
+            else
             {
-                break;
+                cout << "Invalid choice. Please try again." << endl;
             }
 
-            while (true)
-            {
-                int choice;
-                cout << "+----------------------------------------------------+" << endl;
-                cout << "1. View the incoming orders" << endl;
-                cout << "2. Update status of the orders" << endl;
-                cout << "3. View the customer information for that order" << endl;
-                cout << "4. Exit" << endl;
-                cout << "Please choose an option: ";
-                cin >> choice;
-                cout << "" << endl;
-
-                if (choice == 1)
-                {
-
-                }
-                else if (choice == 2)
-                {
-
-                }
-                else if (choice == 3)
-                {
-
-                }
-            }
-            
         }
-        
     }
 }
 
