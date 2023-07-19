@@ -168,14 +168,14 @@ void readCustomersFromFile() {
 
 // Adding all the food items to the List using add function
 
-void registerAccount()
+void registerAccount(string customerName)
 {
     readCustomersFromFile(); // Read the existing customers from the file
     displayAllCustomer();
-    string customerName;
-    cout << "Please enter your name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    getline(cin, customerName);
+    //string customerName;
+    //cout << "Please enter your name: ";
+    //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //getline(cin, customerName);
 
     bool isNewUser = true;
     for (int i = 0; i < customerList.getLength(); i++) 
@@ -329,6 +329,8 @@ void OrderFood()
 
 
 
+
+
 int main()
 {
     intialiseAdmin();
@@ -349,7 +351,12 @@ int main()
         cin >> option;
         if (option == 1)
         {
-            registerAccount();
+            ////////////// Edits
+            string customerName;
+            cout << "Please enter your name: ";
+            cin >> customerName;
+            /////////////
+            registerAccount(customerName); //Edits
 
                         while (true)
                         {
@@ -358,7 +365,8 @@ int main()
                             cout << "1. Browse All Food Selection" << endl;
                             cout << "2. Create an order" << endl;
                             cout << "3. Delete an order" << endl;
-                            cout << "4. Exit" << endl;
+                            cout << "4. View order" << endl;
+                            cout << "5. Exit" << endl;
                             cout << "Please choose an option: ";
                             cin >> choice;
                             cout << "" << endl;
@@ -376,7 +384,10 @@ int main()
                 {
 
                 }
-                else if (choice == 4)
+                else if (choice == 4) {
+
+                }
+                else if (choice == 5)
                 {
                     // Exit the loop and end the program
                     break;
@@ -389,7 +400,7 @@ int main()
         }
 
         else if (option == 2) {
-
+            customerLogIn();
         }
     }
 
