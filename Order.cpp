@@ -52,3 +52,37 @@ void Order::createOrder(List<Dish> dishes)
         addDish(dish);
     }
 }
+
+/// /// ///
+void Order::setCustName(string n) {
+    CustName = n;
+
+}
+
+string Order::getCustName() {
+    return CustName;
+
+}
+
+/// /// ///
+void Order::setOrderList(List<Dish> oL) {
+    orderList = oL;
+
+}
+
+
+
+List<Dish> Order::getOrderList() {
+    return orderList;
+
+}
+
+/// /// ///
+void Order::setCharge(double c) {
+    Charge = c;
+}
+
+double Order::getCharge() {
+    return Charge;
+
+}
