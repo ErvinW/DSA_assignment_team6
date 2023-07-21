@@ -13,6 +13,7 @@ Customer::Customer(string a_Name, Order a_Order, Membership a_Membership)
 	orderItem = a_Order;
 	Member = a_Membership;
 
+
 }
 
 void Customer::setName(string a_Name)
@@ -35,6 +36,8 @@ Membership Customer::getMembership()
 {
 	return Member;
 }
+
+
 
 void Customer::setOrder(Order a_Order)
 {

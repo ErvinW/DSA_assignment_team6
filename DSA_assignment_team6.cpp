@@ -168,7 +168,7 @@ void readCustomersFromFile() {
 
 // Adding all the food items to the List using add function
 
-string registerAccount()
+string registerAccount1()
 {
     readCustomersFromFile(); // Read the existing customers from the file
     displayAllCustomer();
@@ -207,8 +207,54 @@ string registerAccount()
         outFile.close();
         
     }
+}//////
+
+
+Customer registerAccount()
+{
+    readCustomersFromFile(); // Read the existing customers from the file
+    displayAllCustomer();
+    string customerName;
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
+
+    bool isNewUser = true;
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+        if (c.getName() == customerName)
+        {
+            cout << "You have already registered for an account." << endl;
+            isNewUser = false;
+            break;
+        }
+    }
+
+    if (isNewUser == true)
+    {
+        int memberPoint = 0;
+        string memberStatus = "Ordinary";
+        Membership member = Membership(memberStatus, memberPoint);
+        Order order = Order(false);
+        Customer newCustomer = Customer(customerName, order, member);
+        customerList.add(newCustomer);
+
+        ofstream outFile("Customer.csv", ios::app); // Open the file in append mode
+        if (!outFile)
+        {
+            std::cerr << "Error opening Customer.csv for writing." << endl;
+            return Customer(); // Return an empty Customer object if there was an error
+        }
+
+        outFile << customerName << "," << memberPoint << "," << memberStatus << "\n";
+        outFile.close();
+
+        return newCustomer; // Return the newly created Customer object
+    }
+
+    return Customer(); // Return an empty Customer object if the customer already exists
 }
- 
 
 bool customerLogIn()
 {
@@ -267,7 +313,8 @@ bool adminLogIn()
     }
 }
 
-void OrderFood()
+
+void OrderFood1()
 {
     displayAllCustomer();
     string name;
@@ -327,6 +374,62 @@ void OrderFood()
     }
 }
 
+
+void OrderFood(Customer cust) {
+
+    displayAllFood();
+    Order temp = cust.getOrder();
+    List<Dish> tempList = temp.getOrderList();
+
+    while (true) {
+        cout << "" << endl;
+        int option;
+        cout << "1. Please select a dish" << endl;
+        cout << "2. Finish ordering" << endl;
+        cin >> option;
+
+        if (option == 1) {
+            int dishIndex;
+            cout << "Please enter the index of the dish you want to order: ";
+            cin >> dishIndex;
+            if (dishIndex > 0 && dishIndex <= foodItemList.getLength())
+            {
+                tempList.add(foodItemList.get(dishIndex - 1)); // add the selected dish to the order
+
+            }
+            else
+            {
+                cout << "Invalid index. Please try again." << endl;
+
+
+            }
+        }
+
+        else if (option == 2) {
+            double totalCharge = 0;
+            cout << "\nYour Order:\n";
+            for (int j = 0; j < tempList.getLength(); j++)
+            {
+                auto& dish = tempList.get(j);
+                // c.orderItem.addDish(dish); // add dishes to the order
+                totalCharge += dish.getCharge();
+                cout << dish << endl;
+            }
+            temp.setCharge(totalCharge);
+            cout << "Total: $" << totalCharge << endl;
+            orderList.enqueue(temp); // add the order to the queue
+            break;
+
+        }
+        else {
+            cout << "Invalid input" << endl;
+        }
+    }
+
+    
+
+}
+
 int main()
 {
     intialiseAdmin();
@@ -363,9 +466,7 @@ int main()
                     if (option == 1)
                     {
                         
-                        string customerName = registerAccount();
-
-                        while (true)
+                        Customer customer = registerAccount();
                         {
                             int choice;
                             cout << "+----------------------------------------------------+" << endl;
@@ -385,7 +486,7 @@ int main()
                             }
                             else if (choice == 2)
                             {
-                                OrderFood();
+                                OrderFood(customer);
                             }
                             else if (choice == 3)
                             {
@@ -398,6 +499,17 @@ int main()
                             {
                                 // Exit the loop and end the program
                                 break;
+                            }
+
+                            else if (choice == 5) { //For testing purposes
+                                Order Check = customer.getOrder();
+                                List<Dish> ListCheck = Check.getOrderList();
+                                cout << ListCheck.getLength() << endl;
+
+                                int tot = Check.getCharge();
+                                cout << tot << endl;
+
+
                             }
                             else
                             {
@@ -433,7 +545,7 @@ int main()
                             }
                             else if (choice == 2)
                             {
-                                OrderFood();
+                                //OrderFood(customer);
                             }
                             else if (choice == 3)
                             {
