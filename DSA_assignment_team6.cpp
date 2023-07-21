@@ -372,7 +372,8 @@ int main()
                             cout << "1. Browse All Food Selection" << endl;
                             cout << "2. Create an order" << endl;
                             cout << "3. Cancel an order" << endl;
-                            cout << "4. Exit" << endl;
+                            cout << "4. View order" << endl;
+                            cout << "5. Exit" << endl;
                             cout << "Please choose an option: ";
                             cin >> choice;
                             cout << "" << endl;
@@ -390,7 +391,10 @@ int main()
                             {
 
                             }
-                            else if (choice == 4)
+                            else if (choice == 4) {
+
+                            }
+                            else if (choice == 5)
                             {
                                 // Exit the loop and end the program
                                 break;
@@ -416,7 +420,8 @@ int main()
                             cout << "1. Browse All Food Selection" << endl;
                             cout << "2. Create an order" << endl;
                             cout << "3. Cancel an order" << endl;
-                            cout << "4. Exit" << endl;
+                            cout << "4. View order" << endl;
+                            cout << "5. Exit" << endl;
                             cout << "Please choose an option: ";
                             cin >> choice;
                             cout << "" << endl;
@@ -434,7 +439,10 @@ int main()
                             {
 
                             }
-                            else if (choice == 4)
+                            else if (choice == 4) {
+
+                            }
+                            else if (choice == 5)
                             {
                                 // Exit the loop and end the program
                                 break;
