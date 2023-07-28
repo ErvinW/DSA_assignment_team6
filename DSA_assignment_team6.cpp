@@ -60,8 +60,8 @@ std:string userName;
     std::string password;
 
     std::cout << "Enter username: ";
-    std::cin >> userName;
-    std::cout << "" << std::endl;
+    std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    std::getline(cin, userName);
 
 
     std::cout << "Enter password: ";

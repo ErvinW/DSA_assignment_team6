@@ -10,6 +10,8 @@ private:
 	string foodName;
 	string portion;
 	double charge;
+	//double rating;
+	//double ratingNum;
 
 public:
 	Dish();
@@ -22,9 +24,9 @@ public:
 	string getPortion() const;
 	void setCharge(double);
 	double getCharge() const;
-	virtual double CalculateCharges();
-	friend std::ostream& operator<<(std::ostream& os, const Dish& dish);
+	double CalculateCharges();
+	
 };
 
-std::ostream& operator<<(std::ostream& os, const Dish& dish);
+
 
