@@ -2,11 +2,11 @@
 #include <iostream>
 #include<fstream>
 #include<sstream>
+#include <iomanip>
 
 #include"List.h"
 
 #include"Queue.h"
-
 
 #include"Membership.h"
 
@@ -16,9 +16,11 @@
 
 #include"Customer.h"
 
+using namespace std;
 
 List<Customer> customerList;
 Customer TemplateCust;
+
 
 
 void readCustFile() {
@@ -42,21 +44,85 @@ void readCustFile() {
 
         }
     }
-
-
-
 }
 
-void initCustomer() {
-    Membership mem1 = Membership("Normal", 0);
-    List<Dish> dL;
-    Order order1 = Order("Ervin", dL, false, 0.0);
-    customerList.add(Customer("Ervin", "Ew123", order1, mem1));
+void displayAllCustomer()
+{
+    // Print the header
 
+    cout << left << setw(25) << "Name";
+    cout << left << setw(15) << "Member Status";
+    cout << right << setw(15) << "Member Points" << endl;
+    cout << "" << endl;
+    cout << "+-------------------------------------------------------+" << endl;
+
+    // Print the food items
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+
+
+
+        cout << left << setw(3) << i + 1;
+        cout << left << setw(25) << c.getName();
+        cout << left << setw(15) << c.Member.getStatus();
+        cout << right << setw(10) << c.Member.getPoint() << endl;
+        cout << "+-------------------------------------------------------+" << endl;
+
+    }
+}
+
+
+void userRegister() {
+    string customerName;
+    string custPassword;
+
+    cout << "Please enter your name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, customerName);
+    cout << "Please enter your password: ";
+    cin >> custPassword;
+    bool isNewUser = true;
+    for (int i = 0; i < customerList.getLength(); i++)
+    {
+        auto c = customerList.get(i);
+        if (c.getName() == customerName)
+        {
+            cout << "You have registered for an account " << endl;
+            cout << "" << endl;
+            isNewUser = false;
+            break;
+        }
+    }
+
+    if (isNewUser == true)
+    {
+        int memberPoint = 0;
+        std::string memberStatus = "Ordinary";
+        List <Dish> dL;
+        Membership member = Membership(memberStatus, memberPoint);
+        Order order = Order(customerName,dL,false,0.0);
+        Customer newCustomer = Customer(customerName, custPassword,order, member);
+        TemplateCust = newCustomer;
+        customerList.add(TemplateCust);
+
+        std::ofstream file("Customer.csv", ios::app); // Open file in append mode
+
+        if (!file.is_open()) {
+            cerr << "Error opening file: Customer.csv" << std::endl;
+        }
+
+        // Write customer data to the file in CSV format
+        file << customerName << "," << custPassword << ","
+            << memberPoint << "," << memberStatus << endl;
+
+        file.close();
+
+    }   
 }
 
 void userLogin() {
-std:string userName;
+    std:string userName;
     std::string password;
 
     std::cout << "Enter username: ";
@@ -79,7 +145,8 @@ std:string userName;
         }
 
         else {
-
+            cout << "Please register for an account" << endl;
+            break;
         }
     }
 
@@ -104,6 +171,9 @@ void mainMenu() {
     if (option == 1) {
         userLogin();
     }
+    else if (option == 3) {
+        userRegister();
+    }
 
 
     else {
@@ -116,7 +186,6 @@ void mainMenu() {
 int main()
 {
     readCustFile();
-    initCustomer();
     mainMenu();
 }
             
