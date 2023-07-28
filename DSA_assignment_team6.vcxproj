@@ -136,6 +136,7 @@
   <ItemGroup>
     <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
     <None Include="Customer.csv" />
+    <None Include="Dishes.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />

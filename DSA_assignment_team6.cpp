@@ -19,6 +19,8 @@
 using namespace std;
 
 List<Customer> customerList;
+List<Dish> dishList;
+
 Customer TemplateCust;
 
 
@@ -44,24 +46,59 @@ void readCustFile() {
 
         }
     }
+
+
+
 }
 
-void displayAllCustomer()
-{
-    // Print the header
+void readDishFile() {
+    ifstream inFile("Dishes.csv");
+    if (!inFile) {
+        std::cerr << "Error opening Customer.csv for reading." << std::endl;
+        return;
+    }
 
-    cout << left << setw(25) << "Name";
-    cout << left << setw(15) << "Member Status";
-    cout << right << setw(15) << "Member Points" << endl;
-    cout << "" << endl;
-    cout << "+-------------------------------------------------------+" << endl;
+    std::string line;
+    while (getline(inFile, line)) {
+        std::istringstream iss(line);
+        std::string c, n, p;
+        double ch;
+        if (getline(iss, c, ',') && getline(iss, n, ',') && getline(iss, p, ',') && (iss >> ch)) {
+            Dish newDish = Dish(c,n,p,ch);
+            dishList.add(newDish);
 
-    // Print the food items
-    for (int i = 0; i < customerList.getLength(); i++)
-    {
-        auto c = customerList.get(i);
+        }
+
+    }
+
+}
 
 
+void printAllDish() {
+   
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        
+
+        std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+        std::cout << "" << std::endl;
+
+    }
+
+
+
+}
+
+void printAllChinese() {
+
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        if (dish.getCuisine() == "Chinese") {
+            std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+            std::cout << "" << std::endl;
+        }
+    }
+   
 
         cout << left << setw(3) << i + 1;
         cout << left << setw(25) << c.getName();
@@ -72,57 +109,84 @@ void displayAllCustomer()
     }
 }
 
+void printAllWestern() {
 
-void userRegister() {
-    string customerName;
-    string custPassword;
 
-    cout << "Please enter your name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    getline(cin, customerName);
-    cout << "Please enter your password: ";
-    cin >> custPassword;
-    bool isNewUser = true;
-    for (int i = 0; i < customerList.getLength(); i++)
-    {
-        auto c = customerList.get(i);
-        if (c.getName() == customerName)
-        {
-            cout << "You have registered for an account " << endl;
-            cout << "" << endl;
-            isNewUser = false;
-            break;
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        if (dish.getCuisine() == "Western") {
+            std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+            std::cout << "" << std::endl;
         }
     }
+    
 
-    if (isNewUser == true)
-    {
-        int memberPoint = 0;
-        std::string memberStatus = "Ordinary";
-        List <Dish> dL;
-        Membership member = Membership(memberStatus, memberPoint);
-        Order order = Order(customerName,dL,false,0.0);
-        Customer newCustomer = Customer(customerName, custPassword,order, member);
-        TemplateCust = newCustomer;
-        customerList.add(TemplateCust);
-
-        std::ofstream file("Customer.csv", ios::app); // Open file in append mode
-
-        if (!file.is_open()) {
-            cerr << "Error opening file: Customer.csv" << std::endl;
-        }
-
-        // Write customer data to the file in CSV format
-        file << customerName << "," << custPassword << ","
-            << memberPoint << "," << memberStatus << endl;
-
-        file.close();
-
-    }   
 }
 
+void filterDish() {
+    int option;
+
+    std::cout << "[1] View all dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[2] View all Chinese dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[3] View all Western dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cin >> option; 
+
+    if (option == 1) {
+        std::cout << "" << std::endl;
+        printAllDish();
+    }
+
+    else if (option == 2) {
+        std::cout << "" << std::endl;
+        printAllChinese();
+
+    }
+
+    else if (option == 3) {
+        std::cout << "" << std::endl;
+        printAllWestern();
+
+    }
+
+}
+
+
+void UserPage(Customer customer) {
+    int option;
+
+    std::cout << "+---------------Welcome To  Restaurant, " << customer.getName() << "---------------+" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[1] View Menu" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[2] Place an order" << std::endl;
+    std::cout << "" << std::endl;
+    std::cin >> option;
+
+
+    if (option == 1) {
+        filterDish();
+
+    }
+
+    else if (option == 2) {
+        Dish dish = dishList.get(0);
+        std::cout << dish.getCuisine();
+    }
+
+    else {
+        std::cout << "Invalid input, try again" << std::endl;
+        std::cout << "" << std::endl;
+        UserPage(TemplateCust);
+
+    }
+}
+
+
 void userLogin() {
-    std:string userName;
+    std::string userName;
     std::string password;
 
     std::cout << "Enter username: ";
@@ -140,7 +204,7 @@ void userLogin() {
         std::string pass = temp.getPassword();
         if (name == userName && pass == password) {
             TemplateCust = temp;
-            std::cout << "Yes" << std::endl;
+            UserPage(TemplateCust);
 
         }
 
@@ -176,6 +240,8 @@ void mainMenu() {
     }
 
 
+
+
     else {
         std::cout << "Invalid input. Try again." << std::endl;
         mainMenu();
@@ -186,6 +252,7 @@ void mainMenu() {
 int main()
 {
     readCustFile();
+    readDishFile();
     mainMenu();
 }
             
