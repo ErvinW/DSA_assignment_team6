@@ -18,6 +18,8 @@
 
 
 List<Customer> customerList;
+List<Dish> dishList;
+
 Customer TemplateCust;
 
 
@@ -47,16 +49,135 @@ void readCustFile() {
 
 }
 
-void initCustomer() {
-    Membership mem1 = Membership("Normal", 0);
-    List<Dish> dL;
-    Order order1 = Order("Ervin", dL, false, 0.0);
-    customerList.add(Customer("Ervin", "Ew123", order1, mem1));
+void readDishFile() {
+    ifstream inFile("Dishes.csv");
+    if (!inFile) {
+        std::cerr << "Error opening Customer.csv for reading." << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (getline(inFile, line)) {
+        std::istringstream iss(line);
+        std::string c, n, p;
+        double ch;
+        if (getline(iss, c, ',') && getline(iss, n, ',') && getline(iss, p, ',') && (iss >> ch)) {
+            Dish newDish = Dish(c,n,p,ch);
+            dishList.add(newDish);
+
+        }
+
+    }
 
 }
 
+
+void printAllDish() {
+   
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        
+
+        std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+        std::cout << "" << std::endl;
+
+    }
+
+
+
+}
+
+void printAllChinese() {
+
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        if (dish.getCuisine() == "Chinese") {
+            std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+            std::cout << "" << std::endl;
+        }
+    }
+   
+
+}
+
+void printAllWestern() {
+
+
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishList.get(i);
+        if (dish.getCuisine() == "Western") {
+            std::cout << "[" << i + 1 << "] " << dish.getFoodName() << "    " << dish.getPortion() << "    " << "$" << dish.getCharge() << std::endl;
+            std::cout << "" << std::endl;
+        }
+    }
+    
+
+}
+
+void filterDish() {
+    int option;
+
+    std::cout << "[1] View all dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[2] View all Chinese dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[3] View all Western dishes" << std::endl;
+    std::cout << "" << std::endl;
+    std::cin >> option; 
+
+    if (option == 1) {
+        std::cout << "" << std::endl;
+        printAllDish();
+    }
+
+    else if (option == 2) {
+        std::cout << "" << std::endl;
+        printAllChinese();
+
+    }
+
+    else if (option == 3) {
+        std::cout << "" << std::endl;
+        printAllWestern();
+
+    }
+
+}
+
+
+void UserPage(Customer customer) {
+    int option;
+
+    std::cout << "+---------------Welcome To  Restaurant, " << customer.getName() << "---------------+" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[1] View Menu" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[2] Place an order" << std::endl;
+    std::cout << "" << std::endl;
+    std::cin >> option;
+
+
+    if (option == 1) {
+        filterDish();
+
+    }
+
+    else if (option == 2) {
+        Dish dish = dishList.get(0);
+        std::cout << dish.getCuisine();
+    }
+
+    else {
+        std::cout << "Invalid input, try again" << std::endl;
+        std::cout << "" << std::endl;
+        UserPage(TemplateCust);
+
+    }
+}
+
+
 void userLogin() {
-std:string userName;
+    std::string userName;
     std::string password;
 
     std::cout << "Enter username: ";
@@ -74,7 +195,7 @@ std:string userName;
         std::string pass = temp.getPassword();
         if (name == userName && pass == password) {
             TemplateCust = temp;
-            std::cout << "Yes" << std::endl;
+            UserPage(TemplateCust);
 
         }
 
@@ -106,6 +227,8 @@ void mainMenu() {
     }
 
 
+
+
     else {
         std::cout << "Invalid input. Try again." << std::endl;
         mainMenu();
@@ -116,7 +239,7 @@ void mainMenu() {
 int main()
 {
     readCustFile();
-    initCustomer();
+    readDishFile();
     mainMenu();
 }
             

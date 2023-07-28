@@ -36,6 +36,9 @@
     <None Include="Customer.csv">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Dishes.csv">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h">
