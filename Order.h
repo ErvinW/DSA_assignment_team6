@@ -1,31 +1,36 @@
 #pragma once
-using namespace std;
 #include <iostream>
 #include <string>
-#include "List.h"
-#include "Dish.h"
 
-class Order
-{
+
+#include"Dish.h"
+#include"List.h"
+
+
+using namespace std;
+
+class Order {
 private:
 
 public:
-	string CustName;//
-	bool isReady;
+	string custName;
 	List<Dish> orderList;
-	double Charge; //
+	bool isReady;
+	double Charge;
+
 	Order();
-	Order(bool);
-	void setCharge(double);//
+	Order(string c, List<Dish> oL, bool iR, double ch);
+
+	void setCharge(double ch);//
 	double getCharge(); //
-	void setCustName(string);//
-	void setisReady(bool);
+
+	void setCustName(string c);//
+	string getCustName(); //
+
 	void setOrderList(List<Dish> oL);//
 	List<Dish> getOrderList();//
-	bool getisReady();
-	string getCustName(); //
-	void addDish(Dish);
-	double CalculateTotal();
-	void updateStatus(Order order);
-	void createOrder(List<Dish> dishes);
+
+
+	void setisReady(bool iR); //
+	bool getisReady(); //
 };

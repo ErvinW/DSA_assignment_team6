@@ -127,31 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Admin.cpp" />
-    <ClCompile Include="Chinese.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="Dish.cpp" />
     <ClCompile Include="DSA_assignment_team6.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="Membership.cpp" />
     <ClCompile Include="Order.cpp" />
-    <ClCompile Include="Queue.cpp" />
-    <ClCompile Include="Western.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Admin.h" />
-    <ClInclude Include="Chinese.h" />
+    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
+    <None Include="Customer.csv" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Dish.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Membership.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="Queue.h" />
-    <ClInclude Include="Western.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Customer.csv" />
-    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

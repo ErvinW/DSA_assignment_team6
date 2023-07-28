@@ -4,47 +4,47 @@
 #include "Membership.h"
 #include "Order.h"
 
-
 Customer::Customer() {}
 
-Customer::Customer(string a_Name, Order a_Order, Membership a_Membership)
-{
-	Name = a_Name;
-	orderItem = a_Order;
-	Member = a_Membership;
-
-
+Customer::Customer(string n, string p, Order oI, Membership m) {
+	Name = n;
+	Password = p;
+	orderItem = oI;
+	Member = m;
 }
 
-void Customer::setName(string a_Name)
-{
-	Name = a_Name;
+void Customer::setName(string n) {
+	Name = n;
 
 }
-
-string Customer::getName()
-{
+string Customer::getName() {
 	return Name;
+
 }
 
-void Customer::setMember(Membership a_Membership)
-{
-	Member = a_Membership;
+void Customer::setPassword(string p) {
+	Password = p;
+
+}
+string Customer::getPassword() {
+	return Password;
+
 }
 
-Membership Customer::getMembership()
-{
+void Customer::setMember(Membership m) {
+	Member = m;
+
+}
+Membership Customer::getMembership() {
 	return Member;
+
 }
 
+void Customer::setOrder(Order oI) {
+	orderItem = oI;
 
-
-void Customer::setOrder(Order a_Order)
-{
-	orderItem = a_Order;
 }
-
-Order Customer::getOrder()
-{
+Order Customer::getOrder() {
 	return orderItem;
+
 }

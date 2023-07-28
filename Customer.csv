@@ -1,18 +1,3 @@
-Name,Point,Status
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Jin Jie,0,Ordinary
-Elaine,0,Ordinary
-Elly,0,Ordinary
-Test,0,Ordinary
-Test2,0,Ordinary
-Jack,0,Ordinary
-Jason,0,Ordinary
-TestOrder,0,Ordinary
-Order2,0,Ordinary
-NewUser,0,Ordinary
-Testing 123123,0,Ordinary
+Name,Password,Point,Status
+Jin Jie,123,0,Ordinary
+Elly,321,0,Ordinary

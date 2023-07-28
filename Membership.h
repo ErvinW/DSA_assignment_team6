@@ -11,15 +11,14 @@ private:
 public:
 	string Status;
 	int Point;
+
 	Membership();
-	Membership(string, int);
-	void setStatus(string);
+	Membership(string s, int p);
+	void setStatus(string s);
 	string getStatus();
-	void setPoint(int);
+	void setPoint(int p);
 	int getPoint();
-	void EarnPoint(double);
-	bool RedeemPoints(int);
+	double EarnPoint(int d);
+	bool RedeemPoints(int pt);
 
 };
-
-

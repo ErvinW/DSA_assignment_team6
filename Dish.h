@@ -27,3 +27,4 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& os, const Dish& dish);
+

@@ -5,52 +5,38 @@ using namespace std;
 
 Membership::Membership() {}
 
-Membership::Membership(string a_Status, int a_Point)
-{
-	Status = a_Status;
-	Point = a_Point;
+Membership::Membership(string s, int p) {
+	Status = s;
+	Point = p;
+
 }
 
-void Membership::setStatus(string a_Status)
-{
-	Status = a_Status;
-}
+void Membership::setStatus(string s) {
+	Status = s;
 
-string Membership::getStatus()
-{
+}
+string Membership::getStatus() {
 	return Status;
-}
 
-void Membership::setPoint(int a_Point)
-{
-	Point = a_Point;
 }
+void Membership::setPoint(int p) {
+	Point = p;
 
-int Membership::getPoint()
-{
+}
+int Membership::getPoint() {
 	return Point;
 }
+double Membership::EarnPoint(int d) {
+	return Point += d;
 
-void Membership::EarnPoint(double amt)
-{
-	int pointsEarned = static_cast<int>(amt) / 10;
-	Point += pointsEarned;
-	if (Point < 100)
-	{
-		Status = "Ordinary";
-	}
-	else if (Point >= 100 && Point < 200 && Status == "Ordinary")
-	{
-		Status = "Sliver";
-	}
-	else if (Point >= 200 && Status == "Sliver")
-	{
-		Status = "Gold";
-	}
 }
+bool Membership::RedeemPoints(int pt) {
+	if (Point <= pt) {
+		return false;
 
-bool Membership::RedeemPoints(int points)
-{
-	Point -= points;
-	return true;
+	}
+
+	else {
+		return true;
+	}
 }
