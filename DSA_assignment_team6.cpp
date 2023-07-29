@@ -306,7 +306,7 @@ void UserPage(Customer customer) {
 }
 
 
-void userLogin() {
+bool userLogin() {
     std::string userName;
     std::string password;
 
@@ -325,16 +325,17 @@ void userLogin() {
         std::string pass = temp.getPassword();
         if (name == userName && pass == password) {
             TemplateCust = temp;
-            UserPage(TemplateCust);
-            break;
+            return true;
+
             
 
         }
+
         else {
-            cout << "Please register for an account" << endl;
-            break;
+
         }
     }
+    return false; //
 }
 
 
@@ -408,7 +409,16 @@ void mainMenu() {
     std::cout << "" << std::endl;
 
     if (option == 1) {
-        userLogin();
+        bool login = userLogin();
+        if (login == true) {
+            UserPage(TemplateCust);
+
+        }
+
+        else {
+            std::cout << "Invalid account try again" << std::endl;
+            mainMenu();
+        }
         
     }
     else if (option == 3) {
