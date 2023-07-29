@@ -1,4 +1,4 @@
-Name,Password,Point,Status
-Jin Jie,123,0,Ordinary
-Elly,321,0,Ordinary
-Jack ,666,0,Ordinary
+Name,Password,Status,Point
+Jin Jie,123,Ordinary,0
+Elly,321,Ordinary,0
+Jack ,666,Ordinary,0

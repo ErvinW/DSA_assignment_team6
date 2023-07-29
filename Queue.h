@@ -75,15 +75,19 @@ public:
 		return dequeue();
 	}
 	// retrieve (get) item from front of queue
-	void getFront(T& item)
+	T& getFront()
 	{
 		if (isEmpty())
 		{
 			cout << "Error: Queue is empty. Cannot retrieve front item.\n";
-			return;
+			
+		}
+		else
+		{
+			return items[front];
 		}
 
-		item = items[front];
+		
 	}
 	// check if the queue is empty
 	bool isEmpty()
@@ -111,6 +115,11 @@ public:
 			current = (current + 1) % MAXSIZE;
 		}
 		cout << endl;
+	}
+
+	int getLength()
+	{
+		return back + 1;
 	}
 
 };
