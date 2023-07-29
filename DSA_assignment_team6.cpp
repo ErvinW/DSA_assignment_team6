@@ -282,6 +282,7 @@ void UserPage(Customer customer) {
     std::cin >> option;
 
 
+
     if (option == 1) {
         filterDish();
 
@@ -306,6 +307,7 @@ void UserPage(Customer customer) {
 }
 
 
+//bo tai ji
 bool userLogin() {
     std::string userName;
     std::string password;
@@ -412,7 +414,6 @@ void mainMenu() {
         bool login = userLogin();
         if (login == true) {
             UserPage(TemplateCust);
-
         }
 
         else {
@@ -421,9 +422,21 @@ void mainMenu() {
         }
         
     }
+
+
+
+    else if (option == 2) {
+
+    }
+
+
+
     else if (option == 3) {
         userRegister();
     }
+
+
+
     else {
         std::cout << "Invalid input. Try again." << std::endl;
         mainMenu();
