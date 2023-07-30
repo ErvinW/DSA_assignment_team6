@@ -268,8 +268,8 @@ void cancelOrder()
 }
 
 
-void UserPage(Customer customer) {
-    int option;
+std::string UserPage(Customer customer) {
+    std::string option;
 
     std::cout << "+---------------Welcome To  Restaurant, " << customer.getName() << "---------------+" << std::endl;
     std::cout << "" << std::endl;
@@ -279,23 +279,34 @@ void UserPage(Customer customer) {
     std::cout << "" << std::endl;
     std::cout << "[3] Cancel an order" << std::endl;
     std::cout << "" << std::endl;
+    std::cout << "[4] Exit" << std::endl;
+    std::cout << endl;
+
     std::cin >> option;
-
-
-
-    if (option == 1) {
-        filterDish();
+    return option;
+    /*
+    if (option == "1") {
+        //filterDish();
+        return option;
 
     }
 
-    else if (option == 2) {
-        
-        createOrder();
-        
+    else if (option == "2") {
+        //createOrder();
+        return option;
+
     }
 
-    else if (option == 3) {
-        cancelOrder();
+    else if (option == "3") {
+        //cancelOrder();
+        return option;
+
+    }
+
+    else if (option == "4") {
+        std::cout << endl;
+        std::cout << "Exiting application...." << std::endl;
+        
     }
 
     else {
@@ -304,10 +315,11 @@ void UserPage(Customer customer) {
         UserPage(TemplateCust);
 
     }
+    */
 }
 
 
-//bo tai ji
+//OK
 bool userLogin() {
     std::string userName;
     std::string password;
@@ -411,15 +423,27 @@ void mainMenu() {
     std::cout << "" << std::endl;
 
     if (option == 1) {
-        bool login = userLogin();
-        if (login == true) {
-            UserPage(TemplateCust);
-        }
+            bool login = userLogin();
+            if (login == true) {
+                while (true) {
+                    std::string choice = UserPage(TemplateCust);
 
-        else {
-            std::cout << "Invalid account try again" << std::endl;
-            mainMenu();
-        }
+                    if (choice == "1") {
+                        filterDish();
+                    }
+
+                    else {
+                        std::cout << "Invalid input try again" << std::endl;
+
+                    }
+                }
+            }
+
+            else {
+                std::cout << "Invalid account try again" << std::endl;
+                mainMenu();
+            }
+       
         
     }
 
