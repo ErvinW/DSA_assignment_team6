@@ -164,6 +164,10 @@ void filterDish() {
             break;
 
         }
+
+        else if (option == 4) {
+            break;
+        }
         else
         {
             cout << "Invalid Option. Please try again" << endl;
@@ -416,6 +420,8 @@ void mainMenu() {
     std::cout << "" << std::endl;
     std::cout << "3. Register User" << std::endl;
     std::cout << "" << std::endl;
+    std::cout << "4. Exit app" << std::endl;
+    std::cout << endl;
     std::cout << "Please choose your role: ";
     int option;
     std::cin >> option;
@@ -432,6 +438,12 @@ void mainMenu() {
                         filterDish();
                     }
 
+                    else if (choice == "4") {
+                        std::cout << endl;
+                        std::cout << endl;
+                        std::cout << "Logging out" << std::endl;
+                        mainMenu();
+                    }
                     else {
                         std::cout << "Invalid input try again" << std::endl;
 
@@ -459,7 +471,9 @@ void mainMenu() {
         userRegister();
     }
 
-
+    else if (option == 4) {
+        std::cout << "Exiting app... goodbye..." << std::endl;
+    }
 
     else {
         std::cout << "Invalid input. Try again." << std::endl;
