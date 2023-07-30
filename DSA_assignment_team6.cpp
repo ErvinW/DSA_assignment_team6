@@ -136,11 +136,15 @@ void filterDish() {
     int option;
     while (true)
     {
+        std::cout << "----------------------------------" << std::endl;
         std::cout << "[1] View all dishes" << std::endl;
         std::cout << "" << std::endl;
         std::cout << "[2] View all Chinese dishes" << std::endl;
         std::cout << "" << std::endl;
         std::cout << "[3] View all Western dishes" << std::endl;
+        std::cout << endl;
+        std::cout << "[4] Return to user menu" << std::endl;
+        std::cout << "----------------------------------" << std::endl;
         std::cout << "" << std::endl;
         std::cin >> option;
     
@@ -148,20 +152,20 @@ void filterDish() {
         if (option == 1) {
             std::cout << "" << std::endl;
             printAllDish();
-            break;
+            //break;
         }
 
         else if (option == 2) {
             std::cout << "" << std::endl;
             printAllChinese();
-            break;
+            //break;
 
         }
 
         else if (option == 3) {
             std::cout << "" << std::endl;
             printAllWestern();
-            break;
+            //break;
 
         }
 
