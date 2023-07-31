@@ -8,11 +8,12 @@ Order::Order() {
 
 }
 
-Order::Order(string c, List<Dish> oL, bool iR, double ch) {
+Order::Order(string c, List<Dish> oL, bool iR, double ch, string br) {
 	custName = c;
 	orderList = oL;
 	isReady = iR;
 	Charge = ch;
+	branch = br;
 
 }
 

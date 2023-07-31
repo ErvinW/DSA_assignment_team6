@@ -75,7 +75,7 @@ void readCustFile() {
         int points;
         if (getline(iss, name, ',') && getline(iss, password, ',') && getline(iss, status, ',') &&  (iss >> points)) {
             Membership member = Membership(status, points);
-            Order order = Order(name, dL, false, 0.0);
+            Order order = Order(name, dL, false, 0.0, "");
             Customer newCustomer = Customer(name, password, order, member);
             customerList.add(newCustomer);
 
@@ -214,7 +214,7 @@ void createOrder()
                 cout << dish.getCuisine() << " " << dish.getFoodName() << dish.getPortion() << " $" << dish.getCharge() << endl;
             }
             cout << "Total cost - $" << charge << endl;
-            orderQueue.enqueue(Order(TemplateCust.getName(), TemplateCust.orderItem.orderList, false, charge));
+            orderQueue.enqueue(Order(TemplateCust.getName(), TemplateCust.orderItem.orderList, false, charge, branch));
             break;
         }
         else
@@ -240,7 +240,7 @@ void cancelOrder()
 {
     dL.add(Dish("Western", "Fish n Chips", "S", 8));
     TemplateCust.orderItem.orderList.add(Dish("Western", "Fish n Chips", "S", 8.0));
-    orderQueue.enqueue(Order(TemplateCust.getName(), dL, false, 8.0));
+    orderQueue.enqueue(Order(TemplateCust.getName(), dL, false, 8.0, ""));
     if (orderQueue.isEmpty())
     {
         cout << "You have no made an order" << endl;
@@ -399,7 +399,7 @@ bool userRegister() {
         std::string memberStatus = "Ordinary";
         List <Dish> dL;
         Membership member = Membership(memberStatus, memberPoint);
-        Order order = Order(customerName, dL, false, 0.0);
+        Order order = Order(customerName, dL, false, 0.0, "");
         Customer newCustomer = Customer(customerName, custPassword, order, member);
         TemplateCust = newCustomer;
         customerList.add(TemplateCust);

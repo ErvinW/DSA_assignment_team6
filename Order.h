@@ -21,7 +21,7 @@ public:
 
 
 	Order();
-	Order(string c, List<Dish> oL, bool iR, double ch);
+	Order(string c, List<Dish> oL, bool iR, double ch, string br);
 
 	void setCharge(double ch);//
 	double getCharge(); //
