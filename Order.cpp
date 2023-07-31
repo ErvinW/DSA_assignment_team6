@@ -51,3 +51,13 @@ bool Order::getisReady() {
 	return isReady;
 
 }
+
+void Order::setBranch(string br) {
+	branch = br;
+
+}
+
+string Order::getBranch() {
+	return branch;
+
+}

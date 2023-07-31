@@ -17,6 +17,8 @@ public:
 	List<Dish> orderList;
 	bool isReady;
 	double Charge;
+	string branch;
+
 
 	Order();
 	Order(string c, List<Dish> oL, bool iR, double ch);
@@ -33,4 +35,7 @@ public:
 
 	void setisReady(bool iR); //
 	bool getisReady(); //
+
+	void setBranch(string br);//
+	string getBranch(); //
 };

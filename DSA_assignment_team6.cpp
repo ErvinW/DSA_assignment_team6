@@ -22,8 +22,9 @@ List<Customer> customerList;
 List<Dish> dishList;
 Queue <Order> orderQueue;
 List<Order>tempList;
-
+List<string> branchList;
 Customer TemplateCust;
+string branch;
 
 void displayAllCustomer()
 {
@@ -49,6 +50,13 @@ void displayAllCustomer()
         cout << right << setw(10) << c.Member.getPoint() << endl;
         cout << "+-------------------------------------------------------+" << endl;
     }
+}
+
+void initBranch() {
+    branchList.add("Punggol");
+    branchList.add("Clementi");
+    branchList.add("Tiong Bahru");
+
 }
 
 
@@ -487,6 +495,7 @@ void mainMenu() {
 
     else if (option == 4) {
         std::cout << "Exiting app... goodbye..." << std::endl;
+        cout << branch;
     }
 
     else {
@@ -496,11 +505,46 @@ void mainMenu() {
 
 }
 
+void selectBranch() {
+    string opt;
+    cout << "---------- Select a Branch ----------" << endl;
+    for (int i = 0; i < branchList.getLength(); i++) {
+        cout << "[" << i + 1 << "]" << branchList.get(i) << endl;
+    }
+    cout << "Select an option: ";
+    cin >> opt;
+    cout << endl;
+    cout << endl;
+
+    if (opt == "1") {
+        branch = branchList.get(1 - 1);
+        mainMenu();
+    }
+
+    else if (opt == "2") {
+        branch = branchList.get(2 - 1);
+        mainMenu();
+    }
+
+    else if (opt == "3") {
+        branch = branchList.get(3 - 1);
+        mainMenu();
+    }
+
+    else {
+        cout << "Invalid option" << endl;
+        selectBranch();
+    }
+
+}
+
 int main()
 {
+    initBranch();
     readCustFile();
     readDishFile();
-    mainMenu();
+    selectBranch();
+    //mainMenu();
 }
             
 
