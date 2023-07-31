@@ -361,7 +361,7 @@ bool userLogin() {
 }
 
 
-void userRegister() {
+bool userRegister() {
     string customerName;
     string custPassword;
 
@@ -379,7 +379,9 @@ void userRegister() {
             cout << "You have registered for an account " << endl;
             cout << "" << endl;
             isNewUser = false;
-            break;
+            return isNewUser; //
+
+            //break;
         }
     }
 
@@ -402,12 +404,12 @@ void userRegister() {
 
         // Write customer data to the file in CSV format
         file << customerName << "," << custPassword << ","
-            << memberPoint << "," << memberStatus << endl;
+            << memberStatus << "," << memberPoint << endl;
 
         file.close();
-
+        return true; //
     }
-    UserPage(TemplateCust);
+    //UserPage(TemplateCust);
 }
 
 
@@ -472,7 +474,15 @@ void mainMenu() {
 
 
     else if (option == 3) {
-        userRegister();
+        bool reg = userRegister();
+        if (reg == true) {
+            std::cout << "Account Created!" << std::endl;
+            mainMenu();
+        }
+
+        else {
+            mainMenu();
+        }
     }
 
     else if (option == 4) {
