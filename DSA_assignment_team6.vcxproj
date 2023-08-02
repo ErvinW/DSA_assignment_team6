@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="Dish.cpp" />
     <ClCompile Include="DSA_assignment_team6.cpp" />
@@ -139,6 +140,7 @@
     <None Include="Dishes.csv" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Dish.h" />
     <ClInclude Include="List.h" />
