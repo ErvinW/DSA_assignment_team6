@@ -20,7 +20,11 @@ using namespace std;
 
 List<Customer> customerList;
 List<Dish> dishList;
+
 Queue <Order> orderQueue;
+Queue <Order> orderQueue2;
+Queue <Order> orderQueue3;
+
 List<Order>tempList;
 List<string> branchList;
 Customer TemplateCust;
@@ -483,6 +487,11 @@ void mainMenu() {
 
                     if (choice == "1") {
                         filterDish();
+                    }
+
+                    else if (choice == "2") {
+                        createOrder();
+
                     }
 
                     else if (choice == "4") {
