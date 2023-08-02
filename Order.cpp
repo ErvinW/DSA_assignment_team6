@@ -62,3 +62,19 @@ string Order::getBranch() {
 	return branch;
 
 }
+
+void Order::viewIncomingOrders(int index) {
+	if (index >= orderList.getLength()) {
+		return;
+	}
+
+	Dish& dish = orderList.get(index);
+	cout << "Order index: " << index << endl;
+	cout << "Customer Name: " << custName << endl;
+	cout << "Dish Name: " << dish.getFoodName() << endl;
+	cout << "Is Ready: " << (isReady ? "Yes" : "No") << endl;
+	cout << "Charge: " << Charge << endl;
+	cout << "Branch: " << branch << endl;
+
+	viewIncomingOrders(index + 1);  // Recursive call
+}

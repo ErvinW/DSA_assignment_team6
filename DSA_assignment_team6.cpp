@@ -420,6 +420,37 @@ bool userRegister() {
     //UserPage(TemplateCust);
 }
 
+void viewIncomingOrders() {
+    if (orderQueue.isEmpty()) {
+        std::cout << "There are no incoming orders." << std::endl;
+        return;
+    }
+
+    std::cout << "+-------------------------------------+" << std::endl;
+    std::cout << "|            Incoming Orders          |" << std::endl;
+    std::cout << "+-------------------------------------+" << std::endl;
+
+    int i = 0;
+    while (!orderQueue.isEmpty()) {
+        Order order = orderQueue.getFront();
+        orderQueue.dequeue();
+        orderQueue.enqueue(order);  // Re-enqueue the order to maintain the original queue state
+
+        std::cout << "Order [" << i + 1 << "]" << std::endl;
+        std::cout << "Customer Name: " << order.getCustName() << std::endl;
+        std::cout << "Total Cost: $" << order.getCharge() << std::endl;
+        std::cout << "Branch: " << order.getBranch() << std::endl;
+        std::cout << "Dishes: " << std::endl;
+        for (int j = 0; j < order.getOrderList().getLength(); j++) {
+            Dish dish = order.getOrderList().get(j);
+            std::cout << " - " << dish.getFoodName() << ", " << dish.getPortion() << ", $" << dish.getCharge() << std::endl;
+        }
+        std::cout << std::endl;
+        i++;
+    }
+}
+
+
 
 
 
@@ -433,6 +464,8 @@ void mainMenu() {
     std::cout << "2. Admin Login" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "3. Register User" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "5. View Incoming Orders" << std::endl; /*Add this into Admin Login when created*/
     std::cout << "" << std::endl;
     std::cout << "4. Exit app" << std::endl;
     std::cout << endl;
@@ -476,7 +509,7 @@ void mainMenu() {
 
 
     else if (option == 2) {
-
+       
     }
 
 
@@ -496,6 +529,9 @@ void mainMenu() {
     else if (option == 4) {
         std::cout << "Exiting app... goodbye..." << std::endl;
         cout << branch;
+    }
+    else if (option == 5) {
+        viewIncomingOrders();
     }
 
     else {

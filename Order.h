@@ -38,4 +38,6 @@ public:
 
 	void setBranch(string br);//
 	string getBranch(); //
+
+	void viewIncomingOrders(int index = 0);
 };
