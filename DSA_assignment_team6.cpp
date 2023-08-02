@@ -299,7 +299,9 @@ std::string UserPage(Customer customer) {
     std::cout << "" << std::endl;
     std::cout << "[3] Cancel an order" << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "[4] Exit" << std::endl;
+    std::cout << "[4] View invoice" << std::endl;
+    std::cout << endl;
+    std::cout << "[5] Exit" << std::endl;
     std::cout << endl;
 
     std::cin >> option;
@@ -495,6 +497,28 @@ void mainMenu() {
                     }
 
                     else if (choice == "4") {
+                        List<Dish> temp = TemplateCust.getOrder().getOrderList();
+                        if (temp.getLength() > 0) {
+                            std::cout << "---------- Order ----------" << std::endl;
+                            for (int i = 0; i < temp.getLength(); i++) {
+                                std::cout << temp.get(i).getFoodName() << " ----- " << temp.get(i).getCharge() << std::endl;
+
+                            }
+                            std::cout << TemplateCust.getOrder().getCharge() << std::endl;
+                            std::cout << "---------------------------" << std::endl;
+
+                        }
+
+                        else {
+                            std::cout << "No orders" << std::endl;
+
+                        }
+                        
+                        
+
+                    }
+
+                    else if (choice == "5") {
                         std::cout << endl;
                         std::cout << endl;
                         std::cout << "Logging out" << std::endl;
