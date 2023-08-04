@@ -68,7 +68,7 @@ void Order::viewIncomingOrders(int index) {
 		return;
 	}
 
-	Dish& dish = orderList.get(index);
+	Dish dish = orderList.get(index);
 	cout << "Order index: " << index << endl;
 	cout << "Customer Name: " << custName << endl;
 	cout << "Dish Name: " << dish.getFoodName() << endl;
