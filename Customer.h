@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include "Membership.h"
 #include "Order.h"
+#include "List.h"
 
 
 class Customer
@@ -18,9 +19,10 @@ public:
 	string Password;
 	Membership Member;
 	Order orderItem;
+	List<Order> oL;
 
 	Customer();
-	Customer(string n, string p, Order oI, Membership m);
+	Customer(string n, string p, List<Order> OL, Membership m);
 
 	void setName(string n);
 	string getName();

@@ -6,10 +6,10 @@
 
 Customer::Customer() {}
 
-Customer::Customer(string n, string p, Order oI, Membership m) {
+Customer::Customer(string n, string p, List<Order> OL, Membership m) {
 	Name = n;
 	Password = p;
-	orderItem = oI;
+	oL = OL;
 	Member = m;
 }
 

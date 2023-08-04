@@ -87,7 +87,8 @@ void readCustFile() {
         if (getline(iss, name, ',') && getline(iss, password, ',') && getline(iss, status, ',') &&  (iss >> points)) {
             Membership member = Membership(status, points);
             Order order = Order(name, dL, false, 0.0, "");
-            Customer newCustomer = Customer(name, password, order, member);
+            List<Order> OrderL;
+            Customer newCustomer = Customer(name, password, OrderL, member);
             customerList.add(newCustomer);
 
         }
@@ -387,7 +388,7 @@ bool userLogin() {
 }
 
 
-bool userRegister() {
+/*bool userRegister() {
     string customerName;
     string custPassword;
 
@@ -436,7 +437,8 @@ bool userRegister() {
         return true; //
     }
     //UserPage(TemplateCust);
-}
+}*/
+
 
 void viewIncomingOrders() {
     if (orderQueue.isEmpty()) {
@@ -475,7 +477,7 @@ void viewIncomingOrders() {
 
 
 
-void mainMenu() {
+/*void mainMenu() {
     std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
     std::cout << "1. User Login" << std::endl;
     std::cout << "" << std::endl;
@@ -483,7 +485,7 @@ void mainMenu() {
     std::cout << "" << std::endl;
     std::cout << "3. Register User" << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "5. View Incoming Orders" << std::endl; /*Add this into Admin Login when created*/
+    std::cout << "5. View Incoming Orders" << std::endl; 
     std::cout << "" << std::endl;
     std::cout << "4. Exit app" << std::endl;
     std::cout << endl;
@@ -588,7 +590,8 @@ void mainMenu() {
         mainMenu();
     }
 
-}
+} */
+
 
 void selectBranch() {
     string opt;
@@ -603,17 +606,17 @@ void selectBranch() {
 
     if (opt == "1") {
         branch = branchList.get(1 - 1);
-        mainMenu();
+        //mainMenu();
     }
 
     else if (opt == "2") {
         branch = branchList.get(2 - 1);
-        mainMenu();
+        //mainMenu();
     }
 
     else if (opt == "3") {
         branch = branchList.get(3 - 1);
-        mainMenu();
+        //mainMenu();
     }
 
     else {
