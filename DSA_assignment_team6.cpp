@@ -16,6 +16,8 @@
 
 #include"Customer.h"
 
+#include"Admin.h"
+
 using namespace std;
 
 List<Customer> customerList;
@@ -63,6 +65,11 @@ void initBranch() {
 
 }
 
+void initAdmin()
+{
+  
+}
+
 
 void readCustFile() {
 
@@ -104,7 +111,6 @@ void readDishFile() {
             dishList.add(newDish);
 
         }
-
     }
 }
 
@@ -205,6 +211,8 @@ void createOrder()
         cout << "" << std::endl;
         cout << "[2] Finish Add Dish" << std::endl;
         cout << "" << endl;
+        cout << "[3] Cancel" << std::endl;
+        cout << "" << endl;
 
         int option;
         cout << "Please enter an option: ";
@@ -219,9 +227,11 @@ void createOrder()
             }
             cout << "Total cost - $" << charge << endl;
             orderQueue.enqueue(Order(TemplateCust.getName(), TemplateCust.orderItem.orderList, false, charge, branch));
+            TemplateCust.orderItem.orderList.clear();
             break;
         }
-        else
+
+        else if(option == 1)
         {
             int choice;
             cout << "Please enter the index of a dish: ";
@@ -235,16 +245,19 @@ void createOrder()
                 }
             }
         }
+        else if (option == 3)
+        {
+            break;
+        }
+        else
+        {
+            cout << "Invalid input please try again" << endl;
+        }
     }
 }
 
-
-List<Dish> dL;
 void cancelOrder()
 {
-    dL.add(Dish("Western", "Fish n Chips", "S", 8));
-    TemplateCust.orderItem.orderList.add(Dish("Western", "Fish n Chips", "S", 8.0));
-    orderQueue.enqueue(Order(TemplateCust.getName(), dL, false, 8.0, ""));
     if (orderQueue.isEmpty())
     {
         cout << "You have no made an order" << endl;
@@ -269,14 +282,13 @@ void cancelOrder()
                 break;
             }
             cout << "[" << i+1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-                
-            int choice;
-            cout << "Please select an order to cancel:  ";
-            cin >> choice;
-            tempList.remove(choice - 1);
-            cout << "Order has canceled" << endl;
         }
     }
+    int choice;
+    cout << "Please select an order to cancel:  ";
+    cin >> choice;
+    tempList.remove(choice - 1);
+    cout << "Order has canceled" << endl;
     if (tempList.isEmpty() != true)
     {
         for (int i = 0; i < tempList.getLength();i++)
@@ -494,6 +506,10 @@ void mainMenu() {
                     else if (choice == "2") {
                         createOrder();
 
+                    }
+                    else if (choice == "3")
+                    {
+                        cancelOrder();
                     }
 
                     else if (choice == "4") {
