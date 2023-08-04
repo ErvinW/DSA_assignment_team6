@@ -263,7 +263,7 @@ void cancelOrder()
         if (order.getCustName() == TemplateCust.getName())
         {
               
-            if (tempList.getLength() == 0)
+            if (tempList.isEmpty() == true)
             {
                 cout << "You have not made an order" << endl;
                 break;
@@ -277,7 +277,7 @@ void cancelOrder()
             cout << "Order has canceled" << endl;
         }
     }
-    if (tempList.getLength() > 1)
+    if (tempList.isEmpty() != true)
     {
         for (int i = 0; i < tempList.getLength();i++)
         {

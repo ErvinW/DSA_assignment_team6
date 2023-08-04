@@ -1,126 +1,114 @@
 #pragma once
 #include <iostream>
-#include <string>
+#include<string>
 
+using namespace std;
+
+
+const int MAX_SIZE = 100;
+//typedef Person ItemType;
 template <class T>
-class List {
+class List
+{
 private:
-    struct Node {
-        T data;
-        Node* next;
-        Node(const T& value) : data(value), next(nullptr) {}
-    };
-
-    Node* head;
-    int size;
+	T items[MAX_SIZE];
+	int      size;
 
 public:
-    List() : head(nullptr), size(0) {}
 
-    bool add(T item) {
-        Node* newNode = new Node(item);
-        if (!newNode)
-            return false;
+	List() { size = 0; }
 
-        if (!head) {
-            head = newNode;
-        }
-        else {
-            Node* current = head;
-            while (current->next)
-                current = current->next;
-            current->next = newNode;
-        }
+	// add an item to the back of the list (append)
+	bool add(T item)
+	{
+		bool success = size < MAX_SIZE;
+		if (success)
+		{
+			items[size] = item;    // add to the end of the list
+			size++;                // increase the size by 1
+		}
+		return success;
+	}
 
-        size++;
-        return true;
-    }
+	// add an item at a specified position in the list (insert)
+	bool add(int index, T item)
+	{
+		bool success = (index >= 0) && (index <= size) && (size < MAX_SIZE);
+		if (success)
+		{  // make room for the item by shifting all items at
+		   // positions >= index toward the end of the
+		   // List (no shift if index == size + 1)
+			for (int pos = size; pos >= index; pos--)
+				items[pos] = items[pos - 1];
+			// insert the item
+			items[index] = item;
+			size++;  // increase the size by 1
+		}
+		return success;
+	}
 
-    bool add(int index, T item) {
-        if (index < 0 || index > size)
-            return false;
+	// remove an item at a specified position in the list
+	void remove(int index)
+	{
+		bool success = (index >= 0) && (index < size);
+		if (success)
+		{  // delete item by shifting all items at positions >
+		   // index toward the beginning of the list
+		   // (no shift if index == size)
+			for (int pos = index; pos < size; pos++)
+				items[pos] = items[pos + 1];
+			size--;  // decrease the size by 1
+		}
 
-        Node* newNode = new Node(item);
-        if (!newNode)
-            return false;
+	}
 
-        if (index == 0) {
-            newNode->next = head;
-            head = newNode;
-        }
-        else {
-            Node* current = head;
-            for (int i = 0; i < index - 1; i++)
-                current = current->next;
-            newNode->next = current->next;
-            current->next = newNode;
-        }
-
-        size++;
-        return true;
-    }
-
-    void traverse(void (*func)(T&)) const {
-        Node* current = head;
-        while (current) {
-            func(current->data);
-            current = current->next;
-        }
-    }
-
-    T get(int index) const {
-        if (index < 0 || index >= size) {
-            throw std::out_of_range("Invalid index");
-        }
-
-        Node* current = head;
-        for (int i = 0; i < index; i++) {
-            current = current->next;
-        }
-
-        return current->data;
-    }
-
-    int getLength() const {
-        return size;
-    }
+	// get an item at a specified position of the list (retrieve)
+	T& get(int index)
+	{
+		bool success = (index >= 0) && (index < size);
+		if (success)
+			return items[index];
+		else
+			throw std::out_of_range("Invalid index");  // Throw an exception if the index is invalid
+	}
 
 
+	// check if the list is empty
+	bool isEmpty() { return size == 0; }
 
+	// check the size of the list
+	int getLength() { return size; }
 
-    void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw std::out_of_range("Invalid index");
-        }
+	// display the items in the list
+	void print()
+	{
+		for (int i = 0; i < size; i++)
+		{
+			cout << items[i] << endl;
+		}
+	}
 
-        if (index == 0) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
-        }
-        else {
-            Node* prev = nullptr;
-            Node* current = head;
-            for (int i = 0; i < index; i++) {
-                prev = current;
-                current = current->next;
-            }
-            prev->next = current->next;
-            delete current;
-        }
+	// replace the  item in the specified index in the list
+	void replace(int index, T item)
+	{
+		if (index >= 0 && index < size)
+		{
+			// Replace the item at the specified index
+			items[index] = item;
+		}
+		else
+		{
+			// Handle the case when the index is out of bounds
+			cout << "Error: Invalid index. Index should be between 0 and " << (MAX_SIZE - 1) << endl;
+		}
+	}
 
-        size--;
-    }
-
-    
-
-    // Destructor to clean up memory
-    ~List() {
-        Node* current = head;
-        while (current) {
-            Node* next = current->next;
-            delete current;
-            current = next;
-        }
-    }
+	T* begin() { return items; }
+	T* end() { return items + size; }
+	const T* begin() const { return items; }
+	const T* end() const { return items + size; }
 };
+
+
+
+
