@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+using namespace std;
+
 class Admin {
 private:
     std::string username;
@@ -9,16 +11,16 @@ private:
 
 public:
     Admin();
-    Admin(const std::string& username, const std::string& password, int branchID);
+    Admin(string username, string password, int branchID);
     ~Admin();
 
     // getters
-    std::string getUsername() const;
-    std::string getPassword() const;
-    int getBranchID() const;
+    std::string getUsername();
+    std::string getPassword();
+    int getBranchID();
 
     // setters
-    void setUsername(const std::string& username);
-    void setPassword(const std::string& password);
+    void setUsername(std::string username);
+    void setPassword(std::string password);
     void setBranchID(int branchID);
 };

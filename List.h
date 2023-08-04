@@ -103,6 +103,19 @@ public:
 		}
 	}
 
+	void clear()
+	{
+		for (int i = 0; i <= size; i++)
+		{
+			remove(i);
+		}
+		remove(0);
+		if (isEmpty() == true)
+		{
+			cout << "The list is clear cleared" << endl;
+		}
+	}
+
 	T* begin() { return items; }
 	T* end() { return items + size; }
 	const T* begin() const { return items; }
