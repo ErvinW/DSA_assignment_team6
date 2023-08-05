@@ -388,7 +388,7 @@ bool userLogin() {
 }
 
 
-/*bool userRegister() {
+bool userRegister() {
     string customerName;
     string custPassword;
 
@@ -403,7 +403,7 @@ bool userLogin() {
         auto c = customerList.get(i);
         if (c.getName() == customerName)
         {
-            cout << "You have registered for an account " << endl;
+            cout << "Username already taken, try another name. You can try " << c.getName() << "123123 instead" << endl;
             cout << "" << endl;
             isNewUser = false;
             return isNewUser; //
@@ -418,8 +418,10 @@ bool userLogin() {
         std::string memberStatus = "Ordinary";
         List <Dish> dL;
         Membership member = Membership(memberStatus, memberPoint);
-        Order order = Order(customerName, dL, false, 0.0, "");
-        Customer newCustomer = Customer(customerName, custPassword, order, member);
+        List<Order> oL;
+
+        //Order order = Order(customerName, dL, false, 0.0, "");
+        Customer newCustomer = Customer(customerName, custPassword, oL, member);
         TemplateCust = newCustomer;
         customerList.add(TemplateCust);
 
@@ -437,7 +439,7 @@ bool userLogin() {
         return true; //
     }
     //UserPage(TemplateCust);
-}*/
+}
 
 
 void viewIncomingOrders() {
@@ -477,7 +479,7 @@ void viewIncomingOrders() {
 
 
 
-/*void mainMenu() {
+void mainMenu() {
     std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
     std::cout << "1. User Login" << std::endl;
     std::cout << "" << std::endl;
@@ -590,7 +592,7 @@ void viewIncomingOrders() {
         mainMenu();
     }
 
-} */
+} 
 
 
 void selectBranch() {
@@ -606,17 +608,17 @@ void selectBranch() {
 
     if (opt == "1") {
         branch = branchList.get(1 - 1);
-        //mainMenu();
+        mainMenu();
     }
 
     else if (opt == "2") {
         branch = branchList.get(2 - 1);
-        //mainMenu();
+        mainMenu();
     }
 
     else if (opt == "3") {
         branch = branchList.get(3 - 1);
-        //mainMenu();
+        mainMenu();
     }
 
     else {
