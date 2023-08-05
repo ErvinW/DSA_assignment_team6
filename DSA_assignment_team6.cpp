@@ -28,10 +28,20 @@ Queue <Order> orderQueue2;
 Queue <Order> orderQueue3;
 
 List<Order>tempList;
+List<Admin> adminList;
 List<string> branchList;
 Customer TemplateCust;
+Admin Adm;
 string branch;
 
+
+void initAdmins() {
+
+    adminList.add(Admin("Adm1", "PassAdm1", 1));
+    adminList.add(Admin("Adm2", "PassAdm2", 2));
+    adminList.add(Admin("Adm3", "PassAdm3", 3));
+
+}
 void displayAllCustomer()
 {
     // Print the header
@@ -65,10 +75,6 @@ void initBranch() {
 
 }
 
-void initAdmin()
-{
-  
-}
 
 
 void readCustFile() {
@@ -388,6 +394,33 @@ bool userLogin() {
 }
 
 
+bool adminLogin() {
+    std::string userName;
+    std::string password;
+
+    std::cout << "Enter username: ";
+    std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    std::getline(cin, userName);
+
+
+    std::cout << "Enter password: ";
+    std::cin >> password;
+    std::cout << "" << std::endl;
+
+    for (int i = 0; i < adminList.getLength(); i++) {
+        Admin temp = adminList.get(i);
+        if (temp.getUsername() == userName && temp.getPassword() == password) {
+            Adm = temp;
+            return true;
+        }
+
+        else {
+
+        }
+    }
+    return false;
+}
+
 bool userRegister() {
     string customerName;
     string custPassword;
@@ -562,7 +595,16 @@ void mainMenu() {
 
 
     else if (option == 2) {
-       
+        bool AdmLogin = adminLogin();
+        if (AdmLogin == true) {
+
+        }
+
+        else {
+            std::cout << "Invalid credentials, try again. " << std::endl;
+            mainMenu();
+            
+        }
     }
 
 
@@ -630,6 +672,7 @@ void selectBranch() {
 
 int main()
 {
+    initAdmins();
     initBranch();
     readCustFile();
     readDishFile();
