@@ -33,6 +33,6 @@ public:
 	void setMember(Membership m);
 	Membership getMembership();
 
-	void setOrder(Order o);
-	Order getOrder();
+	void setOrderList(List<Order> OL);
+	List<Order> getOrderList();
 };

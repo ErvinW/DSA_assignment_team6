@@ -211,6 +211,8 @@ void createOrder()
 
     while (true)
     {
+        List<Dish> tempDL;
+
         cout << "+---------------Order Page---------------+" << std::endl;
         printAllDish();
         //cout << "" << endl;
@@ -227,14 +229,34 @@ void createOrder()
         if (option == 2)
         {
             cout << TemplateCust.getName() << endl;
-            for (int i = 0; i < TemplateCust.orderItem.orderList.getLength(); i++)
+
+            for (int i = 0; i < tempDL.getLength(); i++) {
+                auto dish = tempDL.get(i);
+                cout << dish.getCuisine() << " " << dish.getFoodName() << " " << dish.getPortion() << " " << "$" << dish.getCharge() << endl;
+            }
+            /*for (int i = 0; i < TemplateCust.orderItem.orderList.getLength(); i++)
             {
                 auto dish = TemplateCust.orderItem.orderList.get(i);
                 cout << dish.getCuisine() << " " << dish.getFoodName() << dish.getPortion() << " $" << dish.getCharge() << endl;
-            }
+            }*/
             cout << "Total cost - $" << charge << endl;
-            orderQueue.enqueue(Order(TemplateCust.getName(), TemplateCust.orderItem.orderList, false, charge, branch));
-            TemplateCust.orderItem.orderList.clear();
+            Order order = Order(TemplateCust.getName(), tempDL, false, charge, branch);
+            //orderQueue.enqueue(Order(TemplateCust.getName(), TemplateCust.orderItem.orderList, false, charge, branch));
+            TemplateCust.oL.add(order);
+            if (branch == "1") {
+                orderQueue.enqueue(order);
+
+            }
+
+            else if (branch == "2") {
+                orderQueue2.enqueue(order);
+
+            }
+            
+            else {
+                orderQueue3.enqueue(order);
+
+            }
             break;
         }
 
@@ -247,7 +269,8 @@ void createOrder()
             {
                 if (choice - 1 == i)
                 {
-                    TemplateCust.orderItem.orderList.add(dishList.get(i));
+                    //TemplateCust.orderItem.orderList.add(dishList.get(i));
+                    tempDL.add(dishList.get(i));
                     charge += dishList.get(i).CalculateCharges();
                 }
             }
@@ -563,15 +586,9 @@ void mainMenu() {
                     }
 
                     else if (choice == "4") {
-                        List<Dish> temp = TemplateCust.getOrder().getOrderList();
+                        List<Order> temp = TemplateCust.getOrderList();
                         if (temp.getLength() > 0) {
-                            std::cout << "---------- Order ----------" << std::endl;
-                            for (int i = 0; i < temp.getLength(); i++) {
-                                std::cout << temp.get(i).getFoodName() << " ----- " << temp.get(i).getCharge() << std::endl;
-
-                            }
-                            std::cout << TemplateCust.getOrder().getCharge() << std::endl;
-                            std::cout << "---------------------------" << std::endl;
+                            std::cout << temp.getLength();
 
                         }
 

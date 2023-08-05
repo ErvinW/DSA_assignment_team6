@@ -40,11 +40,12 @@ Membership Customer::getMembership() {
 
 }
 
-void Customer::setOrder(Order oI) {
-	orderItem = oI;
+void Customer::setOrderList(List<Order> OL) {
+	oL = OL;
 
 }
-Order Customer::getOrder() {
-	return orderItem;
+
+List<Order> Customer::getOrderList() {
+	return oL;
 
 }
