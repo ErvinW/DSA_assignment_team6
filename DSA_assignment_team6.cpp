@@ -245,16 +245,18 @@ void createOrder()
             TemplateCust.oL.add(order);
             if (branch == "1") {
                 orderQueue.enqueue(order);
-
+                tempDL.clear();
             }
 
             else if (branch == "2") {
                 orderQueue2.enqueue(order);
+                tempDL.clear();
 
             }
             
             else {
                 orderQueue3.enqueue(order);
+                tempDL.clear();
 
             }
             break;
