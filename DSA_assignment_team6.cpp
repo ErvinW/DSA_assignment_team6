@@ -306,6 +306,19 @@ void cancelOrder()
     }  
 }
 
+std::string AdminPage(Admin admin) {
+    std::string option;
+
+    std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[1] View orders" << std::endl;
+
+    std::cin >> option;
+    return option;
+
+
+}
+
 
 std::string UserPage(Customer customer) {
     std::string option;
@@ -597,6 +610,19 @@ void mainMenu() {
     else if (option == 2) {
         bool AdmLogin = adminLogin();
         if (AdmLogin == true) {
+
+            while (true) {
+                std::string choice = AdminPage(Adm);
+                if (choice == "1") {
+                    viewIncomingOrders();
+
+                }
+                else {
+                    std::cout << "Invalid option, try again. " << std::endl;
+                    AdminPage(Adm);
+
+                }
+            }
 
         }
 
