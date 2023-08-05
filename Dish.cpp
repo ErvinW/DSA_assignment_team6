@@ -50,3 +50,7 @@ std::ostream& operator<<(std::ostream& os, const Dish& dish) {
 	os << dish.getFoodName() << " - " << dish.getPortion() << " - $" << dish.getCharge();
 	return os;
 }
+
+void Dish::print() {
+	cout << "Dish: " << foodName << "Portion: " << portion << "Price: " << charge << endl;
+}

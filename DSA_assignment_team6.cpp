@@ -157,6 +157,39 @@ void printAllWestern() {
     }
 }
 
+void viewInvoice(Customer customer) {
+
+    List<Order> t = customer.getOrderList();
+    cout << t.getLength();
+    /*
+      for (int i = 0; i < tempOL.getLength(); i++) {
+        double tCharge = 0;
+
+        cout << "---------- " << "Order " << i + 1 << " ----------" << endl;
+        Order tempOrder = tempOL.get(i);
+        List<Dish> tempDL = tempOrder.getDishList();
+        //cout << tempDL.getLength() << endl;  test
+
+        for (int Di = 0; Di < tempDL.getLength(); Di++) {
+
+            Dish tempD = tempDL.get(Di);
+            tCharge += tempD.CalculateCharges();
+
+            cout << tempD.getFoodName();
+            //tempD.print();
+
+            ////
+        }
+        cout << "Total charge: " << tCharge << endl;
+
+        cout << "-----------------------------" << endl;
+
+    }
+    */
+
+    
+}
+
 void filterDish() {
     int option;
     while (true)
@@ -208,10 +241,10 @@ void filterDish() {
 void createOrder()
 {
     double charge = 0;
-
+    List<Dish> tempDL;
     while (true)
     {
-        List<Dish> tempDL;
+        
 
         cout << "+---------------Order Page---------------+" << std::endl;
         printAllDish();
@@ -534,8 +567,8 @@ void viewIncomingOrders() {
         std::cout << "Total Cost: $" << order.getCharge() << std::endl;
         std::cout << "Branch: " << order.getBranch() << std::endl;
         std::cout << "Dishes: " << std::endl;
-        for (int j = 0; j < order.getOrderList().getLength(); j++) {
-            Dish dish = order.getOrderList().get(j);
+        for (int j = 0; j < order.getDishList().getLength(); j++) {
+            Dish dish = order.getDishList().get(j);
             std::cout << " - " << dish.getFoodName() << ", " << dish.getPortion() << ", $" << dish.getCharge() << std::endl;
         }
         std::cout << std::endl;
@@ -588,19 +621,8 @@ void mainMenu() {
                     }
 
                     else if (choice == "4") {
-                        List<Order> temp = TemplateCust.getOrderList();
-                        if (temp.getLength() > 0) {
-                            std::cout << temp.getLength();
-
-                        }
-
-                        else {
-                            std::cout << "No orders" << std::endl;
-
-                        }
+                        viewInvoice(TemplateCust);
                         
-                        
-
                     }
 
                     else if (choice == "5") {

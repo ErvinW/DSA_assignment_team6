@@ -30,7 +30,7 @@ public:
 	string getCustName(); //
 
 	void setOrderList(List<Dish> oL);//
-	List<Dish> getOrderList();//
+	List<Dish> getDishList();//
 
 
 	void setisReady(bool iR); //

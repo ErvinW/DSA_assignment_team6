@@ -38,7 +38,7 @@ void Order::setOrderList(List<Dish> oL) {
 	orderList = oL;
 
 }
-List<Dish> Order::getOrderList() {
+List<Dish> Order::getDishList() {
 	return orderList;
 
 }

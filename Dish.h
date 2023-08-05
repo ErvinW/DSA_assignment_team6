@@ -25,6 +25,8 @@ public:
 	void setCharge(double);
 	double getCharge() const;
 	double CalculateCharges();
+	void print();
+
 	
 };
 
