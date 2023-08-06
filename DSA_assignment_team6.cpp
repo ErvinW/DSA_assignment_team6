@@ -164,7 +164,8 @@ void viewInvoice(Customer customer) {
         std::cout << "+---------- Order " << i << " ----------+" << std::endl;
         List<Dish> tempDL = tempOL.get(i).getDishList();
         for (int x = 0; x < tempDL.getLength(); x++) {
-            std::cout << x << std::endl;
+            Dish tempD = tempDL.get(x);
+            tempD.print();
 
         }
         std::cout << "+-----------------------------+" << std::endl;
