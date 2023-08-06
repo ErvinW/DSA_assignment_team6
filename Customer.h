@@ -18,7 +18,7 @@ public:
 	string Name;
 	string Password;
 	Membership Member;
-	Order orderItem;
+	//Order orderItem;
 	List<Order> oL;
 
 	Customer();

@@ -162,18 +162,32 @@ void viewInvoice(Customer customer) {
     List<Order> tempOL = customer.getOrderList();
     for (int i = 0; i < tempOL.getLength(); i++) {
         std::cout << "+---------- Order " << i << " ----------+" << std::endl;
-        List<Dish> tempDL = tempOL.get(i).getDishList();
+        Order d = tempOL.get(i);
+        List<Dish> dl = d.getDishList();
+        
+        if (dl.getLength() >= 1) {
+            for (int x = 1; x < dl.getLength(); i++) {
+                Dish dish = dl.get(x);
+                dish.print();
+            }
+        }
+
+        /*List<Dish> tempDL = tempOL.get(i).getDishList();
         for (int x = 0; x < tempDL.getLength(); x++) {
             Dish tempD = tempDL.get(x);
             tempD.print();
 
-        }
+        }*/
         std::cout << "+-----------------------------+" << std::endl;
     }
-    
 
-    
+
+
 }
+
+  
+
+
 
 void filterDish() {
     int option;
@@ -249,8 +263,9 @@ void createOrder()
             cout << TemplateCust.getName() << endl;
 
             for (int i = 0; i < tempDL.getLength(); i++) {
-                auto dish = tempDL.get(i);
-                cout << dish.getCuisine() << " " << dish.getFoodName() << " " << dish.getPortion() << " " << "$" << dish.getCharge() << endl;
+                Dish dish = tempDL.get(i);
+                //cout << dish.getCuisine() << " " << dish.getFoodName() << " " << dish.getPortion() << " " << "$" << dish.getCharge() << endl;
+                dish.print();
             }
             /*for (int i = 0; i < TemplateCust.orderItem.orderList.getLength(); i++)
             {
@@ -289,14 +304,16 @@ void createOrder()
             {
                 if (choice - 1 == i)
                 {
+                    Dish d = dishList.get(i);
                     //TemplateCust.orderItem.orderList.add(dishList.get(i));
-                    tempDL.add(dishList.get(i));
-                    charge += dishList.get(i).CalculateCharges();
+                    tempDL.add(d);
+                    charge += d.CalculateCharges();
                 }
             }
         }
         else if (option == 3)
         {
+            tempDL.clear();
             break;
         }
         else
