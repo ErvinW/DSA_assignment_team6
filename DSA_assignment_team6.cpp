@@ -159,33 +159,17 @@ void printAllWestern() {
 
 void viewInvoice(Customer customer) {
 
-    List<Order> t = customer.getOrderList();
-    cout << t.getLength();
-    /*
-      for (int i = 0; i < tempOL.getLength(); i++) {
-        double tCharge = 0;
+    List<Order> tempOL = customer.getOrderList();
+    for (int i = 0; i < tempOL.getLength(); i++) {
+        std::cout << "+---------- Order " << i << " ----------+" << std::endl;
+        List<Dish> tempDL = tempOL.get(i).getDishList();
+        for (int x = 0; x < tempDL.getLength(); x++) {
+            std::cout << x << std::endl;
 
-        cout << "---------- " << "Order " << i + 1 << " ----------" << endl;
-        Order tempOrder = tempOL.get(i);
-        List<Dish> tempDL = tempOrder.getDishList();
-        //cout << tempDL.getLength() << endl;  test
-
-        for (int Di = 0; Di < tempDL.getLength(); Di++) {
-
-            Dish tempD = tempDL.get(Di);
-            tCharge += tempD.CalculateCharges();
-
-            cout << tempD.getFoodName();
-            //tempD.print();
-
-            ////
         }
-        cout << "Total charge: " << tCharge << endl;
-
-        cout << "-----------------------------" << endl;
-
+        std::cout << "+-----------------------------+" << std::endl;
     }
-    */
+    
 
     
 }
