@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-using namespace std;
+
 
 class Admin {
 private:
@@ -11,7 +11,7 @@ private:
 
 public:
     Admin();
-    Admin(string username, string password, int branchID);
+    Admin(std::string username, std::string password, int branchID);
     ~Admin();
 
     // getters

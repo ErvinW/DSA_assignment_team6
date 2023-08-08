@@ -2,32 +2,37 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+
 
 class Dish {
 private:
-	string cuisine;
-	string foodName;
-	string portion;
+	std::string cuisine;
+	std::string foodName;
+	//std::string portion;
 	double charge;
 	//double rating;
 	//double ratingNum;
 
 public:
 	Dish();
-	Dish(string, string, string, double);
-	void setCuisine(string);
-	string getCuisine();
-	void setFoodName(string);
-	string getFoodName() const;
-	void setPortion(string);
-	string getPortion() const;
-	void setCharge(double);
-	double getCharge() const;
-	double CalculateCharges();
+	Dish(std::string c, std::string fN, double ch);
+
+	void setCuisine(std::string c);
+	std::string getCuisine();
+
+	void setFoodName(std::string fN);
+	std::string getFoodName();
+
+	/*void setPortion(std::string p);
+	std::string getPortion();*/
+
+	void setCharge(double ch);
+	double getCharge();
+
+
 	void print();
 
-	
+
 };
 
 

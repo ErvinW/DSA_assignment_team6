@@ -1,24 +1,24 @@
 #include "Membership.h"
-using namespace std;
 #include <iostream>
 #include <string>
 
 Membership::Membership() {}
 
-Membership::Membership(string s, int p) {
+Membership::Membership(std::string s, int p) {
 	Status = s;
 	Point = p;
 
 }
 
-void Membership::setStatus(string s) {
+void Membership::setStatus(std::string s) {
 	Status = s;
 
 }
-string Membership::getStatus() {
+std::string Membership::getStatus() {
 	return Status;
 
 }
+
 void Membership::setPoint(int p) {
 	Point = p;
 
@@ -26,6 +26,7 @@ void Membership::setPoint(int p) {
 int Membership::getPoint() {
 	return Point;
 }
+
 double Membership::EarnPoint(int d) {
 	return Point += d;
 
@@ -39,4 +40,10 @@ bool Membership::RedeemPoints(int pt) {
 	else {
 		return true;
 	}
+}
+
+void Membership::print() {
+
+	std::cout << "Member: " << Status << "----- Points: " << Point << std::endl;
+
 }

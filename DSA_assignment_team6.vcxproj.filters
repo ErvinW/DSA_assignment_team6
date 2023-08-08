@@ -18,10 +18,19 @@
     <ClCompile Include="DSA_assignment_team6.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Admin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Customer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Dictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Dish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DishDict.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Membership.cpp">
@@ -30,12 +39,11 @@
     <ClCompile Include="Order.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Admin.cpp">
+    <ClCompile Include="Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
     <None Include="Customer.csv">
       <Filter>Source Files</Filter>
     </None>
@@ -44,10 +52,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Customer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Dish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DishDict.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="List.h">
@@ -60,9 +77,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Queue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Admin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

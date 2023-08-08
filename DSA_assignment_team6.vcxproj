@@ -129,20 +129,24 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Dish.cpp" />
+    <ClCompile Include="DishDict.cpp" />
     <ClCompile Include="DSA_assignment_team6.cpp" />
     <ClCompile Include="Membership.cpp" />
     <ClCompile Include="Order.cpp" />
+    <ClCompile Include="Queue.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Desktop\Year 2\Semester 1\Data Structure and Algorithms\Assignment\Order.csv" />
     <None Include="Customer.csv" />
     <None Include="Dishes.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
     <ClInclude Include="Customer.h" />
+    <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Dish.h" />
+    <ClInclude Include="DishDict.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Membership.h" />
     <ClInclude Include="Order.h" />

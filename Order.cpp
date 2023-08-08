@@ -1,6 +1,5 @@
 #include"Order.h"
 
-using namespace std;
 #include<iostream>
 #include<string>
 
@@ -8,9 +7,9 @@ Order::Order() {
 
 }
 
-Order::Order(string c, List<Dish> oL, bool iR, double ch, string br) {
+Order::Order(std::string c, /*List<Dish> dL,*/ bool iR, double ch, std::string br) {
 	custName = c;
-	orderList = oL;
+	//DishList = dL;
 	isReady = iR;
 	Charge = ch;
 	branch = br;
@@ -26,23 +25,22 @@ double Order::getCharge() {
 
 }
 
-void Order::setCustName(string c) {
+void Order::setCustName(std::string c) {
 	custName = c;
 
 }
-string Order::getCustName() {
+std::string Order::getCustName() {
 	return custName;
 }
 
-void Order::setOrderList(List<Dish> oL) {
-	orderList = oL;
+void Order::setOrderList(List<Dish> dL) {
+	DishList = dL;
 
 }
 List<Dish> Order::getDishList() {
-	return orderList;
+	return DishList;
 
 }
-
 
 void Order::setisReady(bool iR) {
 	isReady = iR;
@@ -53,28 +51,21 @@ bool Order::getisReady() {
 
 }
 
-void Order::setBranch(string br) {
+void Order::setBranch(std::string br) {
 	branch = br;
 
 }
 
-string Order::getBranch() {
+std::string Order::getBranch() {
 	return branch;
 
 }
 
-void Order::viewIncomingOrders(int index) {
-	if (index >= orderList.getLength()) {
-		return;
+void Order::printDish() {
+	for (int i = 0; i < DishList.getLength(); i++) {
+		Dish tempDish = DishList.get(i);
+		tempDish.print();
+
 	}
-
-	Dish dish = orderList.get(index);
-	cout << "Order index: " << index << endl;
-	cout << "Customer Name: " << custName << endl;
-	cout << "Dish Name: " << dish.getFoodName() << endl;
-	cout << "Is Ready: " << (isReady ? "Yes" : "No") << endl;
-	cout << "Charge: " << Charge << endl;
-	cout << "Branch: " << branch << endl;
-
-	viewIncomingOrders(index + 1);  // Recursive call
 }
+

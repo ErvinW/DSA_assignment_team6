@@ -2,31 +2,30 @@
 #include <iostream>
 #include <string>
 #include "Membership.h"
-#include "Order.h"
+
 
 Customer::Customer() {}
 
-Customer::Customer(string n, string p, List<Order> OL, Membership m) {
+Customer::Customer(std::string n, std::string p, Membership m) {
 	Name = n;
 	Password = p;
-	oL = OL;
 	Member = m;
 }
 
-void Customer::setName(string n) {
+void Customer::setName(std::string n) {
 	Name = n;
 
 }
-string Customer::getName() {
+std::string Customer::getName() {
 	return Name;
 
 }
 
-void Customer::setPassword(string p) {
+void Customer::setPassword(std::string p) {
 	Password = p;
 
 }
-string Customer::getPassword() {
+std::string Customer::getPassword() {
 	return Password;
 
 }
@@ -40,12 +39,8 @@ Membership Customer::getMembership() {
 
 }
 
-void Customer::setOrderList(List<Order> OL) {
-	oL = OL;
-
-}
-
-List<Order> Customer::getOrderList() {
-	return oL;
+void Customer::print() {
+	std::cout << "Name: " << Name << "----- ";
+	Member.print();
 
 }

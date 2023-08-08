@@ -1,56 +1,47 @@
 #include "Dish.h"
-using namespace std;
+
 
 Dish::Dish() {}
 
-Dish::Dish(string a_cuisine, string a_foodName, string a_portion, double a_charge) {
-	cuisine = a_cuisine;
-	foodName = a_foodName;
-	portion = a_portion;
-	charge = a_charge;
+Dish::Dish(std::string c, std::string fN, double ch) {
+	cuisine = c;
+	foodName = fN;
+	//portion = p;
+	charge = ch;
 }
 
-void Dish::setCuisine(string a_cuisine) {
-	cuisine = a_cuisine;
+void Dish::setCuisine(std::string c) {
+	cuisine = c;
 }
 
-string Dish::getCuisine() {
+std::string Dish::getCuisine() {
 	return cuisine;
 }
 
-void Dish::setFoodName(string a_foodName) {
-	foodName = a_foodName;
+void Dish::setFoodName(std::string fN) {
+	foodName = fN;
 }
 
-string Dish::getFoodName() const {
+std::string Dish::getFoodName() {
 	return foodName;
 }
 
-void Dish::setPortion(string a_portion) {
-	portion = a_portion;
+/*void Dish::setPortion(std::string p) {
+	portion = p;
 }
 
-string Dish::getPortion() const {
+std::string Dish::getPortion() {
 	return portion;
+}*/
+
+void Dish::setCharge(double ch) {
+	charge = ch;
 }
 
-void Dish::setCharge(double a_charge) {
-	charge = a_charge;
-}
-
-double Dish::getCharge() const {
+double Dish::getCharge() {
 	return charge;
-}
-
-double Dish::CalculateCharges() {
-	return charge;
-}
-
-std::ostream& operator<<(std::ostream& os, const Dish& dish) {
-	os << dish.getFoodName() << " - " << dish.getPortion() << " - $" << dish.getCharge();
-	return os;
 }
 
 void Dish::print() {
-	cout << "Dish: " << foodName << "Portion: " << portion << "Price: " << charge << endl;
+	std::cout << foodName << "-----Price: " << charge << std::endl;
 }

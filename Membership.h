@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 #include <iostream>
 #include <string>
 
@@ -9,16 +8,22 @@ private:
 
 
 public:
-	string Status;
+	std::string Status;
 	int Point;
 
 	Membership();
-	Membership(string s, int p);
-	void setStatus(string s);
-	string getStatus();
+	Membership(std::string s, int p);
+
+	void setStatus(std::string s);
+	std::string getStatus();
+
 	void setPoint(int p);
 	int getPoint();
+
 	double EarnPoint(int d);
 	bool RedeemPoints(int pt);
 
+	void print();
+
 };
+

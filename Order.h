@@ -6,38 +6,36 @@
 #include"Dish.h"
 #include"List.h"
 
-
-using namespace std;
-
 class Order {
 private:
 
 public:
-	string custName;
-	List<Dish> orderList;
+	std::string custName;
+	List<Dish> DishList;
 	bool isReady;
 	double Charge;
-	string branch;
+	std::string branch;
 
 
 	Order();
-	Order(string c, List<Dish> oL, bool iR, double ch, string br);
+	Order(std::string c, /*List<Dish> dL,*/ bool iR, double ch, std::string br);
 
 	void setCharge(double ch);//
 	double getCharge(); //
 
-	void setCustName(string c);//
-	string getCustName(); //
+	void setCustName(std::string c);//
+	std::string getCustName(); //
 
-	void setOrderList(List<Dish> oL);//
+	void setOrderList(List<Dish> dL);//
 	List<Dish> getDishList();//
 
 
 	void setisReady(bool iR); //
 	bool getisReady(); //
 
-	void setBranch(string br);//
-	string getBranch(); //
+	void setBranch(std::string br);//
+	std::string getBranch(); //
 
-	void viewIncomingOrders(int index = 0);
+	void printDish();
+
 };
