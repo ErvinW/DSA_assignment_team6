@@ -414,7 +414,7 @@ void CreateOrder() {
         else if (option == "2") {
 
             tempOrder.setCustName(sessionStorage.getName());
-            tempOrder.setOrderList(tempDL);
+            tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
 

@@ -26,7 +26,7 @@ public:
 	void setCustName(std::string c);//
 	std::string getCustName(); //
 
-	void setOrderList(List<Dish> dL);//
+	void setDishList(List<Dish> dL);//
 	List<Dish> getDishList();//
 
 

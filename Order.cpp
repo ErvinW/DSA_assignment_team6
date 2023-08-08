@@ -33,7 +33,7 @@ std::string Order::getCustName() {
 	return custName;
 }
 
-void Order::setOrderList(List<Dish> dL) {
+void Order::setDishList(List<Dish> dL) {
 	DishList = dL;
 
 }
