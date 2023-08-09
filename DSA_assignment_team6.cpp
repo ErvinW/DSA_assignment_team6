@@ -24,6 +24,7 @@ DishDict dishDict;
 List<std::string> dishList;
 List<Admin> adminList;
 List<std::string> CustNames;
+List<Order> OrderList;
 
 
 
@@ -278,7 +279,30 @@ void viewBy() {
     }
 }
 
+void viewInvoice(Customer cust) {
 
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+        Order order = OrderList.get(i);
+
+        if (order.getCustName() == cust.getName()) {
+
+            List<std::string> DL = order.getDishList();
+
+            for (int x = 0; x < DL.getLength(); x++) {
+
+                Dish dish = dishDict.get(DL.get(x));
+                dish.print();
+
+            }
+        }
+        std::cout << "--------------------------------------" << std::endl;
+        std::cout << endl;
+        std::cout << endl;
+
+    }
+
+}
 
 
 
@@ -351,6 +375,8 @@ void ViewMenu() {
     }
 }
 
+
+//ask
 void cancelOrder()
 {
     List<Order> tempList;
@@ -366,7 +392,7 @@ void cancelOrder()
         }
         else
         {
-            queue1.enqueue(order);
+            queue1.enqueue(order); //Might need to discuss
         }
     }
 
@@ -620,6 +646,8 @@ void CreateOrder() {
 
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
+            OrderList.add(tempOrder);
+
             /*if (currentBranch == "1")
             {
                 
@@ -696,7 +724,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-
+                    viewInvoice(sessionStorage);
                 }
                 
                 else if (choice == "5")
