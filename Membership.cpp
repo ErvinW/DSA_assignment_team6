@@ -27,10 +27,23 @@ int Membership::getPoint() {
 	return Point;
 }
 
-double Membership::EarnPoint(int d) {
-	return Point += d;
-
+double Membership::EarnPoint(int d)
+{
+	return Point += d / 10;
+	if (Point < 100)
+	{
+		Status = "Ordinary";
+	}
+	else if (Point >= 100 && Point < 200 && Status == "Ordinary")
+	{
+		Status = "Sliver";
+	}
+	else if (Point >= 200 && Status == "Sliver")
+	{
+		Status = "Gold";
+	}
 }
+
 bool Membership::RedeemPoints(int pt) {
 	if (Point <= pt) {
 		return false;

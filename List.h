@@ -1,8 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
+using namespace std;
 
 template <class T>
+
 class List {
 private:
     struct Node {
@@ -86,8 +88,6 @@ public:
     }
 
 
-
-
     void remove(int index) {
         if (index < 0 || index >= size) {
             throw std::out_of_range("Invalid index");
@@ -124,17 +124,27 @@ public:
         size = 0;
     }
 
-
+    bool isEmpty()
+    {
+        if (size == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     // Destructor to clean up memory
-    ~List() {
+    /*~List() {
         Node* current = head;
         while (current) {
             Node* next = current->next;
             delete current;
             current = next;
         }
-    }
+    }*/
 };
 
 

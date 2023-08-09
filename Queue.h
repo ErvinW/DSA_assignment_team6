@@ -42,4 +42,6 @@ public:
     // display items in queue from front to back
     void displayItems();
 
+    int getLength();
+
 };

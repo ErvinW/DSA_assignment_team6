@@ -79,3 +79,17 @@ void Queue::getFront(Item& item) {
 		item = frontNode->item;
 	}
 }
+
+int Queue::getLength()
+{
+	int length = 0;
+    Node* current = frontNode;
+
+    while (current != nullptr) {
+        length++;
+        current = current->next;
+    }
+
+    return length;
+
+}
