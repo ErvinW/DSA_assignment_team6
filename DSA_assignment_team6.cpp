@@ -256,7 +256,7 @@ void viewAllDishes() {
 
 }
 
-void viewByCat() {
+void viewBy() {
     std::string s;
     std::cout << "Enter category to sort by [3 to exit]: ";
     std::cin >> s;
@@ -269,7 +269,7 @@ void viewByCat() {
         for (int x = 0; x < dishList.getLength(); x++) {
             std::string tDish = dishList.get(x);
             Dish tempD = dishDict.get(tDish);
-            if (tempD.getCuisine() == s) {
+            if (tempD.getCuisine() == s || tempD.getFoodName() == s) {
                 tempD.print();
 
             }
@@ -330,7 +330,7 @@ void ViewMenu() {
     while (true) {
         std::cout << "+---------------+---------------+" << std::endl;
         std::cout << "1. View all dishes" << std::endl;
-        std::cout << "2. Search by cuisine" << std::endl;
+        std::cout << "2. Search for dish" << std::endl;
         std::cout << "3. Back" << std::endl;
         std::string option;
         std::cin >> option;
@@ -340,7 +340,7 @@ void ViewMenu() {
         }
 
         else if (option == "2") {
-            viewByCat();
+            viewBy();
             //search (Additional feature)
         }
 
