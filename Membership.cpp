@@ -57,6 +57,6 @@ bool Membership::RedeemPoints(int pt) {
 
 void Membership::print() {
 
-	std::cout << "Member: " << Status << "----- Points: " << Point << std::endl;
+	std::cout << "Member: " << Status << "\nPoints: " << Point << std::endl;
 
 }

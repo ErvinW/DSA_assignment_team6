@@ -253,7 +253,7 @@ void viewAllDishes() {
 
 }
 
-void viewByCat() {
+void viewBy() {
     std::string s;
     std::cout << "Enter category to sort by [3 to exit]: ";
     std::cin >> s;
@@ -266,7 +266,7 @@ void viewByCat() {
         for (int x = 0; x < dishList.getLength(); x++) {
             std::string tDish = dishList.get(x);
             Dish tempD = dishDict.get(tDish);
-            if (tempD.getCuisine() == s) {
+            if (tempD.getCuisine() == s || tempD.getFoodName() == s) {
                 tempD.print();
 
             }
@@ -289,9 +289,7 @@ std::string userPage(Customer cust) {
     std::string option;
 
     std::cout << "+--------------- Welcome ---------------+" << std::endl;
-    std::cout << "+ ";
     cust.print();
-    std::cout << " +" << std::endl;
     std::cout << "+---------------------------------------+" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "[1] View Menu" << std::endl;
@@ -327,7 +325,7 @@ void ViewMenu() {
     while (true) {
         std::cout << "+---------------+---------------+" << std::endl;
         std::cout << "1. View all dishes" << std::endl;
-        std::cout << "2. Search by cuisine" << std::endl;
+        std::cout << "2. Search for dish" << std::endl;
         std::cout << "3. Back" << std::endl;
         std::string option;
         std::cin >> option;
@@ -337,7 +335,7 @@ void ViewMenu() {
         }
 
         else if (option == "2") {
-            viewByCat();
+            viewBy();
             //search (Additional feature)
         }
 
@@ -561,7 +559,7 @@ void CheckOut()
 void CreateOrder() {
 
     double charge = 0;
-    List<Dish> tempDL;
+    List<std::string> tempDL;
     Order tempOrder;
 
 
@@ -593,7 +591,7 @@ void CreateOrder() {
                 int iChoice = std::stoi(choice);
                 std::string tDish = dishList.get(iChoice - 1);
                 Dish toAdd = dishDict.get(tDish);
-                tempDL.add(toAdd);
+                tempDL.add(tDish);
                 charge += toAdd.getCharge();
             }
 
@@ -610,13 +608,14 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
-
-            List<Dish> tDL = tempOrder.getDishList();
+            queue1.enqueue(tempOrder);
+            List<std::string> tDL = tempOrder.getDishList();
             int L = tDL.getLength();
 
-            for (int i = 0; i < tempDL.getLength(); i++) {
-                Dish dish = tempDL.get(i);
-                cout << dish.getCuisine() << " " << dish.getFoodName() << " $" << dish.getCharge() << endl;
+            for (int i = 0; i < L; i++) {
+                std::string dish = tDL.get(i);
+                Dish d = dishDict.get(dish);
+                d.print();
             }
 
             queue1.enqueue(tempOrder);
@@ -698,7 +697,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-                    //view invoice
+
                 }
                 
                 else if (choice == "5")

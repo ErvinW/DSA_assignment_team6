@@ -34,7 +34,7 @@ public:
     bool dequeue(Item& item); //Done
 
     // retrieve (get) item from front of queue
-    void getFront(Item& item); //Done
+    Order getFront(/*Item& item*/); //Done
 
     // check if the queue is empty
     bool isEmpty(); //Done

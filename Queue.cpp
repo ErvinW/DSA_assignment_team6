@@ -69,14 +69,15 @@ bool Queue::dequeue(Item& item) {
 
 
 
-void Queue::getFront(Item& item) {
+Order Queue::getFront(/*Item& item*/) {
 	if (isEmpty()) {
 		std::cout << "Queue is empty" << std::endl;
-		return;
+		return Order();
 	}
 
 	else {
-		item = frontNode->item;
+		Order item = frontNode->item;
+		return item;
 	}
 }
 
