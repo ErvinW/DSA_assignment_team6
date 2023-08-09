@@ -137,16 +137,14 @@ public:
     }
 
     // Destructor to clean up memory
-    /*~List() {
-    /*
-    ~List() {
+   /* ~List() {
         Node* current = head;
         while (current != nullptr) {
             Node* next = current->next;
             delete current;
             current = next;
         }
-    }*/
+    }
 
         head = nullptr;
         size = 0;

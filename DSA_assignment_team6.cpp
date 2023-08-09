@@ -618,7 +618,6 @@ void CreateOrder() {
                 d.print();
             }
 
-            queue1.enqueue(tempOrder);
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
             /*if (currentBranch == "1")
