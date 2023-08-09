@@ -40,7 +40,7 @@ Membership Customer::getMembership() {
 }
 
 void Customer::print() {
-	std::cout << "Name: " << Name << "----- ";
+	std::cout << "Name: " << Name << "\n";
 	Member.print();
 
 }

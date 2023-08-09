@@ -292,9 +292,7 @@ std::string userPage(Customer cust) {
     std::string option;
 
     std::cout << "+--------------- Welcome ---------------+" << std::endl;
-    std::cout << "+ ";
     cust.print();
-    std::cout << " +" << std::endl;
     std::cout << "+---------------------------------------+" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "[1] View Menu" << std::endl;
