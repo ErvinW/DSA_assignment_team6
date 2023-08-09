@@ -364,7 +364,7 @@ void ViewMenu() {
 void CreateOrder() {
 
     double charge = 0;
-    List<Dish> tempDL;
+    List<std::string> tempDL;
     Order tempOrder;
 
 
@@ -396,7 +396,7 @@ void CreateOrder() {
                 int iChoice = std::stoi(choice);
                 std::string tDish = dishList.get(iChoice - 1);
                 Dish toAdd = dishDict.get(tDish);
-                tempDL.add(toAdd);
+                tempDL.add(tDish);
                 charge += toAdd.getCharge();
             }
 
@@ -417,14 +417,15 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
-
-            List<Dish> tDL = tempOrder.getDishList();
+            queue1.enqueue(tempOrder);
+            List<std::string> tDL = tempOrder.getDishList();
             int L = tDL.getLength();
 
-            /*for (int i = 0; i < L; i++) {
-                Dish dish = tDL.get(i);
-                dish.print();
-            }*/
+            for (int i = 0; i < L; i++) {
+                std::string dish = tDL.get(i);
+                Dish d = dishDict.get(dish);
+                d.print();
+            }
 
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
@@ -487,7 +488,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-                    //view invoice
+
                 }
 
                 else if (choice == "5") {

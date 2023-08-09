@@ -11,7 +11,7 @@ private:
 
 public:
 	std::string custName;
-	List<Dish> DishList;
+	List<std::string> DishList;
 	bool isReady;
 	double Charge;
 	std::string branch;
@@ -26,8 +26,8 @@ public:
 	void setCustName(std::string c);//
 	std::string getCustName(); //
 
-	void setDishList(List<Dish> dL);//
-	List<Dish> getDishList();//
+	void setDishList(List<std::string> dL);//
+	List<std::string> getDishList();//
 
 
 	void setisReady(bool iR); //
@@ -36,6 +36,6 @@ public:
 	void setBranch(std::string br);//
 	std::string getBranch(); //
 
-	void printDish();
+	//void printDish();
 
 };

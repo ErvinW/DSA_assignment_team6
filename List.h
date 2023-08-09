@@ -127,14 +127,18 @@ public:
 
 
     // Destructor to clean up memory
+    /*
     ~List() {
         Node* current = head;
-        while (current) {
+        while (current != nullptr) {
             Node* next = current->next;
             delete current;
             current = next;
         }
-    }
+
+        head = nullptr;
+        size = 0;
+    }*/
 };
 
 

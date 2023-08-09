@@ -33,11 +33,11 @@ std::string Order::getCustName() {
 	return custName;
 }
 
-void Order::setDishList(List<Dish> dL) {
+void Order::setDishList(List<std::string> dL) {
 	DishList = dL;
 
 }
-List<Dish> Order::getDishList() {
+List<std::string> Order::getDishList() {
 	return DishList;
 
 }
@@ -61,11 +61,12 @@ std::string Order::getBranch() {
 
 }
 
+/*
 void Order::printDish() {
 	for (int i = 0; i < DishList.getLength(); i++) {
 		Dish tempDish = DishList.get(i);
 		tempDish.print();
 
 	}
-}
+}*/
 
