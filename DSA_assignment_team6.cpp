@@ -71,6 +71,50 @@ bool checkstring(std::string str) {
 }
 //------------- Initialise data -------------//
 
+void ClearQueue() {
+
+    while (!queue1.isEmpty()) {
+        Order Io = queue1.getFront();
+        queue1.dequeue(Io);
+    }
+
+    while (!queue2.isEmpty()) {
+        Order Io2 = queue2.getFront();
+        queue2.dequeue(Io2);
+    }
+
+    while (!queue1.isEmpty()) {
+        Order Io3 = queue3.getFront();
+        queue3.dequeue(Io3);
+    }
+}
+
+void Queuing() {
+    for (int x = 0; x < OrderList.getLength(); x++) {
+        Order order = OrderList.get(x);
+        std::string branch = order.getBranch();
+
+        if (branch == "1") {
+            queue1.enqueue(order);
+
+        }
+
+        else if (branch == "2") {
+            queue2.enqueue(order);
+
+        }
+
+        else if (branch == "3") {
+            queue3.enqueue(order);
+
+        }
+
+        else {
+
+        }
+    }
+}
+
 void initCustomer() {
 
     std::ifstream inFile("Customer.csv");
@@ -283,10 +327,11 @@ void viewBy() {
 void viewInvoice(Customer cust) {
 
     for (int i = 0; i < OrderList.getLength(); i++) {
-        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+
         Order order = OrderList.get(i);
 
         if (order.getCustName() == cust.getName()) {
+            std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
 
             List<std::string> DL = order.getDishList();
 
@@ -296,8 +341,9 @@ void viewInvoice(Customer cust) {
                 dish.print();
 
             }
+            std::cout << "--------------------------------------" << std::endl;
         }
-        std::cout << "--------------------------------------" << std::endl;
+
         std::cout << endl;
         std::cout << endl;
 
@@ -460,7 +506,6 @@ void CheckOut()
 
 
 
-//some prob here//
 void CreateOrder() {
 
     double charge = 0;
@@ -527,6 +572,7 @@ void CreateOrder() {
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
             OrderList.add(tempOrder);
+            queue1.enqueue(tempOrder);
 
             /*if (currentBranch == "1")
             {
@@ -554,6 +600,59 @@ void CreateOrder() {
 
 
 }
+
+
+int ChooseEdit(Customer cust) {
+    viewInvoice(cust);
+    std::string choose;
+    std::cout << "Enter order to edit ";
+    std::cin >> choose;
+    bool checkInt = check(choose);
+    if (checkInt == true) {
+        return (std::stoi(choose) - 1);
+
+    }
+
+    else {
+        std::cout << "Invalid option try again" << std::endl;
+
+    }
+
+}
+
+List<std::string> AddDish(List<std::string> DL) {
+    //std::cout << DL.getLength();
+    viewAllDishes();
+    std::string choice;
+    std::cout << "Select dish to add ";
+    std::cin >> choice;
+    bool TryInt = check(choice);
+    if (TryInt == true) {
+
+        if ((std::stoi(choice) - 1) < dishList.getLength() && (std::stoi(choice) - 1) >= 0) {
+            std::string NewDish = dishList.get((std::stoi(choice) - 1));
+
+            DL.add(NewDish);
+            return DL;
+            //std::cout << DL.getLength();
+        }
+
+        else {
+            std::cout << "Invalid input" << std::endl;
+            return DL;
+
+        }
+
+    }
+
+    else {
+        std::cout << "Invalid input" << std::endl;
+        return DL;
+
+    }
+}
+
+
 //-------------------------------------------//
 
 
@@ -609,7 +708,39 @@ void mainMenu() {
                 
                 else if (choice == "5")
                 {
-                    mainMenu();
+                    int x = ChooseEdit(sessionStorage);
+                    Order tempOrder = OrderList.get(x);
+                    List<std::string> tempDL = tempOrder.getDishList();
+
+                    //std::cout << x; test
+                    std::string chooseOpt;
+                    std::cout << "1. Add to order" << std::endl;
+                    std::cout << "2. Remove dish" << std::endl;
+                    std::cin >> chooseOpt;
+
+                    if (chooseOpt == "1") {
+                        //Add
+                        tempDL = AddDish(tempDL);
+                        tempOrder.setDishList(tempDL);
+                        OrderList.remove(x);
+                        OrderList.add(tempOrder);
+
+                     
+
+                    }
+
+                    else if (chooseOpt == "2") {
+                        //Remove
+                    }
+
+                    else {
+                        std::cout << "Invalid option" << std::endl;
+                        std::cout << endl;
+                        std::cout << endl;
+
+                    }
+
+
                 }
 
                 else if (choice == "6") {
@@ -621,6 +752,8 @@ void mainMenu() {
                     mainMenu();
 
                 }
+
+              
 
                 else {
 
@@ -673,7 +806,7 @@ void mainMenu() {
         }
     }
 
-    else if (option == "4") {
+    else if (option == "6") {
 
         std::cout << "Exiting app... goodbye..." << std::endl;
 
