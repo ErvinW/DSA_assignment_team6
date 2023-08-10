@@ -584,6 +584,9 @@ void updateOrderStatus() {
     std::cout << "Order status updated successfully!" << std::endl;
 }
 //This is my failed code to let customer check their own order status
+
+
+/*
 void viewCustomerOrders(const Customer& customer) {
     std::string customerName = customer.getName();
 
@@ -607,7 +610,7 @@ void viewCustomerOrders(const Customer& customer) {
     if (!ordersFound) {
         std::cout << "No orders found for " << customerName << "." << std::endl;
     }
-}
+}*/
 
 
 void CreateOrder() {
@@ -938,11 +941,9 @@ void mainMenu() {
                     mainMenu();
 
                 }
-                // Failed code to let customer check their order status
+               
                 else if (choice == "7") {
-                    Customer loggedInCustomer = /* retrieve the logged-in customer */;
-                    viewCustomerOrders(loggedInCustomer);
-
+                  
                 
                 }
 
