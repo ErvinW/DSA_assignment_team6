@@ -510,6 +510,28 @@ void CheckOut()
 
 }
 
+void viewIncomingOrders() {
+    if (OrderList.isEmpty()) {
+        std::cout << "No incoming orders at the moment." << std::endl;
+        return;
+    }
+
+    std::cout << "Incoming Orders:" << std::endl;
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        Order order = OrderList.get(i);
+        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+        std::cout << "Customer Name: " << order.getCustName() << std::endl;
+        std::cout << "Branch: " << order.getBranch() << std::endl;
+        std::cout << "Total Charge: " << order.getCharge() << std::endl;
+        std::cout << "Dishes: ";
+        List<std::string> dishes = order.getDishList();
+        for (int j = 0; j < dishes.getLength(); j++) {
+            std::cout << dishes.get(j) << ", ";
+        }
+        std::cout << std::endl;
+        std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+    }
+}
 
 
 void CreateOrder() {
@@ -747,7 +769,10 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-                    viewInvoice(sessionStorage);
+                    //viewInvoice(sessionStorage); I think we can remove this? Since i think it's working 
+                    // now and i placed it under Admin Login already - Javier, remove if needed!
+                   
+
                 }
                 
                 else if (choice == "5")
@@ -863,7 +888,7 @@ void mainMenu() {
                 std::string choice = adminPage(sessionAdmin);
 
                 if (choice == "1") {
-                    //view orders
+                    viewIncomingOrders();
                 }
 
                 else {
