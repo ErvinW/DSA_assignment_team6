@@ -24,6 +24,7 @@ DishDict dishDict;
 List<std::string> dishList;
 List<Admin> adminList;
 List<std::string> CustNames;
+List<Order> OrderList;
 
 
 
@@ -279,7 +280,30 @@ void viewBy() {
     }
 }
 
+void viewInvoice(Customer cust) {
 
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+        Order order = OrderList.get(i);
+
+        if (order.getCustName() == cust.getName()) {
+
+            List<std::string> DL = order.getDishList();
+
+            for (int x = 0; x < DL.getLength(); x++) {
+
+                Dish dish = dishDict.get(DL.get(x));
+                dish.print();
+
+            }
+        }
+        std::cout << "--------------------------------------" << std::endl;
+        std::cout << endl;
+        std::cout << endl;
+
+    }
+
+}
 
 
 
@@ -301,7 +325,9 @@ std::string userPage(Customer cust) {
     std::cout << "" << std::endl;
     std::cout << "[4] View invoice" << std::endl;
     std::cout << std::endl;
-    std::cout << "[5] Exit" << std::endl;
+    std::cout << "[5] Edit order" << std::endl;
+    std::cout << std::endl;
+    std::cout << "[6] Exit" << std::endl;
     std::cout << std::endl;
 
     std::cin >> option;
@@ -496,6 +522,7 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
+            //
             queue1.enqueue(tempOrder);
             List<std::string> tDL = tempOrder.getDishList();
             int L = tDL.getLength();
@@ -508,6 +535,8 @@ void CreateOrder() {
 
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
+            OrderList.add(tempOrder);
+
             /*if (currentBranch == "1")
             {
                 
@@ -584,7 +613,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-
+                    viewInvoice(sessionStorage);
                 }
                 
                 else if (choice == "5")
