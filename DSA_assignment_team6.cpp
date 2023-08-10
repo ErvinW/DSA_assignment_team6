@@ -324,7 +324,9 @@ std::string userPage(Customer cust) {
     std::cout << "" << std::endl;
     std::cout << "[4] View invoice" << std::endl;
     std::cout << std::endl;
-    std::cout << "[5] Exit" << std::endl;
+    std::cout << "[5] Edit order" << std::endl;
+    std::cout << std::endl;
+    std::cout << "[6] Exit" << std::endl;
     std::cout << std::endl;
 
     std::cin >> option;
@@ -634,6 +636,7 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
+            //
             queue1.enqueue(tempOrder);
             List<std::string> tDL = tempOrder.getDishList();
             int L = tDL.getLength();
@@ -729,7 +732,7 @@ void mainMenu() {
                 
                 else if (choice == "5")
                 {
-
+                    
                 }
 
                 else if (choice == "6") {
