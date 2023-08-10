@@ -379,6 +379,8 @@ std::string userPage(Customer cust) {
     std::cout << std::endl;
     std::cout << "[5] Edit order" << std::endl;
     std::cout << std::endl;
+    std:cout << "[7] Check order status" << std::endl;
+    std::cout << std::endl;
     std::cout << "[6] Exit" << std::endl;
     std::cout << std::endl;
 
@@ -393,8 +395,9 @@ std::string adminPage(Admin admin) {
 
     std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "[1] View orders" << std::endl;
-
+    std::cout << "[1] View incoming orders" << std::endl;
+    std::cout << "[2] Update order status" << std::endl;
+    std::cout << "[3] Exit" << std::endl;
     std::cin >> option;
     return option;
 }
@@ -530,6 +533,79 @@ void viewIncomingOrders() {
         }
         std::cout << std::endl;
         std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+    }
+}
+
+void updateOrderStatus() {
+    if (OrderList.isEmpty()) {
+        std::cout << "No orders available to update." << std::endl;
+        return;
+    }
+
+    // Display all orders
+    std::cout << "Select an order to update:" << std::endl;
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        Order order = OrderList.get(i);
+        std::cout << (i + 1) << ". Order from " << order.getCustName() << " (Branch: " << order.getBranch() << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
+    }
+
+    // Ask admin to select an order
+    int selectedIndex;
+    std::cout << "Enter the number of the order to update: ";
+    std::cin >> selectedIndex;
+
+    if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
+        std::cout << "Invalid selection. Operation aborted." << std::endl;
+        return;
+    }
+
+    // Get selected order
+    Order selectedOrder = OrderList.get(selectedIndex - 1);
+
+    // Ask for new status
+    int statusChoice;
+    std::cout << "Select the new status for the order:" << std::endl;
+    std::cout << "1. Ready" << std::endl;
+    std::cout << "2. Not Ready" << std::endl;
+    std::cout << "Enter choice (1 or 2): ";
+    std::cin >> statusChoice;
+
+    if (statusChoice != 1 && statusChoice != 2) {
+        std::cout << "Invalid choice. Operation aborted." << std::endl;
+        return;
+    }
+
+    // Update order status
+    selectedOrder.setisReady(statusChoice == 1);
+    OrderList.remove(selectedIndex - 1);
+    OrderList.add(selectedIndex - 1, selectedOrder);
+
+    // Confirm update
+    std::cout << "Order status updated successfully!" << std::endl;
+}
+//This is my failed code to let customer check their own order status
+void viewCustomerOrders(const Customer& customer) {
+    std::string customerName = customer.getName();
+
+    // Check if there are any orders in the list
+    if (OrderList.isEmpty()) {
+        std::cout << "No orders found." << std::endl;
+        return;
+    }
+
+    // Find and display orders that belong to the given customer
+    bool ordersFound = false;
+    std::cout << "Orders for " << customerName << ":" << std::endl;
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        Order order = OrderList.get(i);
+        if (order.getCustName() == customerName) {
+            ordersFound = true;
+            std::cout << "Order " << (i + 1) << " (Branch: " << order.getBranch() << ") - Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+        }
+    }
+
+    if (!ordersFound) {
+        std::cout << "No orders found for " << customerName << "." << std::endl;
     }
 }
 
@@ -862,8 +938,13 @@ void mainMenu() {
                     mainMenu();
 
                 }
+                // Failed code to let customer check their order status
+                else if (choice == "7") {
+                    Customer loggedInCustomer = /* retrieve the logged-in customer */;
+                    viewCustomerOrders(loggedInCustomer);
 
-              
+                
+                }
 
                 else {
 
@@ -889,6 +970,14 @@ void mainMenu() {
 
                 if (choice == "1") {
                     viewIncomingOrders();
+                }
+
+                else if (choice == "2") {
+                    updateOrderStatus();
+                }
+
+                else if (choice == "3") {
+                    mainMenu();
                 }
 
                 else {

@@ -21,7 +21,7 @@ public:
 	Customer(std::string n, std::string p,  Membership m);
 
 	void setName(std::string n);
-	std::string getName();
+	std::string getName() ;
 
 	void setPassword(std::string p);
 	std::string getPassword();
