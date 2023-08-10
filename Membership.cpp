@@ -1,6 +1,7 @@
 #include "Membership.h"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 Membership::Membership() {}
 
@@ -10,8 +11,8 @@ Membership::Membership(std::string s, int p) {
 
 }
 
-void Membership::setStatus(std::string s) {
-	Status = s;
+void Membership::setStatus() {
+	Status = status();
 
 }
 std::string Membership::getStatus() {
@@ -27,31 +28,40 @@ int Membership::getPoint() {
 	return Point;
 }
 
-double Membership::EarnPoint(int d)
+void Membership::EarnPoint(int amt)
 {
-	return Point += d / 10;
-	if (Point < 100)
-	{
-		Status = "Ordinary";
-	}
-	else if (Point >= 100 && Point < 200 && Status == "Ordinary")
-	{
-		Status = "Sliver";
-	}
-	else if (Point >= 200 && Status == "Sliver")
-	{
-		Status = "Gold";
-	}
+	double pointsEarned = amt * 0.1;
+	Point += llround(pointsEarned);
 }
 
 bool Membership::RedeemPoints(int pt) {
-	if (Point <= pt) {
+	int minus = Point -= pt;
+	if (Point < 0)
+	{
+		Point += pt;
 		return false;
-
 	}
+	setPoint(minus);
+	return true;
+}
 
-	else {
-		return true;
+std::string Membership::status()
+{
+	if (getStatus() == "Silver" || getStatus() == "Gold")
+	{
+		return getStatus();  // Keep Silver or Gold status even if points are less than 10
+	}
+	else if (getPoint() < 10)
+	{
+		return "Ordinary";
+	}
+	else if (getPoint() >= 10 && getPoint() < 20)
+	{
+		return "Silver";
+	}
+	else if (getPoint() >= 20)
+	{
+		return "Gold";
 	}
 }
 

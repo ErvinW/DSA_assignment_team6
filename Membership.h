@@ -14,15 +14,15 @@ public:
 	Membership();
 	Membership(std::string s, int p);
 
-	void setStatus(std::string s);
+	void setStatus();
 	std::string getStatus();
 
 	void setPoint(int p);
 	int getPoint();
 
-	double EarnPoint(int d);
+	void EarnPoint(int d);
 	bool RedeemPoints(int pt);
-
+	std::string status();
 	void print();
 
 };
