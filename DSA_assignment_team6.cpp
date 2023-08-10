@@ -90,6 +90,9 @@ void ClearQueue() {
 }
 
 void Queuing() {
+
+    ClearQueue();
+
     for (int x = 0; x < OrderList.getLength(); x++) {
         Order order = OrderList.get(x);
         std::string branch = order.getBranch();
@@ -340,7 +343,10 @@ void viewInvoice(Customer cust) {
                 Dish dish = dishDict.get(DL.get(x));
                 dish.print();
 
+                
+
             }
+            std::cout << "Total: $" << order.getCharge() << std::endl;
             std::cout << "--------------------------------------" << std::endl;
         }
 
@@ -558,8 +564,9 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
+            tempOrder.setBranch("1");
             //
-            queue1.enqueue(tempOrder);
+            //queue1.enqueue(tempOrder);
             List<std::string> tDL = tempOrder.getDishList();
             int L = tDL.getLength();
 
@@ -572,7 +579,7 @@ void CreateOrder() {
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
             OrderList.add(tempOrder);
-            queue1.enqueue(tempOrder);
+            Queuing();
 
             /*if (currentBranch == "1")
             {
@@ -722,8 +729,19 @@ void mainMenu() {
                         //Add
                         tempDL = AddDish(tempDL);
                         tempOrder.setDishList(tempDL);
+                        double charge = 0;
+                        for (int i = 0; i < tempDL.getLength(); i++) {
+                            std::string s = tempDL.get(i);
+                            Dish dish = dishDict.get(s);
+                            double nCharge = dish.getCharge();
+                            charge += nCharge;
+
+                        }
+                        tempOrder.setCharge(charge);
                         OrderList.remove(x);
                         OrderList.add(tempOrder);
+                        Queuing();
+
 
                      
 
