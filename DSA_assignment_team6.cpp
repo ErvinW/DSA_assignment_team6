@@ -659,6 +659,43 @@ List<std::string> AddDish(List<std::string> DL) {
     }
 }
 
+List<std::string> RemoveDish(List<std::string> DLR) {
+    std::cout << "+---------------++---------------++---------------+" << std::endl;
+    for (int i = 0; i < DLR.getLength(); i++) {
+        std::string str = DLR.get(i);
+        Dish dish = dishDict.get(str);
+        std::cout << i + 1 << ". ";
+        dish.print();
+    }
+    std::cout << "+---------------++---------------++---------------+" << std::endl;
+    std::string chooseR;
+    std::cout << "Select dish to remove: ";
+    std::cin >> chooseR;
+    bool checkInt = check(chooseR);
+    if (checkInt == true) {
+
+        if ((std::stoi(chooseR) - 1) >= 0 || (std::stoi(chooseR) - 1) < DLR.getLength()) {
+            DLR.remove((std::stoi(chooseR) - 1));
+            return DLR;
+        }
+
+        else {
+            std::cout << "Invalid input." << std::endl;
+            return DLR;
+
+        }
+        
+
+    }
+
+    else {
+        std::cout << "Invalid input." << std::endl;
+        return DLR;
+    }
+    
+
+}
+
 
 //-------------------------------------------//
 
@@ -716,47 +753,77 @@ void mainMenu() {
                 else if (choice == "5")
                 {
                     int x = ChooseEdit(sessionStorage);
-                    Order tempOrder = OrderList.get(x);
-                    List<std::string> tempDL = tempOrder.getDishList();
-
-                    //std::cout << x; test
-                    std::string chooseOpt;
-                    std::cout << "1. Add to order" << std::endl;
-                    std::cout << "2. Remove dish" << std::endl;
-                    std::cin >> chooseOpt;
-
-                    if (chooseOpt == "1") {
-                        //Add
-                        tempDL = AddDish(tempDL);
-                        tempOrder.setDishList(tempDL);
-                        double charge = 0;
-                        for (int i = 0; i < tempDL.getLength(); i++) {
-                            std::string s = tempDL.get(i);
-                            Dish dish = dishDict.get(s);
-                            double nCharge = dish.getCharge();
-                            charge += nCharge;
-
-                        }
-                        tempOrder.setCharge(charge);
-                        OrderList.remove(x);
-                        OrderList.add(tempOrder);
-                        Queuing();
-
-
-                     
-
-                    }
-
-                    else if (chooseOpt == "2") {
-                        //Remove
+                    if (x >= OrderList.getLength() || x < 0) {
+                        std::cout << "Invalid value." << std::endl;
                     }
 
                     else {
-                        std::cout << "Invalid option" << std::endl;
-                        std::cout << endl;
-                        std::cout << endl;
+                        Order tempOrder = OrderList.get(x);
+                        List<std::string> tempDL = tempOrder.getDishList();
 
+                        //std::cout << x; test
+                        std::string chooseOpt;
+                        std::cout << "1. Add to order" << std::endl;
+                        std::cout << "2. Remove dish" << std::endl;
+                        std::cin >> chooseOpt;
+
+                        if (chooseOpt == "1") {
+                            //Add
+                            tempDL = AddDish(tempDL);
+                            tempOrder.setDishList(tempDL);
+                            double charge = 0;
+                            for (int i = 0; i < tempDL.getLength(); i++) {
+                                std::string s = tempDL.get(i);
+                                Dish dish = dishDict.get(s);
+                                double nCharge = dish.getCharge();
+                                charge += nCharge;
+
+                            }
+                            tempOrder.setCharge(charge);
+                            OrderList.remove(x);
+                            OrderList.add(tempOrder);
+                            Queuing();
+
+
+
+
+                        }
+
+                        else if (chooseOpt == "2") {
+                            //Remove
+                            tempDL = RemoveDish(tempDL);
+                            tempOrder.setDishList(tempDL);
+                            double charge = 0;
+                            for (int xs = 0; xs < tempDL.getLength(); xs++) {
+                                std::string s = tempDL.get(xs);
+                                Dish dish = dishDict.get(s);
+                                double nCharge = dish.getCharge();
+                                charge += nCharge;
+
+                            }
+                            tempOrder.setCharge(charge);
+                            OrderList.remove(x);
+
+                            if (tempDL.getLength() > 0) {
+                                OrderList.add(tempOrder);
+                                Queuing();
+                            }
+
+                          
+
+                          
+                            
+                            
+                        }
+
+                        else {
+                            std::cout << "Invalid option" << std::endl;
+                            std::cout << endl;
+                            std::cout << endl;
+
+                        }
                     }
+                   
 
 
                 }
@@ -784,6 +851,7 @@ void mainMenu() {
 
         else {
             std::cout << "Incorrect username/password try again" << std::endl;
+            mainMenu();
         }
     }
 
