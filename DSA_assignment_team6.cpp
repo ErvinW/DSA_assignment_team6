@@ -627,7 +627,6 @@ void CheckOut()
 
         if (tempList.isEmpty() != true)
         {
-            std::cout << tempList.getLength() << endl;
             for (int i = 0; i < tempList.getLength();i++)
             {
                 queue1.enqueue(tempList.get(i));
