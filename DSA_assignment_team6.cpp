@@ -379,10 +379,13 @@ std::string userPage(Customer cust) {
     std::cout << std::endl;
     std::cout << "[5] Edit order" << std::endl;
     std::cout << std::endl;
-    std:cout << "[7] Check order status" << std::endl;
+    std::cout << "[6] Check Out" << std::endl;
     std::cout << std::endl;
-    std::cout << "[6] Exit" << std::endl;
+    std:cout  << "[7] Check order status" << std::endl;
     std::cout << std::endl;
+    std::cout << "[8] Exit" << std::endl;
+    std::cout << std::endl;
+   
 
     std::cin >> option;
     return option;
@@ -521,7 +524,7 @@ void CheckOut()
         queue1.dequeue(tempOrder);
         tempList.add(tempOrder);
     }
-    
+
 
     int numOrder = 0;
     int totalCharge = 0;
@@ -529,10 +532,24 @@ void CheckOut()
     string decision;
     int length = tempList.getLength();
 
+
     for (int i = length - 1; i >= 0; i--)
     {
         auto order = tempList.get(i);
-        if (order.getCustName() == sessionStorage.getName() /* && order.getisReady() == true*/)
+        
+        if (order.getisReady() == true)
+        {
+            cout << "Order Status: true" << endl;
+        }
+        else
+        {
+            cout << "Order Status: false" << endl;
+        }
+        if (order.getisReady() == true)
+        {
+            break;
+        }
+        else if(order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
         {
             tempList2.add(order);
         }
@@ -542,14 +559,14 @@ void CheckOut()
         for (int i = length - 1; i >= 0; i--)
         {
             auto order = tempList.get(i);
-            if (order.getCustName() == sessionStorage.getName() /* && order.getisReady() == true*/)
+            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
             {
-                
+
                 totalCharge += order.getCharge();
                 tempList.remove(i);
             }
         }
-       
+
         viewInvoice(sessionStorage);
         std::cout << "$Total Amount: " << totalCharge << endl;
         std::cout << "" << endl;
@@ -626,8 +643,37 @@ void CheckOut()
         sessionStorage.Member.EarnPoint(totalCharge);
         sessionStorage.Member.setStatus();
 
-void CheckOut()
-{
+        if (tempList.isEmpty() != true)
+        {
+            for (int i = 0; i < tempList.getLength();i++)
+            {
+                queue1.enqueue(tempList.get(i));
+            }
+            tempList.clear();
+            tempList2.clear();
+            queue1.displayItems();
+        }
+    }
+    else
+    {
+        if (tempList.isEmpty() != true)
+        {
+            for (int i = 0; i < tempList.getLength();i++)
+            {
+                queue1.enqueue(tempList.get(i));
+            }
+            tempList.clear();
+            tempList2.clear();
+            std::cout << "Your order is preparing please wait" << endl;
+            queue1.displayItems();
+        }
+        else
+        {
+            cout << "You have not make an order" << endl;
+        }
+        
+    }
+
 
 }
 
@@ -1057,8 +1103,11 @@ void mainMenu() {
                 {
                     CheckOut();
                 }
-
                 else if (choice == "7") {
+                    updateOrderStatus();
+                }
+
+                else if (choice == "8") {
 
                     std::cout << std::endl;
                     std::cout << std::endl;
@@ -1067,12 +1116,6 @@ void mainMenu() {
                     mainMenu();
 
                 }
-               
-                else if (choice == "7") {
-                  
-                
-                }
-
                 else {
 
                     std::cout << "Invalid input try again" << std::endl;
