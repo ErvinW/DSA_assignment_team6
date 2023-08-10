@@ -351,200 +351,87 @@ void ViewMenu() {
     }
 }
 
-void cancelOrder()
-{
+void CancelOrder()
+{   
     List<Order> tempList;
-    while (!queue1.isEmpty())
-    {
-        Order order;
-        queue1.dequeue(order);
-
-        if (order.getCustName() == sessionStorage.getName())
-        {
-            tempList.add(order);
-            
-        }
-        else
-        {
-            queue1.enqueue(order);
-        }
-    }
-
-    if (tempList.isEmpty())
+    List<Order> tempList2;
+    
+    if (queue1.isEmpty())
     {
         cout << "You have not made an order" << endl;
         return;
     }
+    // Move from Queue to List
+    int queueSize = queue1.getLength(); // Get the initial queue size
 
-    for (int i = 0; i < tempList.getLength(); i++)
-    {
-        auto order = tempList.get(i);
-        cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
+    for (int i = 0; i < queueSize; i++) {
+        Order tempOrder;
+        queue1.dequeue(tempOrder);
+        tempList.add(tempOrder);
     }
 
-    int choice;
-    cout << "Please select an order to cancel: ";
-    cin >> choice;
+    List<int> index;
+    int numOrder = 0;
+    int length = tempList.getLength();
 
-    if (choice >= 1 && choice <= tempList.getLength())
+    for (int i = 0; i < length; i++)
     {
-        tempList.remove(choice - 1);
-        cout << "Order has been canceled" << endl;
+        auto order = tempList.get(i);
+        
+        if (order.getCustName() == sessionStorage.getName())
+        {   
+            cout << sessionStorage.getName() << endl;
+            index.add(i);
+            tempList2.add(order);
+            numOrder++;
+            
+            cout << "[" << numOrder << "] " << order.getCustName() << " $" << order.getCharge() << endl;
+        }
+    }
+    for (int i = index.getLength() - 1; i >= 0; i--) {
+        tempList.remove(index.get(i));
+    }
+
+    if (tempList2.isEmpty() == false)
+    {
+        int choice;
+        cout << "Please select an order to cancel:  ";
+        cin >> choice;
+        index.remove(choice - 1);
+        tempList2.remove(choice - 1);
+        cout << "Order has canceled" << endl;
+
+        for (int i = 0; i < tempList2.getLength();i++)
+        {
+            if (index.get(i) == 1)
+            {
+                tempList.add(index.get(i) - 1, tempList2.get(i));
+            }
+            else
+            {
+               tempList.add(index.get(i) , tempList2.get(i));
+            }
+            
+        }
+
+        if (tempList.isEmpty() != true)
+        {
+            for (int i = 0; i < tempList.getLength();i++)
+            {
+                queue1.enqueue(tempList.get(i));
+            }
+            tempList.clear();
+            tempList2.clear();
+            queue1.displayItems();
+        }
     }
     else
     {
-        cout << "Invalid choice" << endl;
+        cout << "You have not make an order" << endl;
     }
-
-    for (int i = 0; i < tempList.getLength(); i++)
-    {
-        queue1.enqueue(tempList.get(i));
-    }
-    /*if (currentBranch == "1")
-    {
-        while (!queue1.isEmpty())
-        {
-            Order order;
-            queue1.dequeue(order);
-
-            if (order.getCustName() == sessionStorage.getName())
-            {
-                tempList.add(order);
-            }
-            else
-            {
-                queue1.enqueue(order);
-            }
-        }
-
-        if (tempList.isEmpty())
-        {
-            cout << "You have not made an order" << endl;
-            return;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            auto order = tempList.get(i);
-            cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-        }
-
-        int choice;
-        cout << "Please select an order to cancel: ";
-        cin >> choice;
-
-        if (choice >= 1 && choice <= tempList.getLength())
-        {
-            tempList.remove(choice - 1);
-            cout << "Order has been canceled" << endl;
-        }
-        else
-        {
-            cout << "Invalid choice" << endl;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            queue1.enqueue(tempList.get(i));
-        }
-    }
-    else if (currentBranch == "2")
-    {
-        while (!queue1.isEmpty())
-        {
-            Order order;
-            queue2.dequeue(order);
-
-            if (order.getCustName() == sessionStorage.getName())
-            {
-                tempList.add(order);
-            }
-            else
-            {
-                queue2.enqueue(order);
-            }
-        }
-
-        if (tempList.isEmpty())
-        {
-            cout << "You have not made an order" << endl;
-            return;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            auto order = tempList.get(i);
-            cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-        }
-
-        int choice;
-        cout << "Please select an order to cancel: ";
-        cin >> choice;
-
-        if (choice >= 1 && choice <= tempList.getLength())
-        {
-            tempList.remove(choice - 1);
-            cout << "Order has been canceled" << endl;
-        }
-        else
-        {
-            cout << "Invalid choice" << endl;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            queue2.enqueue(tempList.get(i));
-        }
-    }
-    else if (currentBranch == "3")
-    {
-        while (!queue1.isEmpty())
-        {
-            Order order;
-            queue3.dequeue(order);
-
-            if (order.getCustName() == sessionStorage.getName())
-            {
-                tempList.add(order);
-            }
-            else
-            {
-                queue3.enqueue(order);
-            }
-        }
-
-        if (tempList.isEmpty())
-        {
-            cout << "You have not made an order" << endl;
-            return;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            auto order = tempList.get(i);
-            cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-        }
-
-        int choice;
-        cout << "Please select an order to cancel: ";
-        cin >> choice;
-
-        if (choice >= 1 && choice <= tempList.getLength())
-        {
-            tempList.remove(choice - 1);
-            cout << "Order has been canceled" << endl;
-        }
-        else
-        {
-            cout << "Invalid choice" << endl;
-        }
-
-        for (int i = 0; i < tempList.getLength(); i++)
-        {
-            queue3.enqueue(tempList.get(i));
-        }
     
-    }*/
+    
+    
 }
 
 
@@ -692,7 +579,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "3") {
-                    cancelOrder();
+                    CancelOrder();
                 }
 
                 else if (choice == "4") {
@@ -701,7 +588,7 @@ void mainMenu() {
                 
                 else if (choice == "5")
                 {
-
+                    mainMenu();
                 }
 
                 else if (choice == "6") {

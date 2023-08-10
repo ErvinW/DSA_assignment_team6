@@ -67,8 +67,6 @@ bool Queue::dequeue(Item& item) {
 
 }
 
-
-
 Order Queue::getFront(/*Item& item*/) {
 	if (isEmpty()) {
 		std::cout << "Queue is empty" << std::endl;
@@ -93,4 +91,18 @@ int Queue::getLength()
 
     return length;
 
+}
+
+void Queue::displayItems() {
+	if (isEmpty()) {
+		std::cout << "Queue is empty" << std::endl;
+		return;
+	}
+
+	Node* current = frontNode;
+	while (current != nullptr) {
+		// Assuming Order class has orderId and customerName members
+		std::cout << "Customer: "  << current->item.getCustName() << ", Charge: " << current->item.getCharge() << std::endl;
+		current = current->next;
+	}
 }
