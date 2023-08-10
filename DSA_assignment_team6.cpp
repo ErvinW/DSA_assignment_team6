@@ -397,7 +397,7 @@ void CancelOrder()
         tempList.add(tempOrder);
     }
 
-    List<int> index;
+    
     int numOrder = 0;
     int length = tempList.getLength();
 
@@ -407,38 +407,28 @@ void CancelOrder()
         
         if (order.getCustName() == sessionStorage.getName())
         {   
-            cout << sessionStorage.getName() << endl;
-            index.add(i);
             tempList2.add(order);
-            numOrder++;
+
+            cout << sessionStorage.getName() << endl;
             
-            cout << "[" << numOrder << "] " << order.getCustName() << " $" << order.getCharge() << endl;
+            cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
         }
     }
-    for (int i = index.getLength() - 1; i >= 0; i--) {
-        tempList.remove(index.get(i));
-    }
 
-    if (tempList2.isEmpty() == false)
+    if (tempList2.isEmpty() != true)
     {
         int choice;
-        cout << "Please select an order to cancel:  ";
+        cout << "Please select an order to cancel: ";
         cin >> choice;
-        index.remove(choice - 1);
-        tempList2.remove(choice - 1);
-        cout << "Order has canceled" << endl;
 
-        for (int i = 0; i < tempList2.getLength();i++)
+        if (choice >= 1 && choice <= tempList.getLength())
         {
-            if (index.get(i) == 1)
-            {
-                tempList.add(index.get(i) - 1, tempList2.get(i));
-            }
-            else
-            {
-               tempList.add(index.get(i) , tempList2.get(i));
-            }
-            
+            tempList.remove(choice - 1);
+            cout << "Order has been canceled" << endl;
+        }
+        else
+        {
+            cout << "Invalid choice" << endl;
         }
 
         if (tempList.isEmpty() != true)
@@ -448,12 +438,13 @@ void CancelOrder()
                 queue1.enqueue(tempList.get(i));
             }
             tempList.clear();
-            tempList2.clear();
             queue1.displayItems();
         }
-    }
+    }    
     else
     {
+        tempList.clear();
+        tempList2.clear();
         cout << "You have not make an order" << endl;
     }
     
