@@ -28,7 +28,7 @@ int Membership::getPoint() {
 	return Point;
 }
 
-void Membership::EarnPoint(int amt)
+void Membership::EarnPoint(double amt)
 {
 	double pointsEarned = amt * 0.1;
 	Point += llround(pointsEarned);

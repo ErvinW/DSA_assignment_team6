@@ -38,7 +38,7 @@ Customer sessionStorage;
 Admin sessionAdmin;
 std::string currentBranch;
 
-using namespace std;
+//using namespace std;
 
 
 //------------- Input validation -------------//
@@ -47,6 +47,18 @@ bool check(std::string s) {
 
     try {
         int tryInt = std::stoi(s);
+        return true;
+    }
+
+    catch (std::invalid_argument& e) {
+        return false;
+    }
+}
+
+bool checkDouble(std::string s) {
+
+    try {
+        int tryInt = std::stod(s);
         return true;
     }
 
@@ -97,22 +109,29 @@ void Queuing() {
         Order order = OrderList.get(x);
         std::string branch = order.getBranch();
 
-        if (branch == "1") {
-            queue1.enqueue(order);
+        if (order.getisReady() == false)
+        {
+            if (branch == "1") {
+                queue1.enqueue(order);
 
+            }
+
+            else if (branch == "2") {
+                queue2.enqueue(order);
+
+            }
+
+            else if (branch == "3") {
+                queue3.enqueue(order);
+
+            }
+
+            else {
+
+            }
         }
-
-        else if (branch == "2") {
-            queue2.enqueue(order);
-
-        }
-
-        else if (branch == "3") {
-            queue3.enqueue(order);
-
-        }
-
-        else {
+        else
+        {
 
         }
     }
@@ -330,6 +349,11 @@ void viewBy() {
 
 void viewInvoice(Customer cust) {
 
+    if (OrderList.getLength() == 0)
+    {
+        std::cout << "There is no order" << std::endl;
+        return;
+    }
     for (int i = 0; i < OrderList.getLength(); i++) {
 
         Order order = OrderList.get(i);
@@ -405,780 +429,38 @@ void ViewMenu() {
 
 void CancelOrder()
 {   
-    List<Order> tempList;
-    List<Order> tempList2;
-    
-    if (currentBranch == "1")
+    while (true)
     {
-        if (queue1.isEmpty())
+        viewInvoice(sessionStorage);
+        std::cout << "Please select order to remove[Press 0 to Exit] ";
+        std::string choose;
+        std::cin >> choose;
+        if (choose == "0")
         {
-            std::cout << "You have not made an order" << endl;
             return;
         }
-        // Move from Queue to List
-        int queueSize = queue1.getLength(); // Get the initial queue size
-
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue1.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int length = tempList.getLength();
-
-        for (int i = 0; i < length; i++)
+        bool checkInt = check(choose);
+        if (checkInt == true)
         {
-            auto order = tempList.get(i);
-            if (order.getisReady() == true)
+            int choice = std::stoi(choose);
+            if (choice - 1 < OrderList.getLength() && choice - 1 >= 0)
             {
-                cout << "Order Status: true" << endl;
+                OrderList.remove(choice - 1);
+                Queuing();
+                std::cout << "Order Canceled" << std::endl;
             }
             else
             {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
-            {
-                tempList2.add(order);
-
-                std::cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-            }
-        }
-
-        if (tempList2.isEmpty() != true)
-        {
-            int choice;
-            std::cout << "Please select an order to cancel: ";
-            std::cin >> choice;
-
-            if (choice >= 1 && choice <= tempList.getLength())
-            {
-                tempList.remove(choice - 1);
-                std::cout << "Order has been canceled" << endl;
-            }
-            else
-            {
-                std::cout << "Invalid choice" << endl;
-            }
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue1.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                queue1.displayItems();
-            }
+                std::cout << "Invalid Input" << std::endl;
+            } 
         }
         else
         {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue1.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue1.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
-        }
-    }
-    else if (currentBranch == "2")
-    {
-        if (queue2.isEmpty())
-        {
-            std::cout << "You have not made an order" << endl;
-            return;
-        }
-        // Move from Queue to List
-        int queueSize = queue2.getLength(); // Get the initial queue size
-
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue2.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int length = tempList.getLength();
-
-        for (int i = 0; i < length; i++)
-        {
-            auto order = tempList.get(i);
-            if (order.getisReady() == true)
-            {
-                cout << "Order Status: true" << endl;
-            }
-            else
-            {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getisReady() == true)
-            {
-                break;
-            }
-            else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
-            {
-                tempList2.add(order);
-
-                std::cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-            }
-        }
-
-        if (tempList2.isEmpty() != true)
-        {
-            int choice;
-            std::cout << "Please select an order to cancel: ";
-            std::cin >> choice;
-
-            if (choice >= 1 && choice <= tempList.getLength())
-            {
-                tempList.remove(choice - 1);
-                std::cout << "Order has been canceled" << endl;
-            }
-            else
-            {
-                std::cout << "Invalid choice" << endl;
-            }
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue2.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                queue2.displayItems();
-            }
-        }
-        else
-        {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue2.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue2.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
-        }
-    }
-    else if (currentBranch == "3")
-    {
-        if (queue3.isEmpty())
-        {
-            std::cout << "You have not made an order" << endl;
-            return;
-        }
-        // Move from Queue to List
-        int queueSize = queue3.getLength(); // Get the initial queue size
-
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue3.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int length = tempList.getLength();
-
-        for (int i = 0; i < length; i++)
-        {
-            auto order = tempList.get(i);
-            if (order.getisReady() == true)
-            {
-                cout << "Order Status: true" << endl;
-            }
-            else
-            {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getisReady() == true)
-            {
-                break;
-            }
-            else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
-            {
-                tempList2.add(order);
-
-                std::cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
-            }
-        }
-
-        if (tempList2.isEmpty() != true)
-        {
-            int choice;
-            std::cout << "Please select an order to cancel: ";
-            std::cin >> choice;
-
-            if (choice >= 1 && choice <= tempList.getLength())
-            {
-                tempList.remove(choice - 1);
-                std::cout << "Order has been canceled" << endl;
-            }
-            else
-            {
-                std::cout << "Invalid choice" << endl;
-            }
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue3.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                queue3.displayItems();
-            }
-        }
-        else
-        {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue3.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue3.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
-        }
-    }
-}
-
-
-void CheckOut()
-{
-    List<Order> tempList;
-    List<Order> tempList2;
-
-    if (currentBranch == "1")
-    {
-        if (queue1.isEmpty())
-        {
-            std::cout << "You have not made an order" << endl;
-            return;
-        }
-        // Move from Queue to List
-        int queueSize = queue1.getLength(); // Get the initial queue size
-
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue1.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int totalCharge = 0;
-        int payment;
-        string decision;
-        int length = tempList.getLength();
-
-
-        for (int i = length - 1; i >= 0; i--)
-        {
-            auto order = tempList.get(i);
-
-            if (order.getisReady() == true)
-            {
-                cout << "Order Status: true" << endl;
-            }
-            else
-            {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getisReady() == false)
-            {
-                tempList2.clear();
-                break;
-            }
-            else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-            {
-                tempList2.add(order);
-            }
-        }
-        if (tempList2.isEmpty() != true)
-        {
-            for (int i = length - 1; i >= 0; i--)
-            {
-                auto order = tempList.get(i);
-                if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-                {
-
-                    totalCharge += order.getCharge();
-                    tempList.remove(i);
-                }
-            }
-
-            viewInvoice(sessionStorage);
-            std::cout << "$Total Amount: " << totalCharge << endl;
-            std::cout << "" << endl;
-            while (true)
-            {
-                while (true)
-                {
-
-                    int point;
-                    std::cout << "Current Point: " << sessionStorage.Member.getPoint() << endl;
-                    std::cout << "Do you want use point[Y/N] ";
-                    std::cin >> decision;
-                    if (decision == "N")
-                    {
-                        break;
-                    }
-                    else if (decision == "Y")
-                    {
-                        int currentPoint = sessionStorage.Member.getPoint();
-                        if (currentPoint == 0)
-                        {
-                            std::cout << "You have 0 point" << endl;
-                            std::cout << "" << endl;
-                            break;
-                        }
-                        else
-                        {
-                            while (true)
-                            {
-                                std::cout << "Please enter point: ";
-                                std::cin >> point;
-                                if (sessionStorage.Member.RedeemPoints(point) == false)
-                                {
-                                    std::cout << "Insufficient Points" << endl;
-
-                                }
-                                else
-                                {
-                                    totalCharge -= point;
-                                    std::cout << "Successful Redeem Points" << endl;
-
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "Invalid Input" << endl;
-                    }
-                }
-                std::cout << "" << endl;
-                while (true)
-                {
-                    std::cout << "$Total Amount: " << totalCharge << endl;
-                    std::cout << "Enter Payment amount: ";
-                    std::cin >> payment;
-                    std::cout << "" << endl;
-
-                    if (payment < totalCharge)
-                    {
-                        std::cout << "Payment unsuccessful" << endl;
-                    }
-                    else
-                    {
-                        std::cout << "Payment successful" << endl;
-                        break;
-                    }
-                }
-                break;
-            }
-
-            sessionStorage.Member.EarnPoint(totalCharge);
-            sessionStorage.Member.setStatus();
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue1.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                queue1.displayItems();
-            }
-        }
-        else
-        {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue1.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue1.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
+            std::cout << "Invalid Input" << std::endl;
         }
         
     }
-    else if (currentBranch == "2")
-    {
-        if (queue2.isEmpty())
-        {
-            std::cout << "You have not made an order" << endl;
-            return;
-        }
-        // Move from Queue to List
-        int queueSize = queue2.getLength(); // Get the initial queue size
 
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue2.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int totalCharge = 0;
-        int payment;
-        string decision;
-        int length = tempList.getLength();
-
-
-        for (int i = length - 1; i >= 0; i--)
-        {
-            auto order = tempList.get(i);
-
-            if (order.getisReady() == true)
-            {
-                cout << "Order Status: true" << endl;
-            }
-            else
-            {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getisReady() == false)
-            {
-                tempList2.clear();
-                break;
-            }
-            else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-            {
-                tempList2.add(order);
-            }
-        }
-        if (tempList2.isEmpty() != true)
-        {
-            for (int i = length - 1; i >= 0; i--)
-            {
-                auto order = tempList.get(i);
-                if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-                {
-
-                    totalCharge += order.getCharge();
-                    tempList.remove(i);
-                }
-            }
-
-            viewInvoice(sessionStorage);
-            std::cout << "$Total Amount: " << totalCharge << endl;
-            std::cout << "" << endl;
-            while (true)
-            {
-                while (true)
-                {
-
-                    int point;
-                    std::cout << "Current Point: " << sessionStorage.Member.getPoint() << endl;
-                    std::cout << "Do you want use point[Y/N] ";
-                    std::cin >> decision;
-                    if (decision == "N")
-                    {
-                        break;
-                    }
-                    else if (decision == "Y")
-                    {
-                        int currentPoint = sessionStorage.Member.getPoint();
-                        if (currentPoint == 0)
-                        {
-                            std::cout << "You have 0 point" << endl;
-                            std::cout << "" << endl;
-                            break;
-                        }
-                        else
-                        {
-                            while (true)
-                            {
-                                std::cout << "Please enter point: ";
-                                std::cin >> point;
-                                if (sessionStorage.Member.RedeemPoints(point) == false)
-                                {
-                                    std::cout << "Insufficient Points" << endl;
-
-                                }
-                                else
-                                {
-                                    totalCharge -= point;
-                                    std::cout << "Successful Redeem Points" << endl;
-
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "Invalid Input" << endl;
-                    }
-                }
-                std::cout << "" << endl;
-                while (true)
-                {
-                    std::cout << "$Total Amount: " << totalCharge << endl;
-                    std::cout << "Enter Payment amount: ";
-                    std::cin >> payment;
-                    std::cout << "" << endl;
-
-                    if (payment < totalCharge)
-                    {
-                        std::cout << "Payment unsuccessful" << endl;
-                    }
-                    else
-                    {
-                        std::cout << "Payment successful" << endl;
-                        break;
-                    }
-                }
-                break;
-            }
-
-            sessionStorage.Member.EarnPoint(totalCharge);
-            sessionStorage.Member.setStatus();
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue2.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                queue2.displayItems();
-            }
-        }
-        else
-        {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue2.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue2.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
-        }
-    }
-    else if (currentBranch == "3")
-    {
-        if (queue3.isEmpty())
-        {
-            std::cout << "You have not made an order" << endl;
-            return;
-        }
-        // Move from Queue to List
-        int queueSize = queue3.getLength(); // Get the initial queue size
-
-        for (int i = 0; i < queueSize; i++) {
-            Order tempOrder;
-            queue3.dequeue(tempOrder);
-            tempList.add(tempOrder);
-        }
-
-
-        int numOrder = 0;
-        int totalCharge = 0;
-        int payment;
-        string decision;
-        int length = tempList.getLength();
-
-
-        for (int i = length - 1; i >= 0; i--)
-        {
-            auto order = tempList.get(i);
-
-            if (order.getisReady() == true)
-            {
-                cout << "Order Status: true" << endl;
-            }
-            else
-            {
-                cout << "Order Status: false" << endl;
-            }
-
-            if (order.getisReady() == false)
-            {
-                tempList2.clear();
-                break;
-            }
-            else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-            {
-                tempList2.add(order);
-            }
-        }
-        if (tempList2.isEmpty() != true)
-        {
-            for (int i = length - 1; i >= 0; i--)
-            {
-                auto order = tempList.get(i);
-                if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
-                {
-
-                    totalCharge += order.getCharge();
-                    tempList.remove(i);
-                }
-            }
-
-            viewInvoice(sessionStorage);
-            std::cout << "$Total Amount: " << totalCharge << endl;
-            std::cout << "" << endl;
-            while (true)
-            {
-                while (true)
-                {
-
-                    int point;
-                    std::cout << "Current Point: " << sessionStorage.Member.getPoint() << endl;
-                    std::cout << "Do you want use point[Y/N] ";
-                    std::cin >> decision;
-                    if (decision == "N")
-                    {
-                        break;
-                    }
-                    else if (decision == "Y")
-                    {
-                        int currentPoint = sessionStorage.Member.getPoint();
-                        if (currentPoint == 0)
-                        {
-                            std::cout << "You have 0 point" << endl;
-                            std::cout << "" << endl;
-                            break;
-                        }
-                        else
-                        {
-                            while (true)
-                            {
-                                std::cout << "Please enter point: ";
-                                std::cin >> point;
-                                if (sessionStorage.Member.RedeemPoints(point) == false)
-                                {
-                                    std::cout << "Insufficient Points" << endl;
-
-                                }
-                                else
-                                {
-                                    totalCharge -= point;
-                                    std::cout << "Successful Redeem Points" << endl;
-
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "Invalid Input" << endl;
-                    }
-                }
-                std::cout << "" << endl;
-                while (true)
-                {
-                    std::cout << "$Total Amount: " << totalCharge << endl;
-                    std::cout << "Enter Payment amount: ";
-                    std::cin >> payment;
-                    std::cout << "" << endl;
-
-                    if (payment < totalCharge)
-                    {
-                        std::cout << "Payment unsuccessful" << endl;
-                    }
-                    else
-                    {
-                        std::cout << "Payment successful" << endl;
-                        break;
-                    }
-                }
-                break;
-            }
-
-            sessionStorage.Member.EarnPoint(totalCharge);
-            sessionStorage.Member.setStatus();
-
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue3.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                queue3.displayItems();
-            }
-        }
-        else
-        {
-            if (tempList.isEmpty() != true)
-            {
-                for (int i = 0; i < tempList.getLength();i++)
-                {
-                    queue3.enqueue(tempList.get(i));
-                }
-                tempList.clear();
-                tempList2.clear();
-                std::cout << "Your order is preparing please wait" << endl;
-                queue3.displayItems();
-            }
-            else
-            {
-                cout << "You have not make an order" << endl;
-            }
-        }
-
-    }
 }
 
 void viewIncomingOrders() {
@@ -1262,7 +544,47 @@ void updateOrderStatus() {
 
         // Confirm update
         std::cout << "Order status updated successfully!" << std::endl;
-   }
+
+        Customer customer = customerDict.get(selectedOrder.getCustName());
+        customer.Member.EarnPoint(selectedOrder.getCharge());
+        customer.Member.setStatus();
+
+        customerDict.remove(customer.getName());
+        customerDict.add(customer.getName(),customer);
+
+        string customerName = customer.getName();
+        string custPassword = customer.getPassword();
+        string memberStatus = customer.Member.getStatus();
+        int memberPoint = customer.Member.getPoint();
+
+        std::ifstream inputFile("Customer.csv");
+        std::ofstream outputFile("TempCustomer.csv");
+        
+
+        if (!inputFile.is_open() || !outputFile.is_open()) {
+            std::cerr << "Error opening files." << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(inputFile, line)) {
+            std::istringstream iss(line);
+            std::string name, password, status, point;
+            if (std::getline(iss, name, ',') && name == customerName &&
+                std::getline(iss, password, ',') && std::getline(iss, status, ',') && std::getline(iss, point)) {
+                outputFile << customerName << "," << custPassword << "," << memberStatus << "," << memberPoint << "\n";
+            }
+            else {
+                outputFile << line << "\n";
+            }
+        }
+
+        inputFile.close();
+        outputFile.close();
+
+        std::remove("Customer.csv");
+        std::rename("TempCustomer.csv", "Customer.csv");
+}
 
 
 
@@ -1323,6 +645,120 @@ void viewCustomerOrders(const Customer& customer) {
     }
 }*/
 
+void MakePayment(double amt)
+{
+    
+    
+    viewInvoice(sessionStorage);
+    std::cout << "Total Amount: $" << amt << endl;
+    std::cout << "" << endl;
+    while (true)
+    {
+        while (true)
+        {
+            
+            std::cout << "Current Point: " << sessionStorage.Member.getPoint() << endl;
+            std::cout << "Do you want use point[Y/N] ";
+            string decision;
+            std::cin >> decision;
+            bool validation = checkstring(decision);
+            if (validation == true)
+            {
+                if (decision == "N" || decision == "n")
+                {
+                    break;
+                }
+                else if (decision == "Y" || decision == "y")
+                {
+                    int currentPoint = sessionStorage.Member.getPoint();
+                    if (currentPoint == 0)
+                    {
+                        std::cout << "You have 0 point" << endl;
+                        std::cout << "" << endl;
+                        break;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            string pt;
+                            std::cout << "Please enter point: ";
+                            std::cin >> pt;
+                            bool checkInt = check(pt);
+                            if (checkInt == true)
+                            {
+                                int point = std::stoi(pt);
+                                if (point > amt)
+                                {
+                                    std::cout << "Unsuccessful Redeem Points" << endl;
+                                    
+                                }
+                                else if (sessionStorage.Member.RedeemPoints(point) == false)
+                                {
+                                    std::cout << "Insufficient Points" << endl;
+                                }
+                                else
+                                {
+                                    amt -= point;
+                                    if (amt < 1)
+                                    {
+                                        amt = 0;
+                                    }
+                                    std::cout << "Successful Redeem Points" << endl;
+
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            else if(validation == false)
+            {
+                std::cout << "Invalid Input" << endl;
+            }
+        }
+        std::cout << "" << endl;
+        while (true)
+        {
+            std::cout << "Total Amount: $" << amt << endl;
+            if (amt <= 0)
+            {
+                std::cout << "Payment successful" << endl;
+                break;
+            }
+            std::cout << "Enter Payment amount: ";
+            string pay;
+            std::cin >> pay;
+            std::cout << "" << endl;
+            bool validationDouble = checkDouble(pay);
+
+            if (validationDouble == true)
+            {
+                double payment = std::stod(pay);
+                if (payment < amt || payment > amt)
+                {
+                    std::cout << "Payment unsuccessful" << endl;
+                    std::cout << "" << endl;
+                }
+                else
+                {
+                    std::cout << "Payment successful" << endl;
+                    break;
+                }
+            }
+            else
+            {
+                std::cout << "Invalid Input" << endl;
+                
+            }
+        }
+        break;
+    }
+
+}
+
 
 void CreateOrder() {
 
@@ -1377,7 +813,7 @@ void CreateOrder() {
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
             tempOrder.setBranch(currentBranch);
-            //
+            
             
             if (tempOrder.getCharge() == 0)
             {
@@ -1393,9 +829,11 @@ void CreateOrder() {
                 d.print();
             }
 
+
+
             std::cout << std::endl;
-            std::cout << tempOrder.getCharge() << std::endl;
             OrderList.add(tempOrder);
+            MakePayment(charge);
 
             if (currentBranch == "1")
             {
@@ -1423,6 +861,8 @@ void CreateOrder() {
 
 
 }
+
+
 
 
 
@@ -1615,11 +1055,7 @@ void userPage(Customer cust) {
         std::cout << std::endl;
         std::cout << "[5] Edit order" << std::endl;
         std::cout << std::endl;
-        std::cout << "[6] Check Out" << std::endl;
-        std::cout << std::endl;
-        std:cout << "[7] Check order status" << std::endl;
-        std::cout << std::endl;
-        std::cout << "[8] Exit" << std::endl;
+        std::cout << "[0] Exit" << std::endl;
         std::cout << std::endl;
 
 
@@ -1647,15 +1083,7 @@ void userPage(Customer cust) {
 
         }
 
-        else if (option == "6") {
-            CheckOut();
-        }
-
-        else if (option == "7") {
-            updateOrderStatus();
-        }
-
-        else if (option == "8") {
+        else if (option == "0") {
             std::cout << "Logging out..." << std::endl;
             std::cout << std::endl;
             return;

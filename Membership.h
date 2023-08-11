@@ -20,7 +20,7 @@ public:
 	void setPoint(int p);
 	int getPoint();
 
-	void EarnPoint(int d);
+	void EarnPoint(double d);
 	bool RedeemPoints(int pt);
 	std::string status();
 	void print();
