@@ -219,6 +219,7 @@ bool AdminLogin() {
         if (userName == tempAdmin.getUsername() && password == tempAdmin.getPassword()) {
 
             sessionAdmin = tempAdmin;
+
             return true;
 
         }
@@ -1014,7 +1015,6 @@ List<std::string> RemoveDish(List<std::string> DLR) {
 
 
 void mainMenu() {
-
     std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
     std::cout << "1. User Login" << std::endl; //OK
     std::cout << "" << std::endl;
@@ -1232,7 +1232,29 @@ void mainMenu() {
 
 
 
+void SelectBranch() {
+    std::string Location;
+    std::cout << "-----------------------------------------" << std::endl;
+    std::cout << "Select branch" << std::endl;
+    std::cout << "[1] Punggol" << std::endl;
+    std::cout << "[2] Clementi" << std::endl;
+    std::cout << "[3] Tiong Bahru" << std::endl;
 
+    std::cin >> Location;
+
+    if (Location == "1" || Location == "2" || Location == "3") {
+        currentBranch = Location;
+        mainMenu();
+
+    }
+
+
+    else {
+        std::cout << "Invalid input. " << std::endl;
+        SelectBranch();
+
+    }
+}
 
 
 
@@ -1249,7 +1271,8 @@ int main()
     initAdmins();
 
 
-    mainMenu();
+    SelectBranch();
+
 
 
 }
