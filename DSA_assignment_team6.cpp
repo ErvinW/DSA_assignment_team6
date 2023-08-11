@@ -586,6 +586,44 @@ void updateOrderStatus() {
         std::rename("TempCustomer.csv", "Customer.csv");
 }
 
+void viewCustomerInformation() {
+    if (OrderList.isEmpty()) {
+        std::cout << "No orders available." << std::endl;
+        return;
+    }
+
+    // Display all orders
+    std::cout << "Select an order to view customer information:" << std::endl;
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        Order order = OrderList.get(i);
+        std::cout << (i + 1) << ". Order from " << order.getCustName()
+            << " (Branch: " << order.getBranch()
+            << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready")
+            << ")" << std::endl;
+    }
+
+    // Ask admin to select an order
+    int selectedIndex;
+    std::cout << "Enter the number of the order to view: ";
+    std::cin >> selectedIndex;
+
+    if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
+        std::cout << "Invalid selection. Operation aborted." << std::endl;
+        return;
+    }
+
+    // Get selected order
+    Order selectedOrder = OrderList.get(selectedIndex - 1);
+
+    // Display customer information
+    std::cout << "Customer Information for Selected Order:" << std::endl;
+    std::cout << "Customer Name: " << selectedOrder.getCustName() << std::endl;
+    std::cout << "Branch: " << selectedOrder.getBranch() << std::endl;
+    std::cout << "Charge: $" << selectedOrder.getCharge() << std::endl;
+    std::cout << "Order Status: " << (selectedOrder.getisReady() ? "Ready" : "Not Ready") << std::endl;
+
+    std::cout << "Customer information displayed successfully!" << std::endl;
+}
 
 
 void adminPage(Admin admin) {
@@ -596,7 +634,8 @@ void adminPage(Admin admin) {
     std::cout << "" << std::endl;
     std::cout << "[1] View incoming orders" << std::endl;
     std::cout << "[2] Update order status" << std::endl;
-    std::cout << "[3] Exit" << std::endl;
+    std::cout << "[3] View customer information" << std::endl;
+    std::cout << "[4] Exit" << std::endl;
     std::cin >> option;
 
     if (option == "1") {
@@ -606,8 +645,11 @@ void adminPage(Admin admin) {
     else if (option == "2") {
         updateOrderStatus();
     }
-
     else if (option == "3") {
+        viewCustomerInformation();
+    }
+
+    else if (option == "4") {
         return;
 
     }
