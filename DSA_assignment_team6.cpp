@@ -1377,7 +1377,7 @@ void CreateOrder() {
             tempOrder.setDishList(tempDL);
             tempOrder.setCharge(charge);
             tempOrder.setisReady(false);
-            tempOrder.setBranch("1");
+            tempOrder.setBranch(currentBranch);
             //
             
             if (tempOrder.getCharge() == 0)
