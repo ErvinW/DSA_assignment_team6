@@ -462,11 +462,23 @@ void CancelOrder()
     for (int i = 0; i < length; i++)
     {
         auto order = tempList.get(i);
-        
-        if (order.getCustName() == sessionStorage.getName())
-        {   
+        if (order.getisReady() == true)
+        {
+            cout << "Order Status: true" << endl;
+        }
+        else
+        {
+            cout << "Order Status: false" << endl;
+        }
+
+        if (order.getisReady() == true)
+        {
+            break;
+        }
+        else if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
+        {
             tempList2.add(order);
-            
+
             std::cout << "[" << i + 1 << "] " << order.getCustName() << " $" << order.getCharge() << endl;
         }
     }
@@ -499,9 +511,21 @@ void CancelOrder()
     }    
     else
     {
-        tempList.clear();
-        tempList2.clear();
-        std::cout << "You have not make an order" << endl;
+        if (tempList.isEmpty() != true)
+        {
+            for (int i = 0; i < tempList.getLength();i++)
+            {
+                queue1.enqueue(tempList.get(i));
+            }
+            tempList.clear();
+            tempList2.clear();
+            std::cout << "Your order is preparing please wait" << endl;
+            queue1.displayItems();
+        }
+        else
+        {
+            cout << "You have not make an order" << endl;
+        }
     }    
 }
 
@@ -545,11 +569,12 @@ void CheckOut()
         {
             cout << "Order Status: false" << endl;
         }
-        if (order.getisReady() == true)
+
+        if (order.getisReady() == false)
         {
             break;
         }
-        else if(order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
+        else if(order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
         {
             tempList2.add(order);
         }
@@ -559,7 +584,7 @@ void CheckOut()
         for (int i = length - 1; i >= 0; i--)
         {
             auto order = tempList.get(i);
-            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
+            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
             {
 
                 totalCharge += order.getCharge();
