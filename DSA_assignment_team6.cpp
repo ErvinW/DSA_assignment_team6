@@ -545,11 +545,11 @@ void CheckOut()
         {
             cout << "Order Status: false" << endl;
         }
-        if (order.getisReady() == true)
+        if (order.getisReady() == false)
         {
             break;
         }
-        else if(order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
+        else if(order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
         {
             tempList2.add(order);
         }
@@ -559,7 +559,7 @@ void CheckOut()
         for (int i = length - 1; i >= 0; i--)
         {
             auto order = tempList.get(i);
-            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == false)
+            if (order.getCustName() == sessionStorage.getName() && order.getisReady() == true)
             {
 
                 totalCharge += order.getCharge();
@@ -744,8 +744,21 @@ void updateOrderStatus() {
     OrderList.remove(selectedIndex - 1);
     OrderList.add(selectedIndex - 1, selectedOrder);
 
+    // Dequeue all existing orders from queue1
+    int existingQueueSize = queue1.getLength();
+    for (int i = 0; i < existingQueueSize; i++) {
+        Item tempItem;
+        queue1.dequeue(tempItem);
+    }
+
+    // Requeue orders from OrderList into queue1
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        queue1.enqueue(OrderList.get(i));
+    }
+
     // Confirm update
     std::cout << "Order status updated successfully!" << std::endl;
+
 }
 //This is my failed code to let customer check their own order status
 
