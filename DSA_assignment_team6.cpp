@@ -1205,7 +1205,6 @@ void viewIncomingOrders() {
 }
 
 void updateOrderStatus() {
-    while (true) {
         if (OrderList.isEmpty()) {
             std::cout << "No orders available to update." << std::endl;
             return;
@@ -1265,7 +1264,7 @@ void updateOrderStatus() {
         std::cout << "Order status updated successfully!" << std::endl;
    }
 
-}
+
 
 void adminPage(Admin admin) {
 
