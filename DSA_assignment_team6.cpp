@@ -1397,7 +1397,6 @@ void CreateOrder() {
             std::cout << std::endl;
             std::cout << tempOrder.getCharge() << std::endl;
             OrderList.add(tempOrder);
-            //Queuing();
 
             if (currentBranch == "1")
             {
@@ -1650,11 +1649,11 @@ void userPage(Customer cust) {
         }
 
         else if (option == "6") {
-            //
+            CheckOut();
         }
 
         else if (option == "7") {
-            //
+            updateOrderStatus();
         }
 
         else if (option == "8") {
