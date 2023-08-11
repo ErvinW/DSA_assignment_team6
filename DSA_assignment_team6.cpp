@@ -64,7 +64,7 @@ bool checkstring(std::string str) {
 
     }
 
-    catch (std::invalid_argument& e) {
+    catch (std::invalid_argument& ) {
         return false;
 
     }
@@ -305,7 +305,7 @@ void viewAllDishes() {
 
 void viewBy() {
     std::string s;
-    std::cout << "Enter category to sort by [3 to exit]: ";
+    std::cout << "Enter category/ dish name to sort by [3 to exit]: ";
     std::cin >> s;
     if (s == "3") {
 
@@ -336,6 +336,14 @@ void viewInvoice(Customer cust) {
 
         if (order.getCustName() == cust.getName()) {
             std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+            if (order.getisReady() == true) {
+                std::cout << "Order ready" << std::endl;
+
+            }
+
+            else {
+                std::cout << "Order not ready" << std::endl;
+            }
 
             List<std::string> DL = order.getDishList();
 
@@ -362,50 +370,6 @@ void viewInvoice(Customer cust) {
 
 
 //------------- UI functions -------------//
-std::string userPage(Customer cust) {
-
-    std::string option;
-
-    std::cout << "+--------------- Welcome ---------------+" << std::endl;
-    cust.print();
-    std::cout << "+---------------------------------------+" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[1] View Menu" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[2] Place an order" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[3] Cancel an order" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[4] View invoice" << std::endl;
-    std::cout << std::endl;
-    std::cout << "[5] Edit order" << std::endl;
-    std::cout << std::endl;
-    std::cout << "[6] Check Out" << std::endl;
-    std::cout << std::endl;
-    std:cout  << "[7] Check order status" << std::endl;
-    std::cout << std::endl;
-    std::cout << "[8] Exit" << std::endl;
-    std::cout << std::endl;
-   
-
-    std::cin >> option;
-    return option;
-}
-
-
-std::string adminPage(Admin admin) {
-
-    std::string option;
-
-    std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[1] View incoming orders" << std::endl;
-    std::cout << "[2] Update order status" << std::endl;
-    std::cout << "[3] Exit" << std::endl;
-    std::cin >> option;
-    return option;
-}
-
 
 void ViewMenu() {
     while (true) {
@@ -426,7 +390,7 @@ void ViewMenu() {
         }
 
         else if (option == "3") {
-            break;
+            return;
 
         }
 
@@ -436,6 +400,8 @@ void ViewMenu() {
         }
     }
 }
+
+
 
 void CancelOrder()
 {   
@@ -1239,68 +1205,99 @@ void viewIncomingOrders() {
 }
 
 void updateOrderStatus() {
-    if (OrderList.isEmpty()) {
-        std::cout << "No orders available to update." << std::endl;
-        return;
-    }
+    while (true) {
+        if (OrderList.isEmpty()) {
+            std::cout << "No orders available to update." << std::endl;
+            return;
+        }
 
-    // Display all orders
-    std::cout << "Select an order to update:" << std::endl;
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        Order order = OrderList.get(i);
-        std::cout << (i + 1) << ". Order from " << order.getCustName() << " (Branch: " << order.getBranch() << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
-    }
+        // Display all orders
+        std::cout << "Select an order to update:" << std::endl;
+        for (int i = 0; i < OrderList.getLength(); i++) {
+            Order order = OrderList.get(i);
+            std::cout << (i + 1) << ". Order from " << order.getCustName() << " (Branch: " << order.getBranch() << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
+        }
 
-    // Ask admin to select an order
-    int selectedIndex;
-    std::cout << "Enter the number of the order to update: ";
-    std::cin >> selectedIndex;
+        // Ask admin to select an order
+        int selectedIndex;
+        std::cout << "Enter the number of the order to update: ";
+        std::cin >> selectedIndex;
 
-    if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
-        std::cout << "Invalid selection. Operation aborted." << std::endl;
-        return;
-    }
+        if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
+            std::cout << "Invalid selection. Operation aborted." << std::endl;
+            return;
+        }
 
-    // Get selected order
-    Order selectedOrder = OrderList.get(selectedIndex - 1);
+        // Get selected order
+        Order selectedOrder = OrderList.get(selectedIndex - 1);
 
-    // Ask for new status
-    int statusChoice;
-    std::cout << "Select the new status for the order:" << std::endl;
-    std::cout << "1. Ready" << std::endl;
-    std::cout << "2. Not Ready" << std::endl;
-    std::cout << "Enter choice (1 or 2): ";
-    std::cin >> statusChoice;
+        // Ask for new status
+        int statusChoice;
+        std::cout << "Select the new status for the order:" << std::endl;
+        std::cout << "1. Ready" << std::endl;
+        std::cout << "2. Not Ready" << std::endl;
+        std::cout << "Enter choice (1 or 2): ";
+        std::cin >> statusChoice;
 
-    if (statusChoice != 1 && statusChoice != 2) {
-        std::cout << "Invalid choice. Operation aborted." << std::endl;
-        return;
-    }
+        if (statusChoice != 1 && statusChoice != 2) {
+            std::cout << "Invalid choice. Operation aborted." << std::endl;
+            return;
+        }
 
-    // Update order status
-    selectedOrder.setisReady(statusChoice == 1);
-    OrderList.remove(selectedIndex - 1);
-    OrderList.add(selectedIndex - 1, selectedOrder);
+        // Update order status
+        selectedOrder.setisReady(statusChoice == 1);
+        OrderList.remove(selectedIndex - 1);
+        OrderList.add(selectedIndex - 1, selectedOrder);
 
-    // Dequeue all existing orders from queue1
-    int existingQueueSize = queue1.getLength();
-    for (int i = 0; i < existingQueueSize; i++) {
-        Item tempItem;
-        queue1.dequeue(tempItem);
-    }
+        // Dequeue all existing orders from queue1
+        int existingQueueSize = queue1.getLength();
+        for (int i = 0; i < existingQueueSize; i++) {
+            Item tempItem;
+            queue1.dequeue(tempItem);
+        }
 
-    // Requeue orders from OrderList into queue1
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        queue1.enqueue(OrderList.get(i));
-    }
+        // Requeue orders from OrderList into queue1
+        for (int i = 0; i < OrderList.getLength(); i++) {
+            queue1.enqueue(OrderList.get(i));
+        }
 
-    // Confirm update
-    std::cout << "Order status updated successfully!" << std::endl;
+        // Confirm update
+        std::cout << "Order status updated successfully!" << std::endl;
+   }
 
 }
+
+void adminPage(Admin admin) {
+
+    std::string option;
+
+    std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "[1] View incoming orders" << std::endl;
+    std::cout << "[2] Update order status" << std::endl;
+    std::cout << "[3] Exit" << std::endl;
+    std::cin >> option;
+
+    if (option == "1") {
+        viewIncomingOrders();
+    }
+
+    else if (option == "2") {
+        updateOrderStatus();
+    }
+
+    else if (option == "3") {
+        return;
+
+    }
+
+    else {
+        std::cout << "Invalid option " << std::endl;
+
+    }
+}
+
 //This is my failed code to let customer check their own order status
-
-
 /*
 void viewCustomerOrders(const Customer& customer) {
     std::string customerName = customer.getName();
@@ -1421,7 +1418,7 @@ void CreateOrder() {
 
         else 
         {
-            break;
+            return;
         }
 
     }
@@ -1430,23 +1427,6 @@ void CreateOrder() {
 }
 
 
-int ChooseEdit(Customer cust) {
-    viewInvoice(cust);
-    std::string choose;
-    std::cout << "Enter order to edit ";
-    std::cin >> choose;
-    bool checkInt = check(choose);
-    if (checkInt == true) {
-        return (std::stoi(choose) - 1);
-
-    }
-
-    else {
-        std::cout << "Invalid option try again" << std::endl;
-
-    }
-
-}
 
 List<std::string> AddDish(List<std::string> DL) {
     //std::cout << DL.getLength();
@@ -1505,7 +1485,7 @@ List<std::string> RemoveDish(List<std::string> DLR) {
             return DLR;
 
         }
-        
+
 
     }
 
@@ -1513,20 +1493,266 @@ List<std::string> RemoveDish(List<std::string> DLR) {
         std::cout << "Invalid input." << std::endl;
         return DLR;
     }
-    
+
 
 }
+
+
+
+void ChooseEdit(Customer cust) {
+
+    while (true) {
+        viewInvoice(cust);
+        std::string choose;
+        std::cout << "Enter order to edit ";
+        std::cin >> choose;
+
+        if (choose == "0") {
+            return;
+        }
+
+        bool checkInt = check(choose);
+        if (checkInt == true) {
+            int choice = std::stoi(choose);
+
+            if (choice - 1 >= OrderList.getLength() || choice - 1 < 0) {
+                std::cout << "Invalid value." << std::endl;
+            }
+
+            
+
+            else {
+
+                Order tempOrder = OrderList.get(choice - 1);
+                List<std::string> tempDL = tempOrder.getDishList();
+
+                //std::cout << x; test
+                std::string chooseOpt;
+                std::cout << "1. Add to order" << std::endl;
+                std::cout << "2. Remove dish" << std::endl;
+                std::cin >> chooseOpt;
+
+                if (chooseOpt == "1") {
+                    //Add
+                    tempDL = AddDish(tempDL);
+                    tempOrder.setDishList(tempDL);
+                    double charge = 0;
+                    for (int i = 0; i < tempDL.getLength(); i++) {
+                        std::string s = tempDL.get(i);
+                        Dish dish = dishDict.get(s);
+                        double nCharge = dish.getCharge();
+                        charge += nCharge;
+
+                    }
+                    tempOrder.setCharge(charge);
+                    OrderList.remove(choice - 1);
+                    OrderList.add(tempOrder);
+                    Queuing();
+                    return;
+
+
+
+                }
+
+                else if (chooseOpt == "2") {
+                    //Remove
+                    tempDL = RemoveDish(tempDL);
+                    tempOrder.setDishList(tempDL);
+                    double charge = 0;
+                    for (int xs = 0; xs < tempDL.getLength(); xs++) {
+                        std::string s = tempDL.get(xs);
+                        Dish dish = dishDict.get(s);
+                        double nCharge = dish.getCharge();
+                        charge += nCharge;
+
+                    }
+                    tempOrder.setCharge(charge);
+                    OrderList.remove(choice - 1);
+
+                    if (tempDL.getLength() > 0) {
+                        OrderList.add(tempOrder);
+                        Queuing();
+                        return;
+                    }
+
+
+
+
+                }
+
+
+                else {
+                    std::cout << "Invalid option try again" << std::endl;
+
+                }
+            }
+        }
+    }
+
+}
+
+
 
 
 //-------------------------------------------//
 
 
+void userPage(Customer cust) {
+
+    while (true) {
+
+        std::string option;
+
+        std::cout << "+--------------- Welcome ---------------+" << std::endl;
+        cust.print();
+        std::cout << "+---------------------------------------+" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "[1] View Menu" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "[2] Place an order" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "[3] Cancel an order" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "[4] View invoice" << std::endl;
+        std::cout << std::endl;
+        std::cout << "[5] Edit order" << std::endl;
+        std::cout << std::endl;
+        std::cout << "[6] Check Out" << std::endl;
+        std::cout << std::endl;
+        std:cout << "[7] Check order status" << std::endl;
+        std::cout << std::endl;
+        std::cout << "[8] Exit" << std::endl;
+        std::cout << std::endl;
+
+
+        std::cin >> option;
+
+        if (option == "1") {
+            ViewMenu();
+        }
+
+        else if (option == "2") {
+            CreateOrder();
+        }
+
+        else if (option == "3") {
+            CancelOrder();
+        }
+
+        else if (option == "4") {
+            viewInvoice(sessionStorage);
+        }
+
+        else if (option == "5") {
+            
+            ChooseEdit(sessionStorage);
+
+        }
+
+        else if (option == "6") {
+            //
+        }
+
+        else if (option == "7") {
+            //
+        }
+
+        else if (option == "8") {
+            std::cout << "Logging out..." << std::endl;
+            std::cout << std::endl;
+            return;
+        }
+
+        else {
+            std::cout << "Invalid option " << std::endl;
+
+        }
+    }
+
+
+}
 
 
 
 
 
-void mainMenu() {
+
+void Main() {
+
+    while (true) {
+        std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
+        std::cout << "1. User Login" << std::endl; //OK
+        std::cout << "" << std::endl;
+        std::cout << "2. Admin Login" << std::endl; //OK
+        std::cout << "" << std::endl;
+        std::cout << "3. Register User" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "4. Exit app" << std::endl; //OK
+        std::cout << std::endl;
+        std::cout << "Please choose your role: ";
+
+        std::string option;
+        std::cin >> option;
+        std::cout << "" << std::endl;
+        std::cout << "" << std::endl;
+
+
+   
+
+        if (option == "1") { //user done
+            bool login = userLogin();
+            if (login == true) {
+                userPage(sessionStorage);
+            }
+
+            else {
+                std::cout << "Invalid option" << std::endl;
+
+            }
+
+        }
+
+        else if (option == "2") { //admin
+            bool aLogin = AdminLogin();
+            if (aLogin == true) {
+                adminPage(sessionAdmin);
+            }
+
+            else {
+                std::cout << "Invalid option" << std::endl;
+
+            }
+
+        }
+
+        else if (option == "3") {
+            bool Reg = regUser();
+            if (Reg == true) {
+                std::cout << "User registered" << std::endl;
+
+            }
+
+            else {
+
+            }
+        }
+
+      
+
+        else if (option == "4") {
+            std::cout << "Exiting app.." << std::endl;
+            return;
+
+        }
+  }
+
+}
+
+
+
+
+
+/*void mainMenu() {
     std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
     std::cout << "1. User Login" << std::endl; //OK
     std::cout << "" << std::endl;
@@ -1565,10 +1791,7 @@ void mainMenu() {
                 }
 
                 else if (choice == "4") {
-                    //viewInvoice(sessionStorage); I think we can remove this? Since i think it's working 
-                    // now and i placed it under Admin Login already - Javier, remove if needed!
-                   
-
+                    viewInvoice(sessionStorage); 
                 }
                 
                 else if (choice == "5")
@@ -1727,19 +1950,15 @@ void mainMenu() {
     }
 
     else if (option == "5") {
-
         std::cout << "Exiting app... goodbye..." << std::endl;
-
     }
 
     else {
-
         std::cout << "Invalid input. Try again." << std::endl;
         mainMenu();
-
     }
 
-}
+}*/
 
 
 
@@ -1756,7 +1975,7 @@ void SelectBranch() {
 
     if (Location == "1" || Location == "2" || Location == "3") {
         currentBranch = Location;
-        mainMenu();
+        Main();
 
     }
 
