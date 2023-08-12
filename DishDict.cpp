@@ -118,8 +118,12 @@ void DishDict::loadRatingsFromFile(const std::string& filename) {
         std::istringstream iss(line);
         std::string name;
         double rating;
+        int count;
         std::getline(iss, name, ',');
         iss >> rating;
+        if (rating == -0.0) rating = 0.0;  // Adjust negative zero to positive zero
+        iss.ignore(1); // Ignore the comma
+        iss >> count;
 
         int index = hash(name);
         dNode* current = items[index];
@@ -127,12 +131,24 @@ void DishDict::loadRatingsFromFile(const std::string& filename) {
             current = current->next;
         }
         if (current != nullptr) {
-            current->item.setAverageRating(rating);
+            if (rating == -1.0) {
+                current->item.setRatingFromLoad(0, 0); // Handle the "N/A" case
+            }
+            else {
+                int total_rating_from_file = static_cast<int>(rating * count);
+
+ 
+
+                current->item.setRatingFromLoad(total_rating_from_file, count);
+            }
         }
+
     }
 
     file.close();
 }
+
+
 
 
 void DishDict::saveRatingsToFile(const std::string& filename) {
@@ -145,29 +161,41 @@ void DishDict::saveRatingsToFile(const std::string& filename) {
     for (int i = 0; i < MAX_DISH_SIZE; i++) {
         dNode* current = items[i];
         while (current != nullptr) {
-            file << current->key << "," << current->item.getAverageRating() << "\n";
+            file << current->key << ","
+                << current->item.getAverageRating() << ","
+                << current->item.getRatingCount() << "\n"; // Added count to the CSV output
             current = current->next;
         }
     }
 
     file.close();
-
-
     std::cout << "Ratings saved to file." << std::endl;
 }
 
 
 
 void DishDict::rateDishByName() {
+    loadRatingsFromFile("ratings.csv");
+
     // Display dishes with ratings
     for (int i = 0; i < MAX_DISH_SIZE; i++) {
         dNode* current = items[i];
         while (current != nullptr) {
-            std::cout << current->key << " - Rating: " << current->item.getAverageRating() << "/5" << std::endl;
+            double rating = current->item.getAverageRating();
+            if (rating == -0.0) rating = 0.0;  // Adjust negative zero to positive zero
+            int count = current->item.getRatingCount();
+            std::cout << current->key << " - Rating: ";
+            if (count == 0) {
+                std::cout << "N/A"; // No rating available
+            }
+            else {
+                std::cout << rating << "/5";
+            }
+            std::cout << std::endl;
+
             current = current->next;
         }
     }
-
     // Ask customer for the name of the dish to rate
     std::string dishName;
     std::cout << "Enter the name of the dish you want to rate: ";
@@ -201,10 +229,16 @@ void DishDict::rateDishByName() {
     }
 
     current->item.addRating(rating);
+    double updatedRating = current->item.getAverageRating();
+    if (updatedRating == -0.0) updatedRating = 0.0;  // Adjust negative zero to positive zero
     std::cout << std::fixed << std::setprecision(1); // Set the output to one decimal place
-    std::cout << "Thank you for rating " << dishName << "! Updated Rating: " << current->item.getAverageRating() << "/5" << std::endl;
+    std::cout << "Thank you for rating " << dishName << "! Updated Rating: " << updatedRating << "/5" << std::endl;
+
+    // Save ratings to the file
+    saveRatingsToFile("ratings.csv");
+    std::cout << "Ratings saved to file." << std::endl;
 }
-  
+
 
 void DishDict::print() {
     for (int i = 0; i < MAX_DISH_SIZE; i++) {

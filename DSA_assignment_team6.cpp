@@ -981,6 +981,12 @@ List<std::string> RemoveDish(List<std::string> DLR) {
 
 }
 
+void saveAndExit(DishDict& dishes) {
+    dishes.saveRatingsToFile("ratings.csv");
+    std::cout << "Ratings saved. Exiting program.\n";
+    exit(0);
+}
+
 
 
 void ChooseEdit(Customer cust) {
@@ -1155,7 +1161,6 @@ void userPage(Customer cust) {
 
 
 void Main() {
-
     while (true) {
         std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
         std::cout << "1. User Login" << std::endl; //OK
@@ -1474,17 +1479,14 @@ void SelectBranch() {
 int main()
 {
     DishDict dishes;
+   
 
-    // Load ratings from the file
-    dishes.loadRatingsFromFile("ratings.csv");
 
     initCustomer();
     initDishList();
+    dishDict.loadRatingsFromFile("ratings.csv"); // Load ratings after dishes are created
     initAdmins();
     SelectBranch();
-
-    // Save ratings to the file before exiting
-    dishes.saveRatingsToFile("ratings.csv");
 
     return 0;
 }

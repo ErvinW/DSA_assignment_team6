@@ -10,9 +10,9 @@ private:
 	std::string foodName;
 	//std::string portion;
 	double charge;
-	double totalRating; // Total rating received
-	int ratingCount;    // Number of times the dish has been rated
-	double averageRating;
+	double totalRating = 0; // Total rating received
+	int ratingCount = 0;    // Number of times the dish has been rated
+
 
 public:
 	Dish();
@@ -32,10 +32,10 @@ public:
 
 	// Add a rating and update the total rating
 	void addRating(int rating);
-
 	double getAverageRating() const;
+	void setRatingFromLoad(int total, int count);
+	int getRatingCount() const;
 
-	void setAverageRating(double rating);
 
 
 	void print();

@@ -44,20 +44,28 @@ double Dish::getCharge() {
 	return charge;
 }
 
-void Dish::setAverageRating(double rating) {
-	// Your implementation here, e.g.:
-	averageRating = rating;
-}
+
 
 
 double Dish::getAverageRating() const {
-	if (ratingCount == 0) return 3.0; // Default rating if no ratings have been given
+	if (ratingCount == 0) return 0.0; // To prevent division by zero
 	return static_cast<double>(totalRating) / ratingCount;
 }
+
+
 
 void Dish::addRating(int rating) {
 	totalRating += rating;
 	ratingCount++;
+}
+
+void Dish::setRatingFromLoad(int total, int count) {
+	totalRating = total;
+	ratingCount = count;
+}
+
+int Dish::getRatingCount() const {
+	return ratingCount;
 }
 
 void Dish::print() {
