@@ -51,7 +51,7 @@ public:
 	void loadRatingsFromFile(const std::string& filename);
 	void saveRatingsToFile(const std::string& filename);
 
-	
+
 
 	//------------------- Other useful functions -----------------
 	// display the items in the Dictionary

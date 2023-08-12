@@ -312,15 +312,15 @@ bool regUser() {
 //-------------- View functions -------------//
 
 void viewAllDishes() {
-
     for (int i = 0; i < dishList.getLength(); i++) {
         std::string name = dishList.get(i);
         Dish tempD = dishDict.get(name);
         std::cout << i + 1 << ". ";
         tempD.print();
+        std::cout << " - Rating: " << tempD.getAverageRating() << "/5" << std::endl; // Display the rating
     }
-
 }
+
 
 void viewBy() {
     std::string s;
@@ -1210,7 +1210,7 @@ void Main() {
             }
         }
 
-      
+     
 
         else if (option == "4") {
             std::cout << "Exiting app.." << std::endl;
