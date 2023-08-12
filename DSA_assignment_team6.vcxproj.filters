@@ -50,6 +50,9 @@
     <None Include="Dishes.csv">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="ratings.csv">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h">
