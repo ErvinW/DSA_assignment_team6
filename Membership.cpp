@@ -56,7 +56,6 @@ bool Membership::RedeemPoints(int pt) {
 	{
 		Point -= pt;
 		setPoint(Point);
-		std::cout << Point << std::endl;
 		return true;
 	}
 }

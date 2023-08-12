@@ -722,6 +722,7 @@ void MakePayment(double amt)
                                 else if (currentPoint < point)
                                 {
                                     std::cout << "Insufficient Points" << endl;
+                                    cout << "" << endl;
                                 }
                                 else
                                 {
