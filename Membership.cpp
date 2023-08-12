@@ -31,7 +31,7 @@ int Membership::getPoint() {
 void Membership::EarnPoint(double amt)
 {
 	double pointsEarned = amt * 0.1;
-	Point += llround(pointsEarned);
+	Point += ceil(pointsEarned);
 }
 
 bool Membership::RedeemPoints(int pt) {

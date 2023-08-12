@@ -545,45 +545,49 @@ void updateOrderStatus() {
         // Confirm update
         std::cout << "Order status updated successfully!" << std::endl;
 
-        Customer customer = customerDict.get(selectedOrder.getCustName());
-        customer.Member.EarnPoint(selectedOrder.getCharge());
-        customer.Member.setStatus();
+        if (statusChoice == 1)
+        {
+            Customer customer = customerDict.get(selectedOrder.getCustName());
+            customer.Member.EarnPoint(selectedOrder.getCharge());
+            customer.Member.setStatus();
 
-        customerDict.remove(customer.getName());
-        customerDict.add(customer.getName(),customer);
+            customerDict.remove(customer.getName());
+            customerDict.add(customer.getName(), customer);
 
-        string customerName = customer.getName();
-        string custPassword = customer.getPassword();
-        string memberStatus = customer.Member.getStatus();
-        int memberPoint = customer.Member.getPoint();
+            string customerName = customer.getName();
+            string custPassword = customer.getPassword();
+            string memberStatus = customer.Member.getStatus();
+            int memberPoint = customer.Member.getPoint();
 
-        std::ifstream inputFile("Customer.csv");
-        std::ofstream outputFile("TempCustomer.csv");
+            std::ifstream inputFile("Customer.csv");
+            std::ofstream outputFile("TempCustomer.csv");
+
+
+            if (!inputFile.is_open() || !outputFile.is_open()) {
+                std::cerr << "Error opening files." << std::endl;
+                return;
+            }
+
+            std::string line;
+            while (std::getline(inputFile, line)) {
+                std::istringstream iss(line);
+                std::string name, password, status, point;
+                if (std::getline(iss, name, ',') && name == customerName &&
+                    std::getline(iss, password, ',') && std::getline(iss, status, ',') && std::getline(iss, point)) {
+                    outputFile << customerName << "," << custPassword << "," << memberStatus << "," << memberPoint << "\n";
+                }
+                else {
+                    outputFile << line << "\n";
+                }
+            }
+
+            inputFile.close();
+            outputFile.close();
+
+            std::remove("Customer.csv");
+            std::rename("TempCustomer.csv", "Customer.csv");
+        }
         
-
-        if (!inputFile.is_open() || !outputFile.is_open()) {
-            std::cerr << "Error opening files." << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (std::getline(inputFile, line)) {
-            std::istringstream iss(line);
-            std::string name, password, status, point;
-            if (std::getline(iss, name, ',') && name == customerName &&
-                std::getline(iss, password, ',') && std::getline(iss, status, ',') && std::getline(iss, point)) {
-                outputFile << customerName << "," << custPassword << "," << memberStatus << "," << memberPoint << "\n";
-            }
-            else {
-                outputFile << line << "\n";
-            }
-        }
-
-        inputFile.close();
-        outputFile.close();
-
-        std::remove("Customer.csv");
-        std::rename("TempCustomer.csv", "Customer.csv");
 }
 
 void viewCustomerInformation() {
