@@ -29,6 +29,7 @@ List<Order> OrderList;
 
 
 
+
 Queue queue1;
 Queue queue2;
 Queue queue3;
@@ -39,7 +40,6 @@ Admin sessionAdmin;
 std::string currentBranch;
 
 //using namespace std;
-
 
 //------------- Input validation -------------//
 
@@ -139,7 +139,7 @@ void Queuing() {
 
 void initCustomer() {
 
-    std::ifstream inFile("Customer.csv");
+    std::ifstream inFile("Customer.csv");   
     if (!inFile) {
         std::cerr << "Error opening Customer.csv for reading." << std::endl;
         return;
@@ -1101,6 +1101,8 @@ void userPage(Customer cust) {
         std::cout << std::endl;
         std::cout << "[5] Edit order" << std::endl;
         std::cout << std::endl;
+        std::cout << "[6] Rate Dishes" << std::endl;
+        std::cout << std::endl;
         std::cout << "[0] Exit" << std::endl;
         std::cout << std::endl;
 
@@ -1127,6 +1129,9 @@ void userPage(Customer cust) {
             
             ChooseEdit(sessionStorage);
 
+        }
+        else if (option == "6") {
+            dishDict.rateDishByName();
         }
 
         else if (option == "0") {
@@ -1466,17 +1471,20 @@ void SelectBranch() {
 
 
 //------------------------------------------//
-
 int main()
 {
+    DishDict dishes;
+
+    // Load ratings from the file
+    dishes.loadRatingsFromFile("ratings.csv");
+
     initCustomer();
     initDishList();
     initAdmins();
-
-
     SelectBranch();
 
+    // Save ratings to the file before exiting
+    dishes.saveRatingsToFile("ratings.csv");
 
-
+    return 0;
 }
-

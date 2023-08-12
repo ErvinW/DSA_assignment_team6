@@ -8,6 +8,8 @@ Dish::Dish(std::string c, std::string fN, double ch) {
 	foodName = fN;
 	//portion = p;
 	charge = ch;
+	totalRating = 0;
+	ratingCount = 0;
 }
 
 void Dish::setCuisine(std::string c) {
@@ -40,6 +42,22 @@ void Dish::setCharge(double ch) {
 
 double Dish::getCharge() {
 	return charge;
+}
+
+void Dish::setAverageRating(double rating) {
+	// Your implementation here, e.g.:
+	averageRating = rating;
+}
+
+
+double Dish::getAverageRating() const {
+	if (ratingCount == 0) return 3.0; // Default rating if no ratings have been given
+	return static_cast<double>(totalRating) / ratingCount;
+}
+
+void Dish::addRating(int rating) {
+	totalRating += rating;
+	ratingCount++;
 }
 
 void Dish::print() {

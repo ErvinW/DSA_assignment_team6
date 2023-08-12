@@ -140,6 +140,7 @@
   <ItemGroup>
     <None Include="Customer.csv" />
     <None Include="Dishes.csv" />
+    <None Include="ratings.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
