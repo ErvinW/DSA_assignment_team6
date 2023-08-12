@@ -445,9 +445,16 @@ void CancelOrder()
             int choice = std::stoi(choose);
             if (choice - 1 < OrderList.getLength() && choice - 1 >= 0)
             {
-                OrderList.remove(choice - 1);
-                Queuing();
-                std::cout << "Order Canceled" << std::endl;
+                if (OrderList.get(choice - 1).getisReady() == false)
+                {
+                    OrderList.remove(choice - 1);
+                    Queuing();
+                    std::cout << "Order Canceled" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Unable to delete order" << endl;
+                }
             }
             else
             {
@@ -664,33 +671,6 @@ void adminPage(Admin admin) {
     }
 }
 
-//This is my failed code to let customer check their own order status
-/*
-void viewCustomerOrders(const Customer& customer) {
-    std::string customerName = customer.getName();
-
-    // Check if there are any orders in the list
-    if (OrderList.isEmpty()) {
-        std::cout << "No orders found." << std::endl;
-        return;
-    }
-
-    // Find and display orders that belong to the given customer
-    bool ordersFound = false;
-    std::cout << "Orders for " << customerName << ":" << std::endl;
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        Order order = OrderList.get(i);
-        if (order.getCustName() == customerName) {
-            ordersFound = true;
-            std::cout << "Order " << (i + 1) << " (Branch: " << order.getBranch() << ") - Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
-        }
-    }
-
-    if (!ordersFound) {
-        std::cout << "No orders found for " << customerName << "." << std::endl;
-    }
-}*/
-
 void MakePayment(double amt)
 {
     
@@ -739,12 +719,52 @@ void MakePayment(double amt)
                                     std::cout << "Unsuccessful Redeem Points" << endl;
                                     
                                 }
-                                else if (sessionStorage.Member.RedeemPoints(point) == false)
+                                else if (currentPoint < point)
                                 {
                                     std::cout << "Insufficient Points" << endl;
                                 }
                                 else
                                 {
+                                    sessionStorage.Member.RedeemPoints(point);
+                                    sessionStorage.Member.setPoint(currentPoint - point);
+                                    
+                                    Membership member = Membership(sessionStorage.Member.getStatus(), currentPoint - point);
+                                    Customer customer2 = Customer(sessionStorage.getName(), sessionStorage.getPassword(), member);
+                                    customerDict.remove(sessionStorage.getName());
+                                    customerDict.add(sessionStorage.getName(), customer2);
+                                
+                                    string customerName = customer2.getName();
+                                    string custPassword = customer2.getPassword();
+                                    string memberStatus = customer2.Member.getStatus();
+                                    int memberPoint = customer2.Member.getPoint();
+
+                                    std::ifstream inputFile("Customer.csv");
+                                    std::ofstream outputFile("TempCustomer.csv");
+
+
+                                    if (!inputFile.is_open() || !outputFile.is_open()) {
+                                        std::cerr << "Error opening files." << std::endl;
+                                        return;
+                                    }
+
+                                    std::string line;
+                                    while (std::getline(inputFile, line)) {
+                                        std::istringstream iss(line);
+                                        std::string name, password, status, point;
+                                        if (std::getline(iss, name, ',') && name == customerName &&
+                                            std::getline(iss, password, ',') && std::getline(iss, status, ',') && std::getline(iss, point)) {
+                                            outputFile << customerName << "," << custPassword << "," << memberStatus << "," << memberPoint << "\n";
+                                        }
+                                        else {
+                                            outputFile << line << "\n";
+                                        }
+                                    }
+
+                                    inputFile.close();
+                                    outputFile.close();
+
+                                    std::remove("Customer.csv");
+                                    std::rename("TempCustomer.csv", "Customer.csv");
                                     amt -= point;
                                     if (amt < 1)
                                     {
@@ -1086,9 +1106,9 @@ void userPage(Customer cust) {
     while (true) {
 
         std::string option;
-
+        Customer tempcust = customerDict.get(sessionStorage.getName());
         std::cout << "+--------------- Welcome ---------------+" << std::endl;
-        cust.print();
+        tempcust.print();
         std::cout << "+---------------------------------------+" << std::endl;
         std::cout << "" << std::endl;
         std::cout << "[1] View Menu" << std::endl;
@@ -1224,220 +1244,6 @@ void Main() {
   }
 
 }
-
-
-
-
-
-/*void mainMenu() {
-    std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
-    std::cout << "1. User Login" << std::endl; //OK
-    std::cout << "" << std::endl;
-    std::cout << "2. Admin Login" << std::endl; //OK
-    std::cout << "" << std::endl;
-    std::cout << "3. Register User" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "4. View Incoming Orders" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "5. Exit app" << std::endl; //OK
-    std::cout << std::endl;
-    std::cout << "Please choose your role: ";
-
-    std::string option;
-    std::cin >> option;
-    std::cout << "" << std::endl;
-    std::cout << "" << std::endl;
-
-    if (option == "1") {
-        bool login = userLogin();
-        if (login == true) {
-            bool loop = true; //
-            while (loop) {
-                std::string choice = userPage(sessionStorage);
-
-                if (choice == "1") {
-                    ViewMenu();
-                }
-
-                else if (choice == "2") {
-                    CreateOrder();
-                }
-
-                else if (choice == "3") {
-                    CancelOrder();
-                }
-
-                else if (choice == "4") {
-                    viewInvoice(sessionStorage); 
-                }
-                
-                else if (choice == "5")
-                {
-                    int x = ChooseEdit(sessionStorage);
-                    if (x >= OrderList.getLength() || x < 0) {
-                        std::cout << "Invalid value." << std::endl;
-                    }
-
-                    else {
-                        Order tempOrder = OrderList.get(x);
-                        List<std::string> tempDL = tempOrder.getDishList();
-
-                        //std::cout << x; test
-                        std::string chooseOpt;
-                        std::cout << "1. Add to order" << std::endl;
-                        std::cout << "2. Remove dish" << std::endl;
-                        std::cin >> chooseOpt;
-
-                        if (chooseOpt == "1") {
-                            //Add
-                            tempDL = AddDish(tempDL);
-                            tempOrder.setDishList(tempDL);
-                            double charge = 0;
-                            for (int i = 0; i < tempDL.getLength(); i++) {
-                                std::string s = tempDL.get(i);
-                                Dish dish = dishDict.get(s);
-                                double nCharge = dish.getCharge();
-                                charge += nCharge;
-
-                            }
-                            tempOrder.setCharge(charge);
-                            OrderList.remove(x);
-                            OrderList.add(tempOrder);
-                            Queuing();
-
-
-
-
-                        }
-
-                        else if (chooseOpt == "2") {
-                            //Remove
-                            tempDL = RemoveDish(tempDL);
-                            tempOrder.setDishList(tempDL);
-                            double charge = 0;
-                            for (int xs = 0; xs < tempDL.getLength(); xs++) {
-                                std::string s = tempDL.get(xs);
-                                Dish dish = dishDict.get(s);
-                                double nCharge = dish.getCharge();
-                                charge += nCharge;
-
-                            }
-                            tempOrder.setCharge(charge);
-                            OrderList.remove(x);
-
-                            if (tempDL.getLength() > 0) {
-                                OrderList.add(tempOrder);
-                                Queuing();
-                            }
-
-                          
-
-                          
-                            
-                            
-                        }
-
-                        else {
-                            std::cout << "Invalid option" << std::endl;
-                            std::cout << endl;
-                            std::cout << endl;
-
-                        }
-                    }
-                   
-
-
-                }
-
-                else if (choice == "6")
-                {
-                    CheckOut();
-                }
-                else if (choice == "7") {
-                    updateOrderStatus();
-                }
-
-                else if (choice == "8") {
-
-                    std::cout << std::endl;
-                    std::cout << std::endl;
-                    std::cout << "Logging out" << std::endl;
-                    loop = false; // 
-                    mainMenu();
-
-                }
-                else {
-
-                    std::cout << "Invalid input try again" << std::endl;
-
-                }
-
-            }
-        }
-
-        else {
-            std::cout << "Incorrect username/password try again" << std::endl;
-            mainMenu();
-        }
-    }
-
-    else if (option == "2") {
-        //admin login
-        bool aLogin = AdminLogin();
-        if (aLogin == true) {
-            while (true) {
-                std::string choice = adminPage(sessionAdmin);
-
-                if (choice == "1") {
-                    viewIncomingOrders();
-                }
-
-                else if (choice == "2") {
-                    updateOrderStatus();
-                }
-
-                else if (choice == "3") {
-                    mainMenu();
-                }
-
-                else {
-                    std::cout << "Invalid option, try again. " << std::endl;
-                    adminPage(sessionAdmin);
-
-
-                }
-            }
-        }
-
-        else {
-            std::cout << "Incorrect username/password try again" << std::endl;
-        }
-    }
-
-    else if (option == "3") {
-        bool reg = regUser();
-        if (reg == true) {
-            std::cout << "Account Created!" << std::endl;
-            mainMenu();
-        }
-
-        else {
-            mainMenu();
-        }
-    }
-
-    else if (option == "5") {
-        std::cout << "Exiting app... goodbye..." << std::endl;
-    }
-
-    else {
-        std::cout << "Invalid input. Try again." << std::endl;
-        mainMenu();
-    }
-
-}*/
-
-
 
 
 void SelectBranch() {

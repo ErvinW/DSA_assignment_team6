@@ -30,19 +30,35 @@ int Membership::getPoint() {
 
 void Membership::EarnPoint(double amt)
 {
-	double pointsEarned = amt * 0.1;
-	Point += ceil(pointsEarned);
+	if (Status == "Ordinary")
+	{
+		double pointsEarned = amt * 0.1;
+		Point += ceil(pointsEarned);
+	}
+	else if (Status == "Silver")
+	{
+		double pointsEarned = amt * 0.2;
+		Point += ceil(pointsEarned);
+	}
+	else if (Status == "Gold")
+	{
+		double pointsEarned = amt * 0.25;
+		Point += ceil(pointsEarned);
+	}
 }
 
 bool Membership::RedeemPoints(int pt) {
-	int minus = Point -= pt;
 	if (Point < 0)
 	{
-		Point += pt;
 		return false;
 	}
-	setPoint(minus);
-	return true;
+	else
+	{
+		Point -= pt;
+		setPoint(Point);
+		std::cout << Point << std::endl;
+		return true;
+	}
 }
 
 std::string Membership::status()
