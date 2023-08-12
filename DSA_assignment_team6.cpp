@@ -882,7 +882,7 @@ void CreateOrder() {
             MakePayment(charge);
 
             if (currentBranch == "1")
-            {
+            { 
                 queue1.enqueue(tempOrder);
             }
             else if (currentBranch == "2")
