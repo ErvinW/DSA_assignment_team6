@@ -531,10 +531,6 @@ void updateOrderStatus() {
     // Confirm update
     std::cout << "Order status updated successfully!" << std::endl;
 
- 
-
-
-
 
         if (statusChoice == 1)
         {
@@ -657,8 +653,6 @@ void adminPage(Admin admin) {
 
 void MakePayment(double amt)
 {
-    
-    
     viewInvoice(sessionStorage);
     std::cout << "Total Amount: $" << amt << endl;
     std::cout << "" << endl;
@@ -711,8 +705,7 @@ void MakePayment(double amt)
                                 else
                                 {
                                     sessionStorage.Member.RedeemPoints(point);
-                                    sessionStorage.Member.setPoint(currentPoint - point);
-                                    
+
                                     Membership member = Membership(sessionStorage.Member.getStatus(), currentPoint - point);
                                     Customer customer2 = Customer(sessionStorage.getName(), sessionStorage.getPassword(), member);
                                     customerDict.remove(sessionStorage.getName());
