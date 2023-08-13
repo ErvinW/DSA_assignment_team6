@@ -1264,7 +1264,7 @@ void Main() {
         std::cout << "" << std::endl;
         std::cout << "3. Register User" << std::endl;
         std::cout << "" << std::endl;
-        std::cout << "4. Exit app" << std::endl; //OK
+        std::cout << "4. Exit" << std::endl; //OK
         std::cout << std::endl;
         std::cout << "Please choose your role: ";
 
@@ -1317,7 +1317,7 @@ void Main() {
      
 
         else if (option == "4") {
-            std::cout << "Exiting app.." << std::endl;
+            std::cout << "Exiting.." << std::endl;
             return;
 
         }
@@ -1327,26 +1327,32 @@ void Main() {
 
 
 void SelectBranch() {
-    std::string Location;
-    std::cout << "-----------------------------------------" << std::endl;
-    std::cout << "Select branch" << std::endl;
-    std::cout << "[1] Punggol" << std::endl;
-    std::cout << "[2] Clementi" << std::endl;
-    std::cout << "[3] Tiong Bahru" << std::endl;
+    while (true) {
+        std::string Location;
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << "Select branch" << std::endl;
+        std::cout << "[1] Punggol" << std::endl;
+        std::cout << "[2] Clementi" << std::endl;
+        std::cout << "[3] Tiong Bahru" << std::endl;
+        std::cout << "[4] Exit" << std::endl;
 
-    std::cin >> Location;
+        std::cin >> Location;
 
-    if (Location == "1" || Location == "2" || Location == "3") {
-        currentBranch = Location;
-        Main();
+        if (Location == "1" || Location == "2" || Location == "3") {
+            currentBranch = Location;
+            Main();
 
-    }
+        }
+
+        else if (Location == "4") {
+            return;
+        }
 
 
-    else {
-        std::cout << "Invalid input. " << std::endl;
-        SelectBranch();
+        else {
+            std::cout << "Invalid input. " << std::endl;
 
+        }
     }
 }
 
