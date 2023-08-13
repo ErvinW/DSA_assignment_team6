@@ -41,7 +41,7 @@ std::string currentBranch;
 
 //using namespace std;
 
-//------------- Input validation -------------//
+//------------- Input validation functions -------------//
 
 bool check(std::string s) {
 
@@ -82,6 +82,7 @@ bool checkstring(std::string str) {
 }
 //------------- Initialise data -------------//
 
+//clears the queue
 void ClearQueue() {
 
     while (!queue1.isEmpty()) {
@@ -100,6 +101,7 @@ void ClearQueue() {
     }
 }
 
+//Uses orderList to queue all orders into their respective queues
 void Queuing() {
 
     ClearQueue();
@@ -136,6 +138,7 @@ void Queuing() {
     }
 }
 
+//Read customer.csv and populate the hashtable customerDict and CustNames list
 void initCustomer() {
 
     std::ifstream inFile("Customer.csv");   
@@ -160,6 +163,7 @@ void initCustomer() {
 
 }
 
+//Read Dishes.csv and populate the hashtable dishDict and dishList list
 void initDishList() {
     std::ifstream inFile("Dishes.csv");
     if (!inFile) {
@@ -181,6 +185,7 @@ void initDishList() {
     }
 }
 
+//Initialise admin accounts into adminList
 void initAdmins() {
     adminList.add(Admin("Adm1", "PassAdm1", 1));
     adminList.add(Admin("Adm2", "PassAdm2", 2));
@@ -192,6 +197,8 @@ void initAdmins() {
 
 //------------- Login functions -------------//
 
+//Gets user input and checks if username and password entered matches an object in customerDict hash table
+//Customer object is stored in global variable SessionStorage
 bool userLogin() {
     std::string userName;
     std::string password;
@@ -219,7 +226,8 @@ bool userLogin() {
 }
 
 
-
+// Gets user input and checks if username and password entered matches an object in adminList list
+//Admin object is stored in global variable adminStorage
 bool AdminLogin() {
     std::string userName;
     std::string password;
@@ -250,6 +258,8 @@ bool AdminLogin() {
 }
 
 
+//Gets user input and checks if username and password entered matches an object in customerDict hash table
+//If no, create new customer object and update customer.csv, customerDict hash table and CustNames list
 bool regUser() {
 
     std::string customerName;
@@ -310,6 +320,9 @@ bool regUser() {
 
 //-------------- View functions -------------//
 
+
+//Loops through dishList list, retrieve keys for dishDict
+//Retrieve the corresponding object and run print function
 void viewAllDishes() {
     for (int i = 0; i < dishList.getLength(); i++) {
         std::string name = dishList.get(i);
@@ -321,6 +334,7 @@ void viewAllDishes() {
 }
 
 
+//Gets user input. Checks if it matches keys in dishList or cuisine name in dish objects. Retrieve dish objects that match and run their print function
 void viewBy() {
     std::string s;
     std::cout << "Enter category/ dish name to sort by [3 to exit]: ";
@@ -346,6 +360,10 @@ void viewBy() {
     }
 }
 
+
+//Uses customer object in SessionStorage. Retrieves Order objects that have customer's name as its custName attribute
+//From Order object, retrieve dish keys from its dishList and retireve dish object from dishDict
+//Run dish objects' print function and print the Order objects status. Ready if true and Not ready if False
 void viewInvoice(Customer cust) {
 
     if (OrderList.getLength() == 0)
@@ -394,6 +412,7 @@ void viewInvoice(Customer cust) {
 
 //------------- UI functions -------------//
 
+//UI for user to select next action
 void ViewMenu() {
     while (true) {
         std::cout << "+---------------+---------------+" << std::endl;
@@ -425,7 +444,9 @@ void ViewMenu() {
 }
 
 
-
+//Runs viewInvoice function
+//Gets user input to select the order they want to cancel. 
+//Removes order from List OrderList and runs the function Queuing()
 void CancelOrder()
 {   
     while (true)
@@ -469,6 +490,8 @@ void CancelOrder()
 
 }
 
+
+//display all orders in OrderList
 void viewIncomingOrders() {
     while (true) {
         if (OrderList.isEmpty()) {
@@ -494,6 +517,11 @@ void viewIncomingOrders() {
    }
 }
 
+
+//displays first Order in OrderList. 
+//Recieve user's input
+//If user enters 1, update order object's isready boolean to true
+//IF enter 2, update to False
 void updateOrderStatus() {
     while (true) {
         if (OrderList.getLength() == 0) {
@@ -584,6 +612,10 @@ void updateOrderStatus() {
         
 }
 
+
+//View all attributes of the selected order
+//Retrieve customer object from customerDict using custname attribute from order as the key
+//display customer object's attribute values
 void viewCustomerInformation() {
     while (true) {
         if (OrderList.isEmpty()) {
@@ -702,6 +734,9 @@ void CreateDish() {
 
 }
 
+
+
+//UI for admin to select next action
 void adminPage(Admin admin) {
 
     while (true) {
@@ -744,6 +779,8 @@ void adminPage(Admin admin) {
 
 }
 
+
+//Page for user to complete order
 void MakePayment(double amt)
 {
     viewInvoice(sessionStorage);
@@ -896,7 +933,7 @@ void MakePayment(double amt)
 
 }
 
-
+//Creates new order object
 void CreateOrder() {
 
     double charge = 0;
@@ -1002,7 +1039,7 @@ void CreateOrder() {
 
 
 
-
+//Adds to list in order object's dishList attribute
 List<std::string> AddDish(List<std::string> DL) {
     //std::cout << DL.getLength();
     viewAllDishes();
@@ -1035,6 +1072,8 @@ List<std::string> AddDish(List<std::string> DL) {
     }
 }
 
+
+//Removes from list in order object's dishList attribute
 List<std::string> RemoveDish(List<std::string> DLR) {
     std::cout << "+---------------++---------------++---------------+" << std::endl;
     for (int i = 0; i < DLR.getLength(); i++) {
@@ -1072,6 +1111,8 @@ List<std::string> RemoveDish(List<std::string> DLR) {
 
 }
 
+
+//Updates rating.csv 
 void saveAndExit(DishDict& dishes) {
     dishes.saveRatingsToFile("ratings.csv");
     std::cout << "Ratings saved. Exiting program.\n";
@@ -1079,7 +1120,7 @@ void saveAndExit(DishDict& dishes) {
 }
 
 
-
+//Select order to edit
 void ChooseEdit(Customer cust) {
 
     while (true) {
@@ -1177,7 +1218,7 @@ void ChooseEdit(Customer cust) {
 
 //-------------------------------------------//
 
-
+//UI for user to select next action
 void userPage(Customer cust) {
 
     while (true) {
@@ -1250,7 +1291,7 @@ void userPage(Customer cust) {
 
 
 
-
+//UI for user to select next action
 void Main() {
     while (true) {
         std::cout << "+---------------Welcome To  Restaurant---------------+" << std::endl;
@@ -1321,7 +1362,8 @@ void Main() {
 
 }
 
-
+//UI for user to select branch
+// value selected is saved to currentBranch
 void SelectBranch() {
     while (true) {
         std::string Location;
