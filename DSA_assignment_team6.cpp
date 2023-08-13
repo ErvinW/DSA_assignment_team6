@@ -69,7 +69,6 @@ bool checkDouble(std::string s) {
 
 bool checkstring(std::string str) {
 
-
     try {
         std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) {return std::tolower(c); });
         return true;
@@ -515,12 +514,16 @@ void updateOrderStatus() {
         }
         // Ask for new status
         int statusChoice;
-        std::cout << "Select the new status for the order:" << std::endl;
+        std::cout << "Select the new status for the order [Select 0 to stop]:" << std::endl;
         std::cout << "1. Ready" << std::endl;
         std::cout << "2. Not Ready" << std::endl;
         std::cout << "Enter choice (1 or 2): ";
         std::cin >> statusChoice;
 
+        if (statusChoice == 0)
+        {
+            break;
+        }
         if (statusChoice != 1 && statusChoice != 2) {
             std::cout << "Invalid choice. Operation aborted." << std::endl;
             return;
