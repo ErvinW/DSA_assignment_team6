@@ -519,11 +519,13 @@ void viewIncomingOrders() {
 
 
 //displays first Order in OrderList. 
-//Recieve user's input
+//Receieve user's input
 //If user enters 1, update order object's isready boolean to true
 //IF enter 2, update to False
 void updateOrderStatus() {
-    while (true) {
+    
+    while (true)
+    {
         if (OrderList.getLength() == 0) {
             std::cout << "No orders available to update." << std::endl;
             return;
@@ -542,7 +544,7 @@ void updateOrderStatus() {
         }
         // Ask for new status
         int statusChoice;
-        std::cout << "Select the new status for the order [Select 0 to stop]:" << std::endl;
+        std::cout << "Select the new status for the order[Select 0 to exit]:" << std::endl;
         std::cout << "1. Ready" << std::endl;
         std::cout << "2. Not Ready" << std::endl;
         std::cout << "Enter choice (1 or 2): ";
@@ -560,7 +562,7 @@ void updateOrderStatus() {
         // Update order status
         frontOrder.setisReady(statusChoice == 1);
         OrderList.remove(0); // Remove the order from the front of the list
-        OrderList.add(OrderList.getLength(), frontOrder); // Add the updated order to the back of the list
+        OrderList.add(OrderList.getLength() - 1, frontOrder); // Add the updated order to the back of the list
 
         // Confirm update
         std::cout << "Order status updated successfully!" << std::endl;
@@ -608,7 +610,8 @@ void updateOrderStatus() {
             std::remove("Customer.csv");
             std::rename("TempCustomer.csv", "Customer.csv");
         }
-   }
+    }
+   
         
 }
 
