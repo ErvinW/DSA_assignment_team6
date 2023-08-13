@@ -471,67 +471,70 @@ void CancelOrder()
 }
 
 void viewIncomingOrders() {
-    if (OrderList.isEmpty()) {
-        std::cout << "No incoming orders at the moment." << std::endl;
-        return;
-    }
-
-    std::cout << "Incoming Orders:" << std::endl;
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        Order order = OrderList.get(i);
-        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
-        std::cout << "Customer Name: " << order.getCustName() << std::endl;
-        std::cout << "Branch: " << order.getBranch() << std::endl;
-        std::cout << "Total Charge: " << order.getCharge() << std::endl;
-        std::cout << "Dishes: ";
-        List<std::string> dishes = order.getDishList();
-        for (int j = 0; j < dishes.getLength(); j++) {
-            std::cout << dishes.get(j) << ", ";
+    while (true) {
+        if (OrderList.isEmpty()) {
+            std::cout << "No incoming orders at the moment." << std::endl;
+            return;
         }
-        std::cout << std::endl;
-        std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
-    }
+
+        std::cout << "Incoming Orders:" << std::endl;
+        for (int i = 0; i < OrderList.getLength(); i++) {
+            Order order = OrderList.get(i);
+            std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+            std::cout << "Customer Name: " << order.getCustName() << std::endl;
+            std::cout << "Branch: " << order.getBranch() << std::endl;
+            std::cout << "Total Charge: " << order.getCharge() << std::endl;
+            std::cout << "Dishes: ";
+            List<std::string> dishes = order.getDishList();
+            for (int j = 0; j < dishes.getLength(); j++) {
+                std::cout << dishes.get(j) << ", ";
+            }
+            std::cout << std::endl;
+            std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+        }
+   }
 }
 
 void updateOrderStatus() {
-    if (OrderList.getLength() == 0) {
-        std::cout << "No orders available to update." << std::endl;
-        return;
-    }
+    while (true) {
+        if (OrderList.getLength() == 0) {
+            std::cout << "No orders available to update." << std::endl;
+            return;
+        }
 
-    // Get the order at the front of the list
-    Order frontOrder = OrderList.get(0);
+        // Get the order at the front of the list
+        Order frontOrder = OrderList.get(0);
 
-    std::cout << "Order to update: " << frontOrder.getCustName() << " (Branch: " << frontOrder.getBranch() << ", Status: " << (frontOrder.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
+        std::cout << "Order to update: " << frontOrder.getCustName() << " (Branch: " << frontOrder.getBranch() << ", Status: " << (frontOrder.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
 
-    // Displaying some of the order details (modify as needed)
-    List<std::string> dishList = frontOrder.getDishList();
-    for (int i = 0; i < dishList.getLength(); i++) {
-        Dish dish = dishDict.get(dishList.get(i));
-        dish.print(); // Assuming Dish has a print() method to print details
-    }
-    // Ask for new status
-    int statusChoice;
-    std::cout << "Select the new status for the order:" << std::endl;
-    std::cout << "1. Ready" << std::endl;
-    std::cout << "2. Not Ready" << std::endl;
-    std::cout << "Enter choice (1 or 2): ";
-    std::cin >> statusChoice;
+        // Displaying some of the order details (modify as needed)
+        List<std::string> dishList = frontOrder.getDishList();
+        for (int i = 0; i < dishList.getLength(); i++) {
+            Dish dish = dishDict.get(dishList.get(i));
+            dish.print(); // Assuming Dish has a print() method to print details
+        }
+        // Ask for new status
+        int statusChoice;
+        std::cout << "Select the new status for the order:" << std::endl;
+        std::cout << "1. Ready" << std::endl;
+        std::cout << "2. Not Ready" << std::endl;
+        std::cout << "Enter choice (1 or 2): ";
+        std::cin >> statusChoice;
 
-    if (statusChoice != 1 && statusChoice != 2) {
-        std::cout << "Invalid choice. Operation aborted." << std::endl;
-        return;
-    }
+        if (statusChoice != 1 && statusChoice != 2) {
+            std::cout << "Invalid choice. Operation aborted." << std::endl;
+            return;
+        }
 
-    // Update order status
-    frontOrder.setisReady(statusChoice == 1);
-    OrderList.remove(0); // Remove the order from the front of the list
-    OrderList.add(OrderList.getLength(), frontOrder); // Add the updated order to the back of the list
+        // Update order status
+        frontOrder.setisReady(statusChoice == 1);
+        OrderList.remove(0); // Remove the order from the front of the list
+        OrderList.add(OrderList.getLength(), frontOrder); // Add the updated order to the back of the list
 
-    // Confirm update
-    std::cout << "Order status updated successfully!" << std::endl;
+        // Confirm update
+        std::cout << "Order status updated successfully!" << std::endl;
 
- 
+
 
 
 
@@ -578,81 +581,168 @@ void updateOrderStatus() {
             std::remove("Customer.csv");
             std::rename("TempCustomer.csv", "Customer.csv");
         }
+   }
         
 }
 
 void viewCustomerInformation() {
-    if (OrderList.isEmpty()) {
-        std::cout << "No orders available." << std::endl;
-        return;
-    }
+    while (true) {
+        if (OrderList.isEmpty()) {
+            std::cout << "No orders available." << std::endl;
+            return;
+        }
 
-    // Display all orders
-    std::cout << "Select an order to view customer information:" << std::endl;
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        Order order = OrderList.get(i);
-        std::cout << (i + 1) << ". Order from " << order.getCustName()
-            << " (Branch: " << order.getBranch()
-            << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready")
-            << ")" << std::endl;
-    }
+        // Display all orders
+        std::cout << "Select an order to view customer information:" << std::endl;
+        for (int i = 0; i < OrderList.getLength(); i++) {
+            Order order = OrderList.get(i);
+            std::cout << (i + 1) << ". Order from " << order.getCustName()
+                << " (Branch: " << order.getBranch()
+                << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready")
+                << ")" << std::endl;
+        }
 
-    // Ask admin to select an order
-    int selectedIndex;
-    std::cout << "Enter the number of the order to view: ";
-    std::cin >> selectedIndex;
+        // Ask admin to select an order
+        int selectedIndex;
+        std::cout << "Enter the number of the order to view: ";
+        std::cin >> selectedIndex;
 
-    if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
-        std::cout << "Invalid selection. Operation aborted." << std::endl;
-        return;
-    }
+        if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
+            std::cout << "Invalid selection. Operation aborted." << std::endl;
+            return;
+        }
 
-    // Get selected order
-    Order selectedOrder = OrderList.get(selectedIndex - 1);
+        // Get selected order
+        Order selectedOrder = OrderList.get(selectedIndex - 1);
 
-    // Display customer information
-    std::cout << "Customer Information for Selected Order:" << std::endl;
-    std::cout << "Customer Name: " << selectedOrder.getCustName() << std::endl;
-    std::cout << "Branch: " << selectedOrder.getBranch() << std::endl;
-    std::cout << "Charge: $" << selectedOrder.getCharge() << std::endl;
-    std::cout << "Order Status: " << (selectedOrder.getisReady() ? "Ready" : "Not Ready") << std::endl;
+        // Display customer information
+        std::cout << "Customer Information for Selected Order:" << std::endl;
+        std::cout << "Customer Name: " << selectedOrder.getCustName() << std::endl;
+        std::cout << "Branch: " << selectedOrder.getBranch() << std::endl;
+        std::cout << "Charge: $" << selectedOrder.getCharge() << std::endl;
+        std::cout << "Order Status: " << (selectedOrder.getisReady() ? "Ready" : "Not Ready") << std::endl;
 
-    std::cout << "Customer information displayed successfully!" << std::endl;
+        std::cout << "Customer information displayed successfully!" << std::endl;
+   }
 }
 
 
+//get input to create dish object
+//Add dish name to dishList and add Dish to DishDict
+//Update csv file
+void CreateDish() {
+    
+    while (true) {
+        std::string cuisine;
+        std::cout << "Enter cuisine: ";
+        std::cin >> cuisine;
+        std::cout << std::endl;
+
+        std::string name;
+        std::cout << "Enter dish name: ";
+        std::cin >> name;
+        std::cout << std::endl;
+
+        std::string charge;
+        std::cout << "Enter price: ";
+        std::cin >> charge;
+        bool check_dbl = checkDouble(charge);
+        double tCharge = 0;
+        std::cout << std::endl;
+
+        if (check_dbl == true) {
+            tCharge += std::stod(charge);
+
+
+
+            std::string cfm;
+            std::cout << "Press 1 to confirm new dish. Press any other button to cancel.";
+            std::cin >> cfm;
+
+            if (cfm == "1") {
+                Dish newDish = Dish(cuisine, name, tCharge);
+                dishList.add(name);
+                dishDict.add(name, newDish);
+
+
+                std::ofstream file("Dishes.csv", std::ios::app); // Open file in append mode
+
+                if (!file.is_open()) {
+                    std::cerr << "Error opening file: Dishes.csv" << std::endl;
+                }
+
+                file << cuisine << "," << name << ","
+                    << charge << std::endl;
+
+                file.close();
+
+
+
+
+                std::cout << std::endl;
+                return;
+
+            }
+
+            else {
+                std::cout << "Cancelled" << std::endl;
+                return;
+            }
+
+        }
+
+        else {
+            std::cout << "Invalid input" << std::endl;
+            return;
+        }
+
+       
+    }
+
+
+
+}
+
 void adminPage(Admin admin) {
 
-    std::string option;
+    while (true) {
+        std::string option;
 
-    std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "[1] View incoming orders" << std::endl;
-    std::cout << "[2] Update order status" << std::endl;
-    std::cout << "[3] View customer information" << std::endl;
-    std::cout << "[4] Exit" << std::endl;
-    std::cin >> option;
+        std::cout << "+---------------Welcome " << admin.getUsername() << "---------------+" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "[1] View incoming orders" << std::endl;
+        std::cout << "[2] Update order status" << std::endl;
+        std::cout << "[3] View customer information" << std::endl;
+        std::cout << "[4] Create a new dish" << std::endl;
+        std::cout << "[5] Exit" << std::endl;
+        std::cin >> option;
 
-    if (option == "1") {
-        viewIncomingOrders();
-    }
+        if (option == "1") {
+            viewIncomingOrders();
+        }
 
-    else if (option == "2") {
-        updateOrderStatus();
-    }
-    else if (option == "3") {
-        viewCustomerInformation();
-    }
+        else if (option == "2") {
+            updateOrderStatus();
+        }
+        else if (option == "3") {
+            viewCustomerInformation();
+        }
 
-    else if (option == "4") {
-        return;
+        else if (option == "4") {
+            CreateDish();
+        }
 
-    }
+        else if (option == "5") {
+            return;
 
-    else {
-        std::cout << "Invalid option " << std::endl;
+        }
 
-    }
+        else {
+            std::cout << "Invalid option " << std::endl;
+
+        }
+   }
+
 }
 
 void MakePayment(double amt)
