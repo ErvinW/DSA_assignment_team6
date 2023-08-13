@@ -524,8 +524,8 @@ void viewIncomingOrders() {
 //IF enter 2, update to False
 void updateOrderStatus() {
     
-    while (true)
-    {
+    //while (true)
+    //{
         if (OrderList.getLength() == 0) {
             std::cout << "No orders available to update." << std::endl;
             return;
@@ -550,10 +550,10 @@ void updateOrderStatus() {
         std::cout << "Enter choice (1 or 2): ";
         std::cin >> statusChoice;
 
-        if (statusChoice == 0)
-        {
-            break;
-        }
+        //if (statusChoice == 0)
+        //{
+          //  break;
+        //}
         if (statusChoice != 1 && statusChoice != 2) {
             std::cout << "Invalid choice. Operation aborted." << std::endl;
             return;
@@ -562,7 +562,7 @@ void updateOrderStatus() {
         // Update order status
         frontOrder.setisReady(statusChoice == 1);
         OrderList.remove(0); // Remove the order from the front of the list
-        OrderList.add(OrderList.getLength() - 1, frontOrder); // Add the updated order to the back of the list
+        OrderList.add(OrderList.getLength(), frontOrder); // Add the updated order to the back of the list
 
         // Confirm update
         std::cout << "Order status updated successfully!" << std::endl;
@@ -610,9 +610,7 @@ void updateOrderStatus() {
             std::remove("Customer.csv");
             std::rename("TempCustomer.csv", "Customer.csv");
         }
-    }
-   
-        
+    //}      
 }
 
 
