@@ -494,68 +494,52 @@ void viewIncomingOrders() {
 }
 
 void updateOrderStatus() {
-        if (OrderList.isEmpty()) {
-            std::cout << "No orders available to update." << std::endl;
-            return;
-        }
+    if (OrderList.getLength() == 0) {
+        std::cout << "No orders available to update." << std::endl;
+        return;
+    }
 
-        // Display all orders
-        std::cout << "Select an order to update:" << std::endl;
-        for (int i = 0; i < OrderList.getLength(); i++) {
-            Order order = OrderList.get(i);
-            std::cout << (i + 1) << ". Order from " << order.getCustName() << " (Branch: " << order.getBranch() << ", Status: " << (order.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
-        }
+    // Get the order at the front of the list
+    Order frontOrder = OrderList.get(0);
 
-        // Ask admin to select an order
-        int selectedIndex;
-        std::cout << "Enter the number of the order to update: ";
-        std::cin >> selectedIndex;
+    std::cout << "Order to update: " << frontOrder.getCustName() << " (Branch: " << frontOrder.getBranch() << ", Status: " << (frontOrder.getisReady() ? "Ready" : "Not Ready") << ")" << std::endl;
 
-        if (selectedIndex <= 0 || selectedIndex > OrderList.getLength()) {
-            std::cout << "Invalid selection. Operation aborted." << std::endl;
-            return;
-        }
+    // Displaying some of the order details (modify as needed)
+    List<std::string> dishList = frontOrder.getDishList();
+    for (int i = 0; i < dishList.getLength(); i++) {
+        Dish dish = dishDict.get(dishList.get(i));
+        dish.print(); // Assuming Dish has a print() method to print details
+    }
+    // Ask for new status
+    int statusChoice;
+    std::cout << "Select the new status for the order:" << std::endl;
+    std::cout << "1. Ready" << std::endl;
+    std::cout << "2. Not Ready" << std::endl;
+    std::cout << "Enter choice (1 or 2): ";
+    std::cin >> statusChoice;
 
-        // Get selected order
-        Order selectedOrder = OrderList.get(selectedIndex - 1);
+    if (statusChoice != 1 && statusChoice != 2) {
+        std::cout << "Invalid choice. Operation aborted." << std::endl;
+        return;
+    }
 
-        // Ask for new status
-        int statusChoice;
-        std::cout << "Select the new status for the order:" << std::endl;
-        std::cout << "1. Ready" << std::endl;
-        std::cout << "2. Not Ready" << std::endl;
-        std::cout << "Enter choice (1 or 2): ";
-        std::cin >> statusChoice;
+    // Update order status
+    frontOrder.setisReady(statusChoice == 1);
+    OrderList.remove(0); // Remove the order from the front of the list
+    OrderList.add(OrderList.getLength(), frontOrder); // Add the updated order to the back of the list
 
-        if (statusChoice != 1 && statusChoice != 2) {
-            std::cout << "Invalid choice. Operation aborted." << std::endl;
-            return;
-        }
+    // Confirm update
+    std::cout << "Order status updated successfully!" << std::endl;
 
-        // Update order status
-        selectedOrder.setisReady(statusChoice == 1);
-        OrderList.remove(selectedIndex - 1);
-        OrderList.add(selectedIndex - 1, selectedOrder);
+ 
 
-        // Dequeue all existing orders from queue1
-        int existingQueueSize = queue1.getLength();
-        for (int i = 0; i < existingQueueSize; i++) {
-            Item tempItem;
-            queue1.dequeue(tempItem);
-        }
 
-        // Requeue orders from OrderList into queue1
-        for (int i = 0; i < OrderList.getLength(); i++) {
-            queue1.enqueue(OrderList.get(i));
-        }
 
-        // Confirm update
-        std::cout << "Order status updated successfully!" << std::endl;
 
         if (statusChoice == 1)
         {
-            Customer customer = customerDict.get(selectedOrder.getCustName());
-            customer.Member.EarnPoint(selectedOrder.getCharge());
+            Customer customer = customerDict.get(frontOrder.getCustName());
+            customer.Member.EarnPoint(frontOrder.getCharge());
             customer.Member.setStatus();
 
             customerDict.remove(customer.getName());

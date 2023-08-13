@@ -169,7 +169,6 @@ void DishDict::saveRatingsToFile(const std::string& filename) {
     }
 
     file.close();
-    std::cout << "Ratings saved to file." << std::endl;
 }
 
 
@@ -236,7 +235,6 @@ void DishDict::rateDishByName() {
 
     // Save ratings to the file
     saveRatingsToFile("ratings.csv");
-    std::cout << "Ratings saved to file." << std::endl;
 }
 
 
