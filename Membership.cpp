@@ -62,19 +62,15 @@ bool Membership::RedeemPoints(int pt) {
 
 std::string Membership::status()
 {
-	if (getStatus() == "Silver" || getStatus() == "Gold")
-	{
-		return getStatus();  // Keep Silver or Gold status even if points are less than 10
-	}
-	else if (getPoint() < 10)
+	if (getPoint() < 10 && getStatus() == "Ordinary")
 	{
 		return "Ordinary";
 	}
-	else if (getPoint() >= 10 && getPoint() < 20)
+	else if (getPoint() >= 10 && getPoint() < 20 && getStatus() == "Ordinary")
 	{
 		return "Silver";
 	}
-	else if (getPoint() >= 20)
+	else if (getPoint() >= 20 && getStatus() == "Silver")
 	{
 		return "Gold";
 	}
