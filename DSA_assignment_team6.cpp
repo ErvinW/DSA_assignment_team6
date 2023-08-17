@@ -493,28 +493,28 @@ void CancelOrder()
 
 //display all orders in OrderList
 void viewIncomingOrders() {
-    while (true) {
-        if (OrderList.isEmpty()) {
-            std::cout << "No incoming orders at the moment." << std::endl;
-            return;
-        }
+    
+    if (OrderList.isEmpty()) {
+        std::cout << "No incoming orders at the moment." << std::endl;
+        return;
+    }
 
-        std::cout << "Incoming Orders:" << std::endl;
-        for (int i = 0; i < OrderList.getLength(); i++) {
-            Order order = OrderList.get(i);
-            std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
-            std::cout << "Customer Name: " << order.getCustName() << std::endl;
-            std::cout << "Branch: " << order.getBranch() << std::endl;
-            std::cout << "Total Charge: " << order.getCharge() << std::endl;
-            std::cout << "Dishes: ";
-            List<std::string> dishes = order.getDishList();
-            for (int j = 0; j < dishes.getLength(); j++) {
-                std::cout << dishes.get(j) << ", ";
-            }
-            std::cout << std::endl;
-            std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+    std::cout << "Incoming Orders:" << std::endl;
+    for (int i = 0; i < OrderList.getLength(); i++) {
+        Order order = OrderList.get(i);
+        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+        std::cout << "Customer Name: " << order.getCustName() << std::endl;
+        std::cout << "Branch: " << order.getBranch() << std::endl;
+        std::cout << "Total Charge: " << order.getCharge() << std::endl;
+        std::cout << "Dishes: ";
+        List<std::string> dishes = order.getDishList();
+        for (int j = 0; j < dishes.getLength(); j++) {
+            std::cout << dishes.get(j) << ", ";
         }
-   }
+        std::cout << std::endl;
+        std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+    }
+   
 }
 
 

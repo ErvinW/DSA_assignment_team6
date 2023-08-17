@@ -1,8 +1,9 @@
 Name,Password,Status,Point
-Jin Jie,123,Gold,0
-Elly,321,Ordinary,0
+Jin Jie,123,Gold,10
+Elly,321,Silver,2
 Jack,666,Ordinary,0
 Test,t1,Ordinary,0
 Javier,Jav,Ordinary,0
 Test123,y11,Ordinary,0
 JJ,678,Ordinary,0
+Ervin,PasswordE,Ordinary,0
