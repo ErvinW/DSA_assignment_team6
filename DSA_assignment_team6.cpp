@@ -491,30 +491,119 @@ void CancelOrder()
 }
 
 
+
+
 //display all orders in OrderList
 void viewIncomingOrders() {
-    
+
     if (OrderList.isEmpty()) {
         std::cout << "No incoming orders at the moment." << std::endl;
         return;
     }
 
-    std::cout << "Incoming Orders:" << std::endl;
-    for (int i = 0; i < OrderList.getLength(); i++) {
-        Order order = OrderList.get(i);
-        std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
-        std::cout << "Customer Name: " << order.getCustName() << std::endl;
-        std::cout << "Branch: " << order.getBranch() << std::endl;
-        std::cout << "Total Charge: " << order.getCharge() << std::endl;
-        std::cout << "Dishes: ";
-        List<std::string> dishes = order.getDishList();
-        for (int j = 0; j < dishes.getLength(); j++) {
-            std::cout << dishes.get(j) << ", ";
+    else if (sessionAdmin.getBranchID() == 1) {
+
+        if (queue1.isEmpty()) {
+            std::cout << "No incoming orders at the moment." << std::endl;
+            return;
         }
-        std::cout << std::endl;
-        std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+
+        else {
+            std::cout << "Incoming Orders(Branch 1):" << std::endl;
+            for (int i = 0; i < OrderList.getLength(); i++) {
+                Order order = OrderList.get(i);
+                if (order.getBranch() == "1") {
+                    std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+                    std::cout << "Customer Name: " << order.getCustName() << std::endl;
+                    std::cout << "Branch: " << order.getBranch() << std::endl;
+                    std::cout << "Total Charge: " << order.getCharge() << std::endl;
+                    std::cout << "Dishes: ";
+                    List<std::string> dishes = order.getDishList();
+                    for (int j = 0; j < dishes.getLength(); j++) {
+                        std::cout << dishes.get(j) << ", ";
+                    }
+                    std::cout << std::endl;
+                    std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+                }
+
+                else {
+
+                }
+            }
+        }
+
     }
-   
+
+    else if (sessionAdmin.getBranchID() == 2) {
+
+        if (queue2.isEmpty()) {
+            std::cout << "No incoming orders at the moment." << std::endl;
+            return;
+        }
+
+        else {
+            std::cout << "Incoming Orders(Branch 2):" << std::endl;
+            for (int i = 0; i < OrderList.getLength(); i++) {
+                Order order = OrderList.get(i);
+                if (order.getBranch() == "2") {
+                    std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+                    std::cout << "Customer Name: " << order.getCustName() << std::endl;
+                    std::cout << "Branch: " << order.getBranch() << std::endl;
+                    std::cout << "Total Charge: " << order.getCharge() << std::endl;
+                    std::cout << "Dishes: ";
+                    List<std::string> dishes = order.getDishList();
+                    for (int j = 0; j < dishes.getLength(); j++) {
+                        std::cout << dishes.get(j) << ", ";
+                    }
+                    std::cout << std::endl;
+                    std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+                }
+
+                else {
+
+                }
+            }
+        }
+    }
+
+    else if (sessionAdmin.getBranchID() == 3) {
+
+        if (queue3.isEmpty()) {
+            std::cout << "No incoming orders at the moment." << std::endl;
+            return;
+        }
+
+        else {
+            std::cout << "Incoming Orders(Branch 3):" << std::endl;
+            for (int i = 0; i < OrderList.getLength(); i++) {
+                Order order = OrderList.get(i);
+                if (order.getBranch() == "3") {
+                    std::cout << "--------------- Order " << i + 1 << " ---------------" << std::endl;
+                    std::cout << "Customer Name: " << order.getCustName() << std::endl;
+                    std::cout << "Branch: " << order.getBranch() << std::endl;
+                    std::cout << "Total Charge: " << order.getCharge() << std::endl;
+                    std::cout << "Dishes: ";
+                    List<std::string> dishes = order.getDishList();
+                    for (int j = 0; j < dishes.getLength(); j++) {
+                        std::cout << dishes.get(j) << ", ";
+                    }
+                    std::cout << std::endl;
+                    std::cout << "Order Status: " << (order.getisReady() ? "Ready" : "Not Ready") << std::endl;
+                }
+
+                else {
+
+                }
+            }
+        }
+    }
+
+
+
+    else {
+        return;
+    }
+
 }
 
 
